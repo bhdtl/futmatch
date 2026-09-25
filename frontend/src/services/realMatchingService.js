@@ -113,6 +113,11 @@ export async function fetchRealSupabaseMatches(profile) {
 
     const urgency = relevantExpiringCount >= 2 ? 'Sehr Hoch' : (relevantExpiringCount === 1 ? 'Mittel' : 'Normal');
 
+    const tacticalMetrics = squadProfile.tactical_metrics || {};
+    const tacticalDna = squadProfile.tactical_dna || tacticalMetrics.tactical_dna || 'Variabler Aufbau';
+    const possessionPct = tacticalMetrics.possession_pct ? `${tacticalMetrics.possession_pct}%` : '50.0%';
+    const pressingScore = tacticalMetrics.pressing_score || 75;
+
     results.push({
       club_id: club.id,
       club_name: club.name,
@@ -123,8 +128,13 @@ export async function fetchRealSupabaseMatches(profile) {
       expiring_count: relevantExpiringCount,
       tactical_fit_reason: fitReason,
       tactical_alignment: `${tacticalSystem} (${headCoach})`,
+      tactical_dna: tacticalDna,
+      possession_pct: possessionPct,
+      pressing_score: pressingScore,
+      build_up_style: tacticalMetrics.build_up_style || 'Variabel',
       contract_urgency: urgency,
-      head_coach: headCoach
+      head_coach: headCoach,
+      squad_profile: squadProfile
     });
   }
 

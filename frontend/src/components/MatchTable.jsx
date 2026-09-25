@@ -61,11 +61,24 @@ export default function MatchTable({ matches, isSearching, onSelectDossier }) {
               const urgency = club.contract_urgency || 'Normal';
               const expiringCount = club.expiring_count || 0;
 
+              const tacticalDna = club.tactical_dna || 'Variabler Aufbau';
+              const possessionPct = club.possession_pct;
+
               return (
                 <tr key={club.club_id || name} className="hover:bg-zinc-800/50 transition-colors">
-                  <td className="py-4 px-5 font-bold text-white text-sm">{name}</td>
+                  <td className="py-4 px-5 font-bold text-white text-sm">
+                    {name}
+                    {possessionPct && (
+                      <div className="text-[10px] font-mono text-zinc-400 font-normal mt-0.5">
+                        Ballbesitz: <span className="text-emerald-400 font-bold">{possessionPct}</span>
+                      </div>
+                    )}
+                  </td>
                   <td className="py-4 px-4 font-mono text-zinc-400 text-xs">{club.league}</td>
-                  <td className="py-4 px-4 font-mono text-zinc-300 text-xs">{tactic}</td>
+                  <td className="py-4 px-4 font-mono text-zinc-300 text-xs">
+                    <div>{tactic}</div>
+                    <div className="text-[10px] text-zinc-500 font-sans mt-0.5">{tacticalDna}</div>
+                  </td>
                   <td className="py-4 px-4 text-center">
                     {isGeneralSearch ? (
                       <span className="px-2.5 py-1 rounded bg-zinc-800 border border-zinc-700 text-zinc-200 font-mono font-bold text-xs">
@@ -86,7 +99,13 @@ export default function MatchTable({ matches, isSearching, onSelectDossier }) {
                       {urgency}
                     </span>
                   </td>
-                  <td className="py-4 px-5 text-zinc-300 text-xs leading-relaxed max-w-md">{fitReason}</td>
+                  <td className="py-4 px-5 text-zinc-300 text-xs leading-relaxed max-w-md">
+                    <div>{fitReason}</div>
+                    <div className="mt-1 flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-emerald-400 font-semibold border border-zinc-700">FBref Data</span>
+                      <span>DNA: {tacticalDna}</span>
+                    </div>
+                  </td>
                   <td className="py-4 px-5 text-right">
                     <button 
                       onClick={() => onSelectDossier(club)} 
