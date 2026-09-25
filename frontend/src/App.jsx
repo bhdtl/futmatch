@@ -4,6 +4,7 @@ import Header from './components/Header';
 import ClientForm from './components/ClientForm';
 import MatchTable from './components/MatchTable';
 import DossierModal from './components/DossierModal';
+import AddClubModal from './components/AddClubModal';
 
 export default function App() {
   const [profile, setProfile] = useState({
@@ -17,6 +18,7 @@ export default function App() {
   const [matches, setMatches] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [selectedClub, setSelectedClub] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const fetchMatches = async (currentProfile) => {
@@ -33,59 +35,13 @@ export default function App() {
         const data = await res.json();
         setMatches(data);
       } else {
-        recalculateFallback(currentProfile);
+        setMatches([]);
       }
     } catch (err) {
-      recalculateFallback(currentProfile);
+      setMatches([]);
     } finally {
       setLoading(false);
     }
-  };
-
-  const recalculateFallback = (p) => {
-    const mockClubs = [
-      {
-        club_id: "CLB-STP",
-        club_name: "FC St. Pauli",
-        logo_short: "STP",
-        league: "Bundesliga / 2. Bundesliga",
-        match_score: 96,
-        tactical_fit_reason: `Vertrag auf ${p.position} läuft im Sommer aus, Coach sucht passendes Profil (${p.preferred_foot}fuß).`,
-        tactical_alignment: "3-4-2-1 System",
-        contract_urgency: "Sehr Hoch"
-      },
-      {
-        club_id: "CLB-F95",
-        club_name: "Fortuna Düsseldorf",
-        logo_short: "F95",
-        league: "2. Bundesliga",
-        match_score: 94,
-        tactical_fit_reason: "Zwei Verträge auf dieser Position laufen aus. Budget für ablösefreie Spieler reserviert.",
-        tactical_alignment: "4-4-2 System",
-        contract_urgency: "Hoch"
-      },
-      {
-        club_id: "CLB-KVM",
-        club_name: "KV Mechelen",
-        logo_short: "KVM",
-        league: "Jupiler Pro League (Belgien)",
-        match_score: 91,
-        tactical_fit_reason: "Stammspieler vor Wechsel in Serie A. Suchen sofortigen Ersatz mit hoher Pressing-Intensität.",
-        tactical_alignment: "4-3-3 Hohes Pressing",
-        contract_urgency: "Hoch"
-      },
-      {
-        club_id: "CLB-SVE",
-        club_name: "SV Elversberg",
-        logo_short: "SVE",
-        league: "2. Bundesliga",
-        match_score: 87,
-        tactical_fit_reason: "Kadererweiterung gefordert. Hohe Passquote im Spielaufbau nötig.",
-        tactical_alignment: "4-2-3-1 Ballbesitz",
-        contract_urgency: "Normal"
-      }
-    ];
-    setMatches(mockClubs);
   };
 
   const handleChange = (e) => {
@@ -113,11 +69,14 @@ export default function App() {
   return (
     <div className="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col md:flex-row antialiased font-sans">
       {/* Sidebar */}
-      <Sidebar activeCount={matches.length} />
+      <Sidebar 
+        activeCount={matches.length} 
+        onOpenAddModal={() => setIsAddModalOpen(true)}
+      />
 
       {/* Main Workbench */}
       <main className="flex-1 p-5 md:p-8 space-y-6 overflow-y-auto custom-scrollbar">
-        <Header />
+        <Header onOpenAddModal={() => setIsAddModalOpen(true)} />
 
         <ClientForm 
           profile={profile} 
@@ -131,11 +90,12 @@ export default function App() {
           matches={hasSearched ? matches : []} 
           isSearching={loading}
           onSelectDossier={(club) => setSelectedClub(club)} 
+          onOpenAddModal={() => setIsAddModalOpen(true)}
         />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800/80 pt-4 gap-2 font-mono">
-          <p>FutMatch Pro Intelligence OS v2.4 — Desktop Native Edition</p>
-          <p>Stand: Saison 2024/2025 • WyScout & Transfermarkt Live Feed API</p>
+          <p>FutMatch Pro Intelligence OS v2.4 — Supabase DB Connected (xrytnuhucuqmyoytdtch)</p>
+          <p>Stand: Saison 2024/2025 • Supabase Live Engine</p>
         </footer>
       </main>
 
@@ -144,6 +104,15 @@ export default function App() {
         club={selectedClub} 
         profile={profile} 
         onClose={() => setSelectedClub(null)} 
+      />
+
+      {/* Add Club to Supabase Modal */}
+      <AddClubModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)}
+        onClubAdded={() => {
+          if (profile.position) fetchMatches(profile);
+        }}
       />
     </div>
   );
