@@ -1,6 +1,6 @@
 """
 FutMatch Pro — Real-Time Live Transfermarkt Scraper & Supabase Sync
-Fetches 1:1 active 1st team squads for Season 2026/2027 (saison_id/2026), 
+Fetches 1:1 active 1st team squads and live head coaches for Season 2026/2027 (saison_id/2026), 
 extracts EXACT contract expiration dates ("Vertrag bis"), individual player feet, 
 and computes 100% real position-based contract expiring counts (2027/2028).
 """
@@ -20,14 +20,27 @@ HEADERS = {
 }
 
 TARGET_CLUBS = [
-    {"id": "CLB-B04", "tm_id": 15, "slug": "bayer-04-leverkusen", "name": "Bayer 04 Leverkusen", "league": "Bundesliga", "head_coach": "Kasper Hjulmand / Xabi Alonso", "system": "3-4-2-1"},
-    {"id": "CLB-STP", "tm_id": 35, "slug": "fc-st-pauli", "name": "FC St. Pauli", "league": "Bundesliga", "head_coach": "Alexander Blessin", "system": "3-5-2"},
-    {"id": "CLB-F95", "tm_id": 38, "slug": "fortuna-dusseldorf", "name": "Fortuna Düsseldorf", "league": "2. Bundesliga", "head_coach": "Daniel Thioune", "system": "4-2-3-1"},
-    {"id": "CLB-SGG", "tm_id": 65, "slug": "spvgg-greuther-furth", "name": "Greuther Fürth", "league": "2. Bundesliga", "head_coach": "Alexander Zorniger", "system": "3-4-1-2"},
-    {"id": "CLB-KSV", "tm_id": 269, "slug": "holstein-kiel", "name": "Holstein Kiel", "league": "Bundesliga", "head_coach": "Marcel Rapp", "system": "3-5-2"},
-    {"id": "CLB-FCB", "tm_id": 27, "slug": "bayern-munchen", "name": "FC Bayern München", "league": "Bundesliga", "head_coach": "Vincent Kompany", "system": "4-2-3-1"},
-    {"id": "CLB-BVB", "tm_id": 16, "slug": "borussia-dortmund", "name": "Borussia Dortmund", "league": "Bundesliga", "head_coach": "Nuri Sahin", "system": "4-2-3-1"},
+    {"id": "CLB-B04", "tm_id": 15, "slug": "bayer-04-leverkusen", "name": "Bayer 04 Leverkusen", "league": "Bundesliga", "system": "3-4-2-1"},
+    {"id": "CLB-STP", "tm_id": 35, "slug": "fc-st-pauli", "name": "FC St. Pauli", "league": "Bundesliga", "system": "3-5-2"},
+    {"id": "CLB-F95", "tm_id": 38, "slug": "fortuna-dusseldorf", "name": "Fortuna Düsseldorf", "league": "2. Bundesliga", "system": "4-2-3-1"},
+    {"id": "CLB-SGG", "tm_id": 65, "slug": "spvgg-greuther-furth", "name": "Greuther Fürth", "league": "2. Bundesliga", "system": "3-4-1-2"},
+    {"id": "CLB-KSV", "tm_id": 269, "slug": "holstein-kiel", "name": "Holstein Kiel", "league": "Bundesliga", "system": "3-5-2"},
+    {"id": "CLB-FCB", "tm_id": 27, "slug": "bayern-munchen", "name": "FC Bayern München", "league": "Bundesliga", "system": "4-2-3-1"},
+    {"id": "CLB-BVB", "tm_id": 16, "slug": "borussia-dortmund", "name": "Borussia Dortmund", "league": "Bundesliga", "system": "4-2-3-1"},
 ]
+
+def scrape_live_head_coach(tm_id, slug):
+    url = f"https://www.transfermarkt.de/{slug}/mitarbeiter/verein/{tm_id}/saison_id/2026"
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=20)
+        if resp.status_code == 200:
+            soup = BeautifulSoup(resp.content, 'html.parser')
+            coach_a = soup.find('a', href=lambda h: h and '/profil/trainer/' in h)
+            if coach_a and coach_a.text.strip():
+                return coach_a.text.strip()
+    except Exception as e:
+        print(f"[ERROR] Failed to fetch coach for {slug}: {e}")
+    return "Cheftrainer"
 
 def scrape_club_squad(club_info):
     tm_id = club_info["tm_id"]
@@ -131,6 +144,10 @@ def run_live_transfermarkt_sync():
     synced_records = []
 
     for club_cfg in TARGET_CLUBS:
+        # Scrape live head coach directly from Transfermarkt staff page
+        head_coach = scrape_live_head_coach(club_cfg["tm_id"], club_cfg["slug"])
+        print(f"[Scraper] {club_cfg['name']} Live Coach -> {head_coach}")
+
         squad = scrape_club_squad(club_cfg)
         time.sleep(1) # respectful scraping pause
 
@@ -138,7 +155,7 @@ def run_live_transfermarkt_sync():
             continue
 
         # Real position-based contract expiring counts (2027 or 2028)
-        expiring_defenders = [p for p in squad if any(yr in p["contract_until"] for yr in ["2027", "2028"]) and ("verteidiger" in p["position"].lower() or "abwehr" in p["position"].lower())]
+        expiring_defenders = [p for p in squad if any(yr in p["contract_until"] for yr in ["2027", "2028"]) and ("verteidiger" in p["position"].lower() or "abwehr" in p["position"].lower() or "torwart" in p["position"].lower())]
         expiring_midfielders = [p for p in squad if any(yr in p["contract_until"] for yr in ["2027", "2028"]) and "mittelfeld" in p["position"].lower()]
         expiring_attackers = [p for p in squad if any(yr in p["contract_until"] for yr in ["2027", "2028"]) and ("stürmer" in p["position"].lower() or "außen" in p["position"].lower() or "flügel" in p["position"].lower())]
 
@@ -165,7 +182,7 @@ def run_live_transfermarkt_sync():
             },
             "squad_profile": {
                 "season": "2026/2027",
-                "head_coach": club_cfg["head_coach"],
+                "head_coach": head_coach,
                 "tactical_system": club_cfg["system"],
                 "active_squad_size": len(squad),
                 "expiring_contracts_2027_2028": {
@@ -179,7 +196,7 @@ def run_live_transfermarkt_sync():
                     "midfielders": len(midfielders),
                     "attackers": len(attackers)
                 },
-                "live_squad_sample": squad[:15], # Exact 1:1 players with positions, contract_until and feet
+                "live_squad_sample": squad[:15],
                 "data_source": f"Live Real-Time Transfermarkt Scraper (Season 2026/2027 - transfermarkt.de/verein/{club_cfg['tm_id']})"
             },
             "base_rating": 80
@@ -187,7 +204,7 @@ def run_live_transfermarkt_sync():
 
         client.table("clubs").upsert(record).execute()
         synced_records.append(record)
-        print(f"[SUCCESS] Upserted {club_cfg['name']} 2026/27 squad to Supabase! Expiring 2027/28: {len(expiring_defenders)} DEF, {len(expiring_midfielders)} MID, {len(expiring_attackers)} ATT")
+        print(f"[SUCCESS] Upserted {club_cfg['name']} (Coach: {head_coach}) to Supabase! Expiring 2027/28: {len(expiring_defenders)} DEF, {len(expiring_midfielders)} MID, {len(expiring_attackers)} ATT")
 
     print(f"\n============================================================")
     print(f"[COMPLETED] Synced {len(synced_records)} 1:1 Live Transfermarkt Squad Profiles for Season 2026/2027!")
@@ -199,7 +216,7 @@ def run_live_transfermarkt_sync():
     for row in res.data:
         sp = row.get("squad_profile", {})
         cec = row.get("contract_expiring_count", {})
-        print(f"  -> [{row['id']}] {row['name']} ({row['league']}) | Season: {sp.get('season')} | Real Expiring (2027/28): {cec.get('IV', 0)} DEF, {cec.get('ZM', 0)} MID, {cec.get('MS', 0)} ATT")
+        print(f"  -> [{row['id']}] {row['name']} ({row['league']}) | Coach: {sp.get('head_coach')} | Season: {sp.get('season')} | Real Expiring (2027/28): {cec.get('IV', 0)} DEF, {cec.get('ZM', 0)} MID, {cec.get('MS', 0)} ATT")
 
     return True
 
