@@ -9,43 +9,34 @@ export default function LandingPage({ onEnterDashboard }) {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 antialiased selection:bg-emerald-500 selection:text-zinc-950 flex flex-col justify-between font-sans relative overflow-x-hidden">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 antialiased selection:bg-emerald-600 selection:text-white flex flex-col justify-between font-sans">
       
-      {/* Background Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[160px] pointer-events-none"></div>
-
-      {/* Navigation Bar */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-6 py-4 bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-800/80">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          
+      {/* Header */}
+      <header className="border-b border-zinc-800 bg-zinc-950 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-black text-zinc-950 text-lg shadow-lg shadow-emerald-500/20">
-              ⚡
+            <div className="h-7 w-7 rounded bg-emerald-600 flex items-center justify-center font-bold text-white text-xs font-mono">
+              FM
             </div>
-            <div>
-              <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
-                FutMatch <span className="text-xs px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">PRO</span>
-              </h1>
-            </div>
+            <span className="font-bold text-white tracking-tight text-sm uppercase">
+              FutMatch <span className="font-mono text-xs text-zinc-400 font-normal">/ PRO</span>
+            </span>
           </div>
-
-          <div className="flex items-center gap-3">
+          
+          <div className="flex items-center gap-4 text-xs font-medium">
             {user ? (
               <div className="flex items-center gap-3">
-                {isAdmin ? (
+                {isAdmin && (
                   <button 
                     onClick={onEnterDashboard}
-                    className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition"
+                    className="px-3.5 py-2 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition"
                   >
                     Zum Workspace (/dashboard)
                   </button>
-                ) : (
-                  <span className="text-xs text-red-400 font-medium">Kein Admin-Zugang</span>
                 )}
                 <button 
                   onClick={logout}
-                  className="text-xs text-zinc-400 hover:text-white px-2 py-1 transition"
+                  className="text-zinc-400 hover:text-white transition"
                 >
                   Abmelden
                 </button>
@@ -54,113 +45,172 @@ export default function LandingPage({ onEnterDashboard }) {
               <>
                 <button 
                   onClick={() => setIsLoginOpen(true)}
-                  className="text-xs font-bold text-zinc-300 hover:text-white px-4 py-2 transition"
+                  className="text-zinc-400 hover:text-white transition"
                 >
-                  Login
+                  Anmelden
                 </button>
                 <button 
                   onClick={() => setIsDemoOpen(true)}
-                  className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition"
+                  className="px-3.5 py-2 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition"
                 >
-                  Zugang anfragen / Demo buchen
+                  Zugang anfragen
                 </button>
               </>
             )}
           </div>
-
         </div>
       </header>
 
       {/* Hero Section */}
-      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto flex-1 flex flex-col justify-center space-y-16 relative z-10">
-        
-        <div className="text-center max-w-3xl mx-auto space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs text-emerald-400 font-mono">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>B2B Transfer Intelligence OS</span>
+      <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 space-y-10 flex-1">
+        <div className="max-w-3xl space-y-4">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-400 font-mono">
+            <span>KADER-VAKANZEN</span> • <span>SYSTEM-FIT</span> • <span>ONE-CLICK DOSSIERS</span>
           </div>
-
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
-            Die Transfer-Matching Engine für <span className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">Spielerberater</span>
-          </h2>
-
-          <p className="text-sm md:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            FutMatch Pro analysiert Kader-Vakanzen, Formations-Alignments und Vertragskonstellationen in europäischen Ziel-Ligen. Finden Sie in Sekunden den perfekten Verein für Ihre Klienten.
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            Die Transfer-Matching Engine für Spielerberater & Agenturen.
+          </h1>
+          <p className="text-sm text-zinc-400 leading-relaxed max-w-2xl">
+            FutMatch Pro aggregiert taktische Spielsysteme, Kaderstrukturen und auslaufende Verträge europäischer Profivereine. Finden Sie den optimalen Club-Fit für Ihre Klienten in Sekunden.
           </p>
+        </div>
 
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button 
-              onClick={() => setIsDemoOpen(true)}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-sm shadow-xl shadow-emerald-500/20 transition flex items-center justify-center gap-2"
-            >
-              <span>Zugang anfragen / Demo buchen</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        {/* Product Preview (Data-Dense Table) */}
+        <div className="border border-zinc-800 rounded-lg bg-zinc-900/60 overflow-hidden shadow-sm space-y-0">
+          <div className="px-5 py-3 border-b border-zinc-800 bg-zinc-950 flex items-center justify-between text-xs font-mono">
+            <span className="text-zinc-400 uppercase tracking-wider">Interaktive Produkt-Vorschau — Klient: Innenverteidiger (IV), Linksfuß, Ablösefrei 2025</span>
+            <span className="text-emerald-500">● LIVE ENGINE</span>
+          </div>
+
+          <div className="overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="bg-zinc-950/80 text-zinc-400 font-mono text-[11px] uppercase tracking-wider border-b border-zinc-800">
+                  <th className="py-3 px-5">Verein</th>
+                  <th className="py-3 px-4">Liga</th>
+                  <th className="py-3 px-4">Taktisches System</th>
+                  <th className="py-3 px-4 text-center">Match-Score</th>
+                  <th className="py-3 px-5">Vakanz- & Fit-Analyse</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-800/80 text-zinc-200 font-sans">
+                <tr className="hover:bg-zinc-800/40">
+                  <td className="py-3.5 px-5 font-semibold text-white">FC St. Pauli</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-400">2. Bundesliga</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-300">3-4-2-1 Dreierkette</td>
+                  <td className="py-3.5 px-4 text-center">
+                    <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-mono font-bold">
+                      96%
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-5 text-zinc-400 text-xs">
+                    Vertrag des Stamm-IV läuft Juni 2025 aus. Hoher Bedarf an linksfüßigem Aufbau-Verteidiger.
+                  </td>
+                </tr>
+                <tr className="hover:bg-zinc-800/40">
+                  <td className="py-3.5 px-5 font-semibold text-white">KV Mechelen</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-400">Jupiler Pro League</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-300">4-3-3 Pressing</td>
+                  <td className="py-3.5 px-4 text-center">
+                    <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-mono font-bold">
+                      92%
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-5 text-zinc-400 text-xs">
+                    Abwehrchef vor Wechsel in Serie A. Suche nach ablösefreiem Ersatz mit hoher Passquote.
+                  </td>
+                </tr>
+                <tr className="hover:bg-zinc-800/40">
+                  <td className="py-3.5 px-5 font-semibold text-white">Fortuna Düsseldorf</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-400">2. Bundesliga</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-300">4-4-2 Flaches System</td>
+                  <td className="py-3.5 px-4 text-center">
+                    <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-mono font-bold">
+                      88%
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-5 text-zinc-400 text-xs">
+                    Zwei Verträge laufen im Sommer aus. Budget für ablösefreie Spieler reserviert.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="border-t border-zinc-800 bg-zinc-950 py-16">
+        <div className="max-w-6xl mx-auto px-6 space-y-10">
+          <div className="space-y-2">
+            <span className="text-xs font-mono text-emerald-500 uppercase tracking-wider">WORKFLOW</span>
+            <h2 class="text-2xl font-bold text-white tracking-tight">In drei Schritten zum passenden Zielverein.</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="border border-zinc-800 bg-zinc-900/40 p-6 rounded-lg space-y-3">
+              <span className="text-xs font-mono text-zinc-500">01 / EINGABE</span>
+              <h3 className="text-sm font-bold text-white">Klienten-Profil erfassen</h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Position, starker Fuß, Altersklasse und Vertragssituation eingeben. Der Algorithmus identifiziert den statistischen Spielertyp.
+              </p>
+            </div>
+
+            <div className="border border-zinc-800 bg-zinc-900/40 p-6 rounded-lg space-y-3">
+              <span className="text-xs font-mono text-zinc-500">02 / MATCHING</span>
+              <h3 className="text-sm font-bold text-white">Vakanzen & Taktik abgleichen</h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                FutMatch gleicht die Anforderungen mit Spielsystemen, Trainer-Präferenzen und auslaufenden Verträgen europäischer Klubs ab.
+              </p>
+            </div>
+
+            <div className="border border-zinc-800 bg-zinc-900/40 p-6 rounded-lg space-y-3">
+              <span className="text-xs font-mono text-zinc-500">03 / OUTREACH</span>
+              <h3 className="text-sm font-bold text-white">Dossier & Pitch generieren</h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Generieren Sie mit einem Klick vorbereitete Pitch-Dokumente und Direkt-Mails für Sportdirektoren und Chef-Scouts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Invitation-Only / Demo Request Form */}
+      <section id="demo" className="border-t border-zinc-800 py-16 bg-zinc-950">
+        <div className="max-w-xl mx-auto px-6 space-y-6">
+          <div className="space-y-2 text-center">
+            <span className="text-xs font-mono text-emerald-500 uppercase tracking-wider">INVITATION-ONLY</span>
+            <h2 className="text-2xl font-bold text-white tracking-tight">Zugang anfragen oder Demo buchen</h2>
+            <p className="text-xs text-zinc-400">FutMatch Pro richtet sich exklusiv an lizenzierte Spielerberater und Agenturen.</p>
+          </div>
+
+          <form onSubmit={(e) => { e.preventDefault(); setIsDemoOpen(true); }} className="border border-zinc-800 bg-zinc-900/60 p-6 rounded-lg space-y-4 text-xs">
+            <div>
+              <label className="block text-zinc-300 font-medium mb-1">Vollständiger Name *</label>
+              <input type="text" required placeholder="z.B. Alexander Schmidt" className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600" />
+            </div>
+            <div>
+              <label className="block text-zinc-300 font-medium mb-1">Geschäftliche E-Mail *</label>
+              <input type="email" required placeholder="name@agentur.de" className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600" />
+            </div>
+            <div>
+              <label className="block text-zinc-300 font-medium mb-1">Name der Agentur *</label>
+              <input type="text" required placeholder="Sports Management GmbH" className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600" />
+            </div>
+            <button type="submit" className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded transition">
+              Demo-Termin & Zugang anfordern
             </button>
-            <button 
-              onClick={() => setIsLoginOpen(true)}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 font-semibold text-sm border border-zinc-800 transition"
-            >
-              Bestandskunden Login
-            </button>
-          </div>
+          </form>
         </div>
-
-        {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <div className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-3xl p-6 space-y-3 shadow-2xl hover:border-zinc-700/80 transition">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-bold text-lg">
-              🎯
-            </div>
-            <h3 className="text-base font-bold text-white">Vakanz-Erkennung</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Erkennt automatisch auslaufende Verträge und entstehende Notstände auf spezifischen Positionen bei europäischen Zielvereinen.
-            </p>
-          </div>
-
-          <div className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-3xl p-6 space-y-3 shadow-2xl hover:border-zinc-700/80 transition">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-bold text-lg">
-              📊
-            </div>
-            <h3 className="text-base font-bold text-white">Formations- & System-Fit</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Algorithmisches Matchmaking für Taktik-Alignment (z.B. Dreierkette vs. Viererkette, Schienenspieler, Pressing-Intensität).
-            </p>
-          </div>
-
-          <div className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-3xl p-6 space-y-3 shadow-2xl hover:border-zinc-700/80 transition">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-bold text-lg">
-              📄
-            </div>
-            <h3 className="text-base font-bold text-white">One-Click Pitch Dossiers</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Generiert maßgeschneiderte Pitch-Dokumente und Direkt-Mails für Sportdirektoren und Chef-Scouts auf Knopfdruck.
-            </p>
-          </div>
-
-        </div>
-
-        {/* Security Badge Banner */}
-        <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
-          <div className="flex items-center gap-3">
-            <span className="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-lg font-mono font-bold text-[10px]">
-              SECURITY APPROVED
-            </span>
-            <span>Enterprise-Grade Cyber Security & Supabase Auth Protection</span>
-          </div>
-          <span className="font-mono text-zinc-500 text-[11px]">Strict Role Access Control (phinampham3@gmail.com)</span>
-        </div>
-
-      </main>
+      </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800/80 py-6 px-6 bg-zinc-950 text-center text-xs text-zinc-500 font-mono">
+      <footer className="border-t border-zinc-800 py-6 px-6 bg-zinc-950 text-center text-xs text-zinc-500 font-mono">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>© 2026 FutMatch Pro. Alle Rechte vorbehalten.</p>
+          <p>© 2026 FutMatch Pro. Utilitarian Data Platform.</p>
           <div className="flex items-center gap-4">
             <a href="#" className="hover:text-zinc-300 transition">Datenschutz</a>
             <a href="#" className="hover:text-zinc-300 transition">Impressum</a>
-            <a href="#" className="hover:text-zinc-300 transition">AGB</a>
           </div>
         </div>
       </footer>
