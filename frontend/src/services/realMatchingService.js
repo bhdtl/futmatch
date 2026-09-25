@@ -114,9 +114,14 @@ export async function fetchRealSupabaseMatches(profile) {
     const urgency = relevantExpiringCount >= 2 ? 'Sehr Hoch' : (relevantExpiringCount === 1 ? 'Mittel' : 'Normal');
 
     const tacticalMetrics = squadProfile.tactical_metrics || {};
-    const tacticalDna = squadProfile.tactical_dna || tacticalMetrics.tactical_dna || 'Variabler Aufbau';
-    const possessionPct = tacticalMetrics.possession_pct ? `${tacticalMetrics.possession_pct}%` : '50.0%';
-    const pressingScore = tacticalMetrics.pressing_score || 75;
+    const deepTactics = squadProfile.deep_tactics || {};
+    const tacticalArchetype = deepTactics.tactical_archetype || squadProfile.tactical_dna || 'Variabler Aufbau';
+    const ppda = deepTactics.ppda !== undefined ? deepTactics.ppda : 10.5;
+    const fieldTilt = deepTactics.field_tilt_pct ? `${deepTactics.field_tilt_pct}%` : '50.0%';
+    const possessionPct = deepTactics.possession_pct ? `${deepTactics.possession_pct}%` : (tacticalMetrics.possession_pct ? `${tacticalMetrics.possession_pct}%` : '50.0%');
+    const progressivePasses = deepTactics.progressive_passes_90 || 35.0;
+    const deepCompletions = deepTactics.deep_completions_per_match || 5.0;
+    const idealTraits = deepTactics.ideal_player_traits || ['Passgenauigkeit unter Druck', 'Positionsdisziplin'];
 
     results.push({
       club_id: club.id,
@@ -128,9 +133,15 @@ export async function fetchRealSupabaseMatches(profile) {
       expiring_count: relevantExpiringCount,
       tactical_fit_reason: fitReason,
       tactical_alignment: `${tacticalSystem} (${headCoach})`,
-      tactical_dna: tacticalDna,
+      tactical_dna: tacticalArchetype,
+      tactical_archetype: tacticalArchetype,
+      ppda: ppda,
+      field_tilt: fieldTilt,
+      progressive_passes_90: progressivePasses,
+      deep_completions: deepCompletions,
+      ideal_player_traits: idealTraits,
       possession_pct: possessionPct,
-      pressing_score: pressingScore,
+      pressing_score: tacticalMetrics.pressing_score || (ppda < 9.5 ? 88 : 72),
       build_up_style: tacticalMetrics.build_up_style || 'Variabel',
       contract_urgency: urgency,
       head_coach: headCoach,

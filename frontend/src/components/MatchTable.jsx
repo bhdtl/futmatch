@@ -63,21 +63,24 @@ export default function MatchTable({ matches, isSearching, onSelectDossier }) {
 
               const tacticalDna = club.tactical_dna || 'Variabler Aufbau';
               const possessionPct = club.possession_pct;
+              const ppda = club.ppda;
+              const fieldTilt = club.field_tilt;
 
               return (
                 <tr key={club.club_id || name} className="hover:bg-zinc-800/50 transition-colors">
                   <td className="py-4 px-5 font-bold text-white text-sm">
                     {name}
                     {possessionPct && (
-                      <div className="text-[10px] font-mono text-zinc-400 font-normal mt-0.5">
-                        Ballbesitz: <span className="text-emerald-400 font-bold">{possessionPct}</span>
+                      <div className="text-[10px] font-mono text-zinc-400 font-normal mt-0.5 flex items-center gap-2">
+                        <span>Ballbesitz: <strong className="text-emerald-400 font-bold">{possessionPct}</strong></span>
+                        {ppda && <span>• PPDA: <strong className="text-amber-400 font-bold">{ppda}</strong></span>}
                       </div>
                     )}
                   </td>
                   <td className="py-4 px-4 font-mono text-zinc-400 text-xs">{club.league}</td>
                   <td className="py-4 px-4 font-mono text-zinc-300 text-xs">
-                    <div>{tactic}</div>
-                    <div className="text-[10px] text-zinc-500 font-sans mt-0.5">{tacticalDna}</div>
+                    <div className="font-bold">{tactic}</div>
+                    <div className="text-[10px] text-emerald-400 font-sans mt-0.5 font-medium">{tacticalDna}</div>
                   </td>
                   <td className="py-4 px-4 text-center">
                     {isGeneralSearch ? (
@@ -101,9 +104,20 @@ export default function MatchTable({ matches, isSearching, onSelectDossier }) {
                   </td>
                   <td className="py-4 px-5 text-zinc-300 text-xs leading-relaxed max-w-md">
                     <div>{fitReason}</div>
-                    <div className="mt-1 flex items-center gap-2 text-[10px] font-mono text-zinc-400">
-                      <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-emerald-400 font-semibold border border-zinc-700">FBref Data</span>
-                      <span>DNA: {tacticalDna}</span>
+                    <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
+                      <span className="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 font-semibold border border-emerald-800/80">
+                        {tacticalDna}
+                      </span>
+                      {ppda && (
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-900 text-amber-400 border border-zinc-700">
+                          PPDA: {ppda} ({ppda < 9.5 ? 'High Press' : 'Mid Block'})
+                        </span>
+                      )}
+                      {fieldTilt && (
+                        <span className="px-1.5 py-0.5 rounded bg-zinc-900 text-blue-400 border border-zinc-700">
+                          Field Tilt: {fieldTilt}
+                        </span>
+                      )}
                     </div>
                   </td>
                   <td className="py-4 px-5 text-right">
