@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LoginModal from '../components/LoginModal';
 import DemoRequestModal from '../components/DemoRequestModal';
+import { FutMatchLogo } from '../components/FutMatchLogo';
 import { useAuth } from '../context/AuthContext';
 
 export default function LandingPage({ onEnterDashboard }) {
@@ -15,9 +16,7 @@ export default function LandingPage({ onEnterDashboard }) {
       <header className="border-b border-zinc-800 bg-zinc-950 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-7 w-7 rounded bg-emerald-600 flex items-center justify-center font-bold text-white text-xs font-mono">
-              FM
-            </div>
+            <FutMatchLogo className="w-7 h-7" />
             <span className="font-bold text-white tracking-tight text-sm uppercase">
               FutMatch <span className="font-mono text-xs text-zinc-400 font-normal">/ PRO</span>
             </span>
@@ -144,7 +143,7 @@ export default function LandingPage({ onEnterDashboard }) {
         <div className="max-w-6xl mx-auto px-6 space-y-10">
           <div className="space-y-2">
             <span className="text-xs font-mono text-emerald-500 uppercase tracking-wider">WORKFLOW</span>
-            <h2 class="text-2xl font-bold text-white tracking-tight">In drei Schritten zum passenden Zielverein.</h2>
+            <h2 className="text-2xl font-bold text-white tracking-tight">In drei Schritten zum passenden Zielverein.</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

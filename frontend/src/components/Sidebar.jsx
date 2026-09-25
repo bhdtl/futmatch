@@ -1,4 +1,5 @@
 import React from 'react';
+import { FutMatchLogo } from './FutMatchLogo';
 
 export default function Sidebar({ activeCount = 0, onOpenAddModal }) {
   return (
@@ -6,9 +7,7 @@ export default function Sidebar({ activeCount = 0, onOpenAddModal }) {
       <div className="space-y-6">
         {/* Logo */}
         <div className="flex items-center gap-3 px-2 py-1">
-          <div className="h-7 w-7 rounded bg-emerald-600 flex items-center justify-center font-bold text-white text-xs font-mono">
-            FM
-          </div>
+          <FutMatchLogo className="w-7 h-7" />
           <span className="font-bold text-white tracking-tight text-sm uppercase">
             FutMatch <span className="font-mono text-xs text-zinc-400 font-normal">/ PRO</span>
           </span>
