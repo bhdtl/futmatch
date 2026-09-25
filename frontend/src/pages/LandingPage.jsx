@@ -64,72 +64,72 @@ export default function LandingPage({ onEnterDashboard }) {
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-12 space-y-10 flex-1">
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-400 font-mono">
-            <span>KADER-VAKANZEN</span> • <span>SYSTEM-FIT</span> • <span>ONE-CLICK DOSSIERS</span>
+            <span>KADER-VAKANZEN SAISON 2026/27</span> • <span>SYSTEM-FIT</span> • <span>ONE-CLICK DOSSIERS</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
             Die Transfer-Matching Engine für Spielerberater & Agenturen.
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed max-w-2xl">
-            FutMatch Pro aggregiert taktische Spielsysteme, Kaderstrukturen und auslaufende Verträge europäischer Profivereine. Finden Sie den optimalen Club-Fit für Ihre Klienten in Sekunden.
+            FutMatch Pro aggregiert taktische Spielsysteme, Live-Kaderstrukturen der Saison 2026/2027 und exakte auslaufende Verträge europäischer Profivereine. Finden Sie den optimalen Club-Fit für Ihre Klienten in Sekunden.
           </p>
         </div>
 
         {/* Product Preview (Data-Dense Table) */}
         <div className="border border-zinc-800 rounded-lg bg-zinc-900/60 overflow-hidden shadow-sm space-y-0">
           <div className="px-5 py-3 border-b border-zinc-800 bg-zinc-950 flex items-center justify-between text-xs font-mono">
-            <span className="text-zinc-400 uppercase tracking-wider">Interaktive Produkt-Vorschau — Klient: Innenverteidiger (IV), Linksfuß, Ablösefrei 2025</span>
-            <span className="text-emerald-500">● LIVE ENGINE</span>
+            <span className="text-zinc-400 uppercase tracking-wider">Live Produkt-Vorschau (Saison 2026/27) — Klient: Innenverteidiger (IV), Linksfuß</span>
+            <span className="text-emerald-500 font-bold">● TRANSFERMARKT LIVE DATA</span>
           </div>
 
           <div className="overflow-x-auto custom-scrollbar">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-zinc-950/80 text-zinc-400 font-mono text-[11px] uppercase tracking-wider border-b border-zinc-800">
-                  <th className="py-3 px-5">Verein</th>
+                  <th className="py-3 px-5">Zielverein</th>
                   <th className="py-3 px-4">Liga</th>
-                  <th className="py-3 px-4">Taktisches System</th>
+                  <th className="py-3 px-4">System (Trainer)</th>
                   <th className="py-3 px-4 text-center">Match-Score</th>
-                  <th className="py-3 px-5">Vakanz- & Fit-Analyse</th>
+                  <th className="py-3 px-5">Reale Vakanz- & Fit-Analyse (2026/27)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800/80 text-zinc-200 font-sans">
                 <tr className="hover:bg-zinc-800/40">
-                  <td className="py-3.5 px-5 font-semibold text-white">FC St. Pauli</td>
-                  <td className="py-3.5 px-4 font-mono text-zinc-400">2. Bundesliga</td>
-                  <td className="py-3.5 px-4 font-mono text-zinc-300">3-4-2-1 Dreierkette</td>
+                  <td className="py-3.5 px-5 font-semibold text-white">FC Bayern München</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-400">Bundesliga</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-300">4-2-3-1 (Vincent Kompany)</td>
                   <td className="py-3.5 px-4 text-center">
                     <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-mono font-bold">
-                      96%
+                      93%
                     </span>
                   </td>
                   <td className="py-3.5 px-5 text-zinc-400 text-xs">
-                    Vertrag des Stamm-IV läuft Juni 2025 aus. Hoher Bedarf an linksfüßigem Aufbau-Verteidiger.
+                    3 Abwehr-Verträge laufen 2027/28 aus (Min-jae Kim, Hiroki Ito). Kompany sucht balancierten IV für flachen Aufbau.
                   </td>
                 </tr>
                 <tr className="hover:bg-zinc-800/40">
-                  <td className="py-3.5 px-5 font-semibold text-white">KV Mechelen</td>
-                  <td className="py-3.5 px-4 font-mono text-zinc-400">Jupiler Pro League</td>
-                  <td className="py-3.5 px-4 font-mono text-zinc-300">4-3-3 Pressing</td>
+                  <td className="py-3.5 px-5 font-semibold text-white">FC St. Pauli</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-400">Bundesliga</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-300">3-5-2 (Alexander Blessin)</td>
                   <td className="py-3.5 px-4 text-center">
                     <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-mono font-bold">
-                      92%
+                      93%
                     </span>
                   </td>
                   <td className="py-3.5 px-5 text-zinc-400 text-xs">
-                    Abwehrchef vor Wechsel in Serie A. Suche nach ablösefreiem Ersatz mit hoher Passquote.
+                    2 Abwehr-Verträge laufen 2027/28 aus (Eric Smith, Adam Dzwigala). Blessin-System fordert linksfüßigen Aufbau-IV.
                   </td>
                 </tr>
                 <tr className="hover:bg-zinc-800/40">
                   <td className="py-3.5 px-5 font-semibold text-white">Fortuna Düsseldorf</td>
                   <td className="py-3.5 px-4 font-mono text-zinc-400">2. Bundesliga</td>
-                  <td className="py-3.5 px-4 font-mono text-zinc-300">4-4-2 Flaches System</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-300">4-2-3-1 (Daniel Thioune)</td>
                   <td className="py-3.5 px-4 text-center">
                     <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-mono font-bold">
-                      88%
+                      93%
                     </span>
                   </td>
                   <td className="py-3.5 px-5 text-zinc-400 text-xs">
-                    Zwei Verträge laufen im Sommer aus. Budget für ablösefreie Spieler reserviert.
+                    7 Verträge in der Abwehr laufen 2027/28 aus (Tim Oberdorf, Dominique Heintz). Hohe Vakanz-Dringlichkeit.
                   </td>
                 </tr>
               </tbody>
@@ -159,7 +159,7 @@ export default function LandingPage({ onEnterDashboard }) {
               <span className="text-xs font-mono text-zinc-500">02 / MATCHING</span>
               <h3 className="text-sm font-bold text-white">Vakanzen & Taktik abgleichen</h3>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                FutMatch gleicht die Anforderungen mit Spielsystemen, Trainer-Präferenzen und auslaufenden Verträgen europäischer Klubs ab.
+                FutMatch gleicht die Anforderungen mit Spielsystemen, Trainer-Präferenzen und auslaufenden Verträgen der Saison 2026/27 ab.
               </p>
             </div>
 

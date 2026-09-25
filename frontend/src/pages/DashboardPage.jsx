@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth, ADMIN_EMAIL } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import ClientForm from '../components/ClientForm';
@@ -12,12 +12,13 @@ export default function DashboardPage({ onBackToLanding }) {
 
   const [profile, setProfile] = useState({
     position: '',
-    age: 23,
+    age: 24,
     age_group: '22-25',
-    preferred_foot: 'Links',
-    contract_status: 'summer2025'
+    preferred_foot: 'Rechts',
+    contract_status: 'summer2027'
   });
 
+  const [selectedLeague, setSelectedLeague] = useState('ALL');
   const [matches, setMatches] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [selectedClub, setSelectedClub] = useState(null);
@@ -104,20 +105,27 @@ export default function DashboardPage({ onBackToLanding }) {
   const handleReset = () => {
     setProfile({
       position: '',
-      age: 23,
+      age: 24,
       age_group: '22-25',
-      preferred_foot: 'Links',
-      contract_status: 'summer2025'
+      preferred_foot: 'Rechts',
+      contract_status: 'summer2027'
     });
+    setSelectedLeague('ALL');
     setMatches([]);
     setHasSearched(false);
   };
+
+  // Filter matches by selected league
+  const filteredMatches = matches.filter(club => {
+    if (selectedLeague === 'ALL') return true;
+    return club.league.toLowerCase().includes(selectedLeague.toLowerCase());
+  });
 
   return (
     <div className="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col md:flex-row antialiased font-sans">
       {/* Sidebar */}
       <Sidebar 
-        activeCount={matches.length} 
+        activeCount={filteredMatches.length} 
         onOpenAddModal={() => setIsAddModalOpen(true)}
       />
 
@@ -146,17 +154,19 @@ export default function DashboardPage({ onBackToLanding }) {
           onSubmit={handleSubmit}
           onReset={handleReset}
           loading={loading}
+          selectedLeague={selectedLeague}
+          onLeagueChange={(league) => setSelectedLeague(league)}
         />
 
         <MatchTable 
-          matches={hasSearched ? matches : []} 
+          matches={hasSearched ? filteredMatches : []} 
           isSearching={loading}
           onSelectDossier={(club) => setSelectedClub(club)} 
           onOpenAddModal={() => setIsAddModalOpen(true)}
         />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800 pt-4 gap-2 font-mono">
-          <p>FutMatch Pro Intelligence OS v2.4 — Utilitarian Edition</p>
+          <p>FutMatch Pro Intelligence OS v2.4 — Season 2026/2027 Live Engine</p>
           <p>© 2026 FutMatch Pro Data Engine</p>
         </footer>
       </main>
