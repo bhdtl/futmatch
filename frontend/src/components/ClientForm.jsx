@@ -1,49 +1,46 @@
 import React from 'react';
 
 const ARCHETYPE_MAP = {
-  IV: "Ball-playing Defender / Aufbauspieler",
-  LV: "Attacking Wing-Back / Schienenspieler",
-  RV: "Defensive Full-Back / Zweikampfstark",
-  DM: "Anchor Man / Balleroberer",
-  ZM: "Box-to-Box Engine / Raumdeuter",
-  LF: "Inside Forward / Dribbler",
-  RF: "Winger / Flankengeber",
-  MS: "Target Man / Knipser"
+  IV: "BALL-PLAYING DEFENDER / AUFBAUSPIELER",
+  LV: "ATTACKING WING-BACK / SCHIENENSPIELER",
+  RV: "DEFENSIVE FULL-BACK / ZWEIKAMPFSTARK",
+  DM: "ANCHOR MAN / BALLEROBERER",
+  ZM: "BOX-TO-BOX ENGINE / RAUMDEUTER",
+  LF: "INSIDE FORWARD / DRIBBLER",
+  RF: "WINGERS / FLANKENGEBER",
+  MS: "TARGET MAN / KNIPSER"
 };
 
 export default function ClientForm({ profile, onChange, onSubmit, onReset, loading }) {
-  const currentArchetype = profile.position ? ARCHETYPE_MAP[profile.position] : "Wählen Sie eine Position aus";
+  const currentArchetype = profile.position ? ARCHETYPE_MAP[profile.position] : "WÄHLEN SIE EINE POSITION";
 
   return (
-    <section className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-5 md:p-6 shadow-2xl relative overflow-hidden">
-      <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-2">
-          <span className="text-emerald-400 text-xs font-mono">01/</span>
-          <h3 className="text-xs font-semibold text-zinc-100 uppercase tracking-wider">Klienten-Profil Parameter</h3>
-        </div>
+    <section className="border border-zinc-800 rounded-lg bg-zinc-900/40 p-5 space-y-4 font-sans">
+      <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+        <span className="text-xs font-mono text-emerald-500 uppercase tracking-wider">01 / KLIENTEN-PARAMETER</span>
         {onReset && (
           <button 
             type="button" 
             onClick={onReset}
-            className="text-xs text-zinc-400 hover:text-zinc-200 transition"
+            className="text-xs font-mono text-zinc-500 hover:text-zinc-300 transition"
           >
-            Formular zurücksetzen
+            ZURÜCKSETZEN
           </button>
         )}
       </div>
 
-      <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
         
         {/* Position */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-medium text-zinc-300">Position</label>
+        <div>
+          <label className="block text-zinc-400 mb-1">POSITION *</label>
           <select 
             name="position"
             value={profile.position || ''} 
             onChange={onChange}
-            className="w-full bg-zinc-950 border border-zinc-800 text-zinc-100 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer"
           >
-            <option value="" disabled>— Position wählen —</option>
+            <option value="" disabled>— Wählen —</option>
             <option value="IV">Innenverteidiger (IV)</option>
             <option value="LV">Linksverteidiger (LV)</option>
             <option value="RV">Rechtsverteidiger (RV)</option>
@@ -56,74 +53,67 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
         </div>
 
         {/* Alter */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-medium text-zinc-300">Alter</label>
+        <div>
+          <label className="block text-zinc-400 mb-1">ALTERSKLASSE</label>
           <select 
             name="age_group"
             value={profile.age_group} 
             onChange={onChange}
-            className="w-full bg-zinc-950 border border-zinc-800 text-zinc-100 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer"
           >
-            <option value="18-21">18 - 21 Jahre (Talent)</option>
-            <option value="22-25">22 - 25 Jahre (Prime Start)</option>
-            <option value="26-29">26 - 29 Jahre (Erfahren)</option>
-            <option value="30+">30+ Jahre (Routinier)</option>
+            <option value="18-21">18 - 21 Jahre</option>
+            <option value="22-25">22 - 25 Jahre</option>
+            <option value="26-29">26 - 29 Jahre</option>
+            <option value="30+">30+ Jahre</option>
           </select>
         </div>
 
         {/* Starker Fuß */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-medium text-zinc-300">Starker Fuß</label>
+        <div>
+          <label className="block text-zinc-400 mb-1">STARKER FUSS</label>
           <select 
             name="preferred_foot"
             value={profile.preferred_foot} 
             onChange={onChange}
-            className="w-full bg-zinc-950 border border-zinc-800 text-zinc-100 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer"
           >
-            <option value="Links">Links (Linksfuß)</option>
-            <option value="Rechts">Rechts (Rechtsfuß)</option>
-            <option value="Beidfüßig">Beidfüßig (Beide)</option>
+            <option value="Links">Linksfuß</option>
+            <option value="Rechts">Rechtsfuß</option>
+            <option value="Beidfüßig">Beidfüßig</option>
           </select>
         </div>
 
         {/* Vertragssituation */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-medium text-zinc-300">Vertragssituation</label>
+        <div>
+          <label className="block text-zinc-400 mb-1">VERTRAGSSTATUS</label>
           <select 
             name="contract_status"
             value={profile.contract_status} 
             onChange={onChange}
-            className="w-full bg-zinc-950 border border-zinc-800 text-zinc-100 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+            className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer"
           >
-            <option value="summer2025">Vertrag läuft Sommer 2025 aus (Ablösefrei)</option>
-            <option value="free">Sofort Vereinslos (Ablösefrei)</option>
+            <option value="summer2025">Auslaufend Juni 2025</option>
+            <option value="free">Sofort Vereinslos</option>
             <option value="rest1y">Restvertrag 1 Jahr</option>
             <option value="rest2y">Restvertrag 2+ Jahre</option>
           </select>
         </div>
 
         {/* Info & Action Row */}
-        <div className="lg:col-span-3 flex flex-wrap items-center gap-3 text-xs text-zinc-400 pt-2">
-          <span className="text-zinc-500">Erkannter Archetyp:</span>
-          <span className={`px-2.5 py-1 bg-zinc-950 rounded-lg border border-zinc-800 font-mono text-[11px] ${profile.position ? 'text-emerald-400' : 'text-zinc-500'}`}>
+        <div className="lg:col-span-3 flex items-center gap-3 text-[11px] pt-1">
+          <span className="text-zinc-500">ARCHETYP:</span>
+          <span className={`px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800 ${profile.position ? 'text-emerald-400 font-bold' : 'text-zinc-500'}`}>
             {currentArchetype}
           </span>
         </div>
 
-        <div className="lg:col-span-1 pt-2 flex justify-end">
+        <div className="lg:col-span-1 pt-1 flex justify-end">
           <button 
             type="submit" 
             disabled={loading || !profile.position}
-            className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl px-4 py-2.5 transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded uppercase tracking-wider font-mono text-xs transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {loading ? (
-              <span>Analysiere FutMatch Data...</span>
-            ) : (
-              <>
-                <span>Match-Analyse starten</span>
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-              </>
-            )}
+            {loading ? "BERECHNE..." : "MATCHING STARTEN"}
           </button>
         </div>
 

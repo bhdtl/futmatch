@@ -2,24 +2,23 @@ import React from 'react';
 
 export default function Header({ onOpenAddModal }) {
   return (
-    <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-zinc-800/80">
+    <header className="border-b border-zinc-800 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-sans">
       <div>
-        <h2 className="text-xl font-bold text-white tracking-tight">Executive Club-Matching Workspace</h2>
-        <p className="text-xs text-zinc-400">Geben Sie die Parameter Ihres Klienten ein, um die FutMatch Analysen zu starten.</p>
+        <h1 className="text-xl font-bold text-white tracking-tight uppercase">Executive Matchmaking Workspace</h1>
+        <p className="text-xs text-zinc-400 font-mono">STANDBY / DATEN-EINHEIT ZUR BERECHNUNG WÄHLEN</p>
       </div>
-      <div className="flex items-center gap-3 text-xs">
+      <div className="flex items-center gap-3">
         {onOpenAddModal && (
           <button 
             onClick={onOpenAddModal}
-            className="px-3.5 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium transition flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-emerald-400 font-medium transition"
           >
-            <span>+ Zielverein / Vakanz anlegen</span>
+            + ZIELVEREIN ANLEGEN
           </button>
         )}
-        <div className="px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Supabase DB Verbunden</span>
-        </div>
+        <span className="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 text-xs font-mono">
+          STATUS: ONLINE
+        </span>
       </div>
     </header>
   );

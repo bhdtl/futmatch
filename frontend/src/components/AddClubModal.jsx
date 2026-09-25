@@ -56,87 +56,56 @@ export default function AddClubModal({ isOpen, onClose, onClubAdded }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 relative">
-        <button onClick={onClose} className="absolute top-4 right-4 text-zinc-400 hover:text-white p-1">
-          ✕
-        </button>
-
-        <div className="border-b border-zinc-800 pb-3">
-          <span className="text-[10px] text-emerald-400 font-mono uppercase tracking-wider">Supabase Live DB</span>
-          <h3 className="text-lg font-bold text-white">+ Zielverein & Vakanz anlegen</h3>
-          <p className="text-xs text-zinc-400">Fügen Sie echte Vereine und Kader-Bedarfe zu Supabase hinzu.</p>
+    <div className="fixed inset-0 bg-zinc-950/90 z-50 flex items-center justify-center p-4">
+      <div className="border border-zinc-800 bg-zinc-900 rounded-lg max-w-lg w-full p-6 space-y-4 relative text-xs font-sans">
+        <button onClick={onClose} className="absolute top-4 right-4 text-zinc-500 hover:text-white">✕</button>
+        
+        <div className="border-b border-zinc-800 pb-3 space-y-1">
+          <span className="text-[10px] font-mono text-emerald-500 uppercase">SUPABASE DATABASE</span>
+          <h3 className="text-base font-bold text-white">+ Zielverein & Vakanz anlegen</h3>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3 text-xs">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-zinc-300 font-medium block mb-1">Vereinsname *</label>
-              <input 
-                name="name" 
-                required 
-                value={formData.name} 
-                onChange={handleChange}
-                placeholder="z.B. FC St. Pauli" 
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-            <div>
-              <label className="text-zinc-300 font-medium block mb-1">Kürzel (Logo)</label>
-              <input 
-                name="logo_short" 
-                value={formData.logo_short} 
-                onChange={handleChange}
-                placeholder="z.B. STP" 
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-zinc-300 font-medium block mb-1">Liga</label>
-              <input 
-                name="league" 
-                value={formData.league} 
-                onChange={handleChange}
-                placeholder="z.B. 2. Bundesliga" 
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-            <div>
-              <label className="text-zinc-300 font-medium block mb-1">Ziel-Position</label>
-              <select 
-                name="target_positions" 
-                value={formData.target_positions} 
-                onChange={handleChange}
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-              >
-                <option value="IV">Innenverteidiger (IV)</option>
-                <option value="LV">Linksverteidiger (LV)</option>
-                <option value="RV">Rechtsverteidiger (RV)</option>
-                <option value="DM">Defensives Mittelfeld (DM)</option>
-                <option value="ZM">Zentrales Mittelfeld (ZM)</option>
-                <option value="MS">Mittelstürmer (MS)</option>
-              </select>
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-3 font-mono">
+          <div>
+            <label className="block text-zinc-400 mb-1">VEREINSNAME *</label>
+            <input 
+              name="name" 
+              required 
+              value={formData.name} 
+              onChange={handleChange}
+              placeholder="z.B. FC St. Pauli" 
+              className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600"
+            />
           </div>
 
           <div>
-            <label className="text-zinc-300 font-medium block mb-1">Grund für Vakanz / Taktisches Alignment</label>
+            <label className="block text-zinc-400 mb-1">LIGA *</label>
+            <input 
+              name="league" 
+              required 
+              value={formData.league} 
+              onChange={handleChange}
+              placeholder="2. Bundesliga" 
+              className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600"
+            />
+          </div>
+
+          <div>
+            <label className="block text-zinc-400 mb-1">VAKANZ-GRUND *</label>
             <textarea 
               name="vacancies" 
+              required 
               value={formData.vacancies} 
               onChange={handleChange}
-              placeholder="z.B. Vertrag des Stamm-IV läuft im Sommer aus, Trainer sucht linksfüßigen Aufbau-IV."
-              className="w-full h-20 bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-emerald-500 custom-scrollbar"
+              placeholder="Vertrag des Stamm-IV läuft aus..." 
+              className="w-full h-16 bg-zinc-950 border border-zinc-800 rounded p-2 text-white focus:outline-none focus:border-emerald-600"
             />
           </div>
 
           <div className="flex justify-end gap-2 pt-2">
-            <button type="button" onClick={onClose} className="px-4 py-2 bg-zinc-800 text-zinc-300 rounded-xl">Abbrechen</button>
-            <button type="submit" disabled={loading} className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold rounded-xl shadow-lg shadow-emerald-500/20">
-              {loading ? "Speichere..." : "In Supabase Speichern"}
+            <button type="button" onClick={onClose} className="px-3.5 py-2 bg-zinc-800 text-zinc-300 font-mono rounded">Abbrechen</button>
+            <button type="submit" disabled={loading} className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-mono font-bold rounded">
+              {loading ? "Speichere..." : "IN SUPABASE SPEICHERN"}
             </button>
           </div>
         </form>

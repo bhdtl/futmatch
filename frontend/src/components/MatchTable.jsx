@@ -3,86 +3,66 @@ import React from 'react';
 export default function MatchTable({ matches, isSearching, onSelectDossier }) {
   if (isSearching) {
     return (
-      <section className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-12 text-center space-y-3 shadow-2xl">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-        <p className="text-xs text-zinc-400 font-mono">Berechne Taktik-Alignment & Vakanz-Scores...</p>
+      <section className="border border-zinc-800 rounded-lg bg-zinc-900/60 p-12 text-center space-y-2 font-mono">
+        <p className="text-xs text-emerald-500 font-bold">BERECHNE MATCH-SCORES & TAKTIK-ALIGNMENTS...</p>
       </section>
     );
   }
 
   if (!matches || matches.length === 0) {
     return (
-      <section className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-12 text-center space-y-3 shadow-2xl">
-        <div className="w-12 h-12 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center mx-auto text-xl text-zinc-500">
-          🔍
-        </div>
-        <div className="max-w-md mx-auto space-y-1">
-          <h4 className="text-sm font-semibold text-zinc-200">Keine aktive Club-Matching Analyse</h4>
-          <p className="text-xs text-zinc-500">Wählen Sie oben die Position und Kriterien Ihres Klienten aus und klicken Sie auf <strong>„Match-Analyse starten“</strong>, um die Ergebnisse zu berechnen.</p>
-        </div>
+      <section className="border border-zinc-800 rounded-lg bg-zinc-900/60 p-12 text-center space-y-2">
+        <p className="text-xs font-mono text-zinc-400">KEINE AKTIVE BERECHNUNG</p>
+        <p className="text-xs text-zinc-500 max-w-sm mx-auto">Wählen Sie oben die Position aus und klicken Sie auf MATCHING STARTEN.</p>
       </section>
     );
   }
 
   return (
-    <section className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl overflow-hidden shadow-2xl">
-      <div className="px-6 py-4 border-b border-zinc-800/80 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-emerald-400 text-xs font-mono">02/</span>
-          <h3 className="text-xs font-semibold text-zinc-100 uppercase tracking-wider">FutMatch Top Club Results</h3>
-        </div>
-        <span className="text-xs px-2.5 py-1 rounded-full bg-zinc-950 text-emerald-400 border border-emerald-500/20 font-mono">
-          {matches.length} Club-Matches gefunden
+    <section className="border border-zinc-800 rounded-lg bg-zinc-900/60 overflow-hidden shadow-sm space-y-0 font-sans">
+      <div className="px-5 py-3 border-b border-zinc-800 bg-zinc-950 flex items-center justify-between text-xs font-mono">
+        <span className="text-zinc-400 uppercase tracking-wider">02 / MATCH-ERGEBNISSE</span>
+        <span className="text-emerald-500 font-bold">
+          {matches.length} ERGEBNISSE GEFUNDEN
         </span>
       </div>
 
       <div className="overflow-x-auto custom-scrollbar">
-        <table className="w-full text-left border-collapse">
+        <table className="w-full text-left border-collapse text-xs">
           <thead>
-            <tr className="bg-zinc-950/90 text-zinc-400 text-[11px] font-semibold uppercase tracking-wider border-b border-zinc-800/80">
-              <th className="py-3.5 px-5">Verein</th>
-              <th className="py-3.5 px-4">Liga</th>
-              <th className="py-3.5 px-4 text-center">Match-Score</th>
-              <th className="py-3.5 px-5">Taktischer Fit & Vakanz-Grund</th>
-              <th className="py-3.5 px-5 text-right">Aktion</th>
+            <tr className="bg-zinc-950/80 text-zinc-400 font-mono text-[11px] uppercase tracking-wider border-b border-zinc-800">
+              <th className="py-3 px-5">Verein</th>
+              <th className="py-3 px-4">Liga</th>
+              <th className="py-3 px-4">Taktisches System</th>
+              <th className="py-3 px-4 text-center">Match-Score</th>
+              <th className="py-3 px-5">Vakanz- & Fit-Analyse</th>
+              <th className="py-3 px-5 text-right">Aktion</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800/60 text-xs">
+          <tbody className="divide-y divide-zinc-800/80 text-zinc-200">
             {matches.map((club) => {
               const score = club.match_score || club.score;
               const name = club.club_name || club.name;
-              const logo = club.logo_short || club.logo;
               const fitReason = club.tactical_fit_reason || club.fit;
+              const tactic = club.tactical_alignment || club.tactic || 'Standard System';
 
               return (
-                <tr key={club.club_id || name} className="hover:bg-zinc-800/40 transition-colors group">
-                  <td className="py-3.5 px-5 font-medium text-zinc-100">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-xs text-emerald-400">
-                        {logo}
-                      </div>
-                      <span className="font-semibold text-white">{name}</span>
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4 text-zinc-300">
-                    <span className="px-2 py-0.5 bg-zinc-950 border border-zinc-800 rounded-md text-[11px]">
-                      {club.league}
-                    </span>
-                  </td>
+                <tr key={club.club_id || name} className="hover:bg-zinc-800/40 transition-colors">
+                  <td className="py-3.5 px-5 font-semibold text-white">{name}</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-400">{club.league}</td>
+                  <td className="py-3.5 px-4 font-mono text-zinc-300">{tactic}</td>
                   <td className="py-3.5 px-4 text-center">
-                    <span className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                      {score}% Match
+                    <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-mono font-bold">
+                      {score}%
                     </span>
                   </td>
-                  <td className="py-3.5 px-5 text-zinc-300 text-xs leading-relaxed max-w-md">
-                    {fitReason}
-                  </td>
+                  <td className="py-3.5 px-5 text-zinc-400 text-xs">{fitReason}</td>
                   <td className="py-3.5 px-5 text-right">
                     <button 
                       onClick={() => onSelectDossier(club)} 
-                      className="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-zinc-950 rounded-lg text-xs font-semibold transition border border-emerald-500/20"
+                      className="px-3 py-1 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-zinc-200 text-xs font-mono rounded"
                     >
-                      Dossier erstellen
+                      Dossier
                     </button>
                   </td>
                 </tr>

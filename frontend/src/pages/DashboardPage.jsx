@@ -28,35 +28,34 @@ export default function DashboardPage({ onBackToLanding }) {
   if (!user || !isAdmin) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center p-6 antialiased font-sans">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl max-w-md w-full p-8 shadow-2xl text-center space-y-5">
-          <div className="w-14 h-14 rounded-2xl bg-red-500/10 text-red-400 border border-red-500/20 flex items-center justify-center mx-auto text-2xl font-bold">
-            🛡️
+        <div className="border border-zinc-800 bg-zinc-900 rounded-lg max-w-md w-full p-8 text-center space-y-4 font-mono shadow-xl">
+          <div className="w-10 h-10 rounded bg-red-950 border border-red-800 text-red-400 flex items-center justify-center mx-auto text-lg font-bold">
+            !
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] text-red-400 font-mono uppercase tracking-wider">Cyber Security Enforcement</span>
-            <h3 className="text-xl font-bold text-white">Zugriff Verweigert</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Der geschützte App-Bereich <code className="bg-zinc-950 px-1.5 py-0.5 rounded text-emerald-400 font-mono">/dashboard</code> ist exklusiv für den autorisierten Administrator reserviert.
+            <span className="text-[10px] text-red-400 uppercase tracking-wider">CYBER SECURITY ENFORCEMENT</span>
+            <h3 className="text-base font-bold text-white">Zugriff Verweigert</h3>
+            <p className="text-xs text-zinc-400 font-sans leading-relaxed">
+              Der geschützte App-Bereich <code className="bg-zinc-950 px-1 py-0.5 rounded text-emerald-400 font-mono">/dashboard</code> ist exklusiv für den autorisierten Administrator reserviert.
             </p>
           </div>
 
-          <div className="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 text-left text-xs font-mono space-y-1 text-zinc-400">
+          <div className="p-3 bg-zinc-950 rounded border border-zinc-800 text-left text-xs font-mono space-y-1 text-zinc-400">
             <p>Eingeloggt als: <span className="text-white">{user?.email || 'Nicht angemeldet'}</span></p>
-            <p>Erforderliche E-Mail: <span className="text-emerald-400 font-bold">{ADMIN_EMAIL}</span></p>
           </div>
 
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-2 pt-2">
             {user && (
               <button 
                 onClick={logout}
-                className="flex-1 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs rounded-xl transition"
+                className="flex-1 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs rounded transition"
               >
                 Abmelden
               </button>
             )}
             <button 
               onClick={onBackToLanding}
-              className="flex-1 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition"
+              className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded transition"
             >
               Zur Landingpage
             </button>
@@ -126,16 +125,16 @@ export default function DashboardPage({ onBackToLanding }) {
       <main className="flex-1 p-5 md:p-8 space-y-6 overflow-y-auto custom-scrollbar">
         
         {/* Header with Admin Badge & Landingpage Back Button */}
-        <div className="flex items-center justify-between bg-zinc-900/60 border border-zinc-800 rounded-2xl px-4 py-2 text-xs">
+        <div className="flex items-center justify-between bg-zinc-950 border border-zinc-800 rounded px-4 py-2 text-xs font-mono">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span className="font-mono text-zinc-300">Admin Account: <strong>{user?.email}</strong></span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span className="text-zinc-400">ADMIN SESSION: <strong className="text-zinc-200">{user?.email}</strong></span>
           </div>
           <button 
             onClick={onBackToLanding}
             className="text-zinc-400 hover:text-white transition font-mono text-[11px] underline"
           >
-            ← Öffentliche Landingpage
+            ← ÖFFENTLICHE LANDINGPAGE
           </button>
         </div>
 
@@ -156,9 +155,9 @@ export default function DashboardPage({ onBackToLanding }) {
           onOpenAddModal={() => setIsAddModalOpen(true)}
         />
 
-        <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800/80 pt-4 gap-2 font-mono">
-          <p>FutMatch Pro Protected OS v2.4 — Supabase Security Auth Active</p>
-          <p>Admin Session Active: {ADMIN_EMAIL}</p>
+        <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800 pt-4 gap-2 font-mono">
+          <p>FutMatch Pro Intelligence OS v2.4 — Utilitarian Edition</p>
+          <p>© 2026 FutMatch Pro Data Engine</p>
         </footer>
       </main>
 
