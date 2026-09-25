@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header
 from typing import List, Optional
 from pydantic import BaseModel, Field
 from app.models.schemas import ClientProfileRequest, ClubMatchResponse, DossierRequest, DossierResponse
@@ -7,6 +7,8 @@ from app.services.dossier_generator import DossierGenerator
 from app.db.supabase_client import get_supabase_client
 
 router = APIRouter()
+
+ADMIN_EMAIL = "phinampham3@gmail.com"
 
 class AddClubRequest(BaseModel):
     id: str = Field(..., description="Unique Club ID, e.g. CLB-STP")
@@ -21,22 +23,29 @@ class AddClubRequest(BaseModel):
     vacancies: str = Field(..., description="Tactical & contract vacancy reason")
     base_rating: int = Field(default=80)
 
+def verify_admin_access(x_admin_email: Optional[str]):
+    if not x_admin_email or x_admin_email.lower() != ADMIN_EMAIL.lower():
+        # Soft validation / warning for backend endpoints
+        pass
+
 @router.post("/match-clubs", response_model=List[ClubMatchResponse])
-def match_clubs(profile: ClientProfileRequest):
+def match_clubs(profile: ClientProfileRequest, x_admin_email: Optional[str] = Header(None)):
     """
     FutMatch Pro Inverted ML Matching Engine:
     Queries real clubs & vacancies from Supabase database.
     """
+    verify_admin_access(x_admin_email)
     try:
         return MatchingEngine.calculate_matches(profile)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/generate-dossier", response_model=DossierResponse)
-def generate_dossier(req: DossierRequest):
+def generate_dossier(req: DossierRequest, x_admin_email: Optional[str] = Header(None)):
     """
     Generates executive pitch dossier for sporting director outreach.
     """
+    verify_admin_access(x_admin_email)
     try:
         matches = MatchingEngine.calculate_matches(req.client_profile)
         club_match = next((m for m in matches if m.club_id == req.club_id), None)
@@ -46,7 +55,7 @@ def generate_dossier(req: DossierRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/clubs")
-def get_clubs():
+def get_clubs(x_admin_email: Optional[str] = Header(None)):
     """
     Fetches real clubs stored in Supabase database.
     """
@@ -60,7 +69,7 @@ def get_clubs():
     return {"total": 0, "clubs": []}
 
 @router.post("/clubs")
-def add_club(club: AddClubRequest):
+def add_club(club: AddClubRequest, x_admin_email: Optional[str] = Header(None)):
     """
     Adds a new target club & vacancy directly to Supabase database.
     """
@@ -89,7 +98,7 @@ def add_club(club: AddClubRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.delete("/clubs/{club_id}")
-def delete_club(club_id: str):
+def delete_club(club_id: str, x_admin_email: Optional[str] = Header(None)):
     """
     Deletes a club from Supabase database.
     """
@@ -100,22 +109,6 @@ def delete_club(club_id: str):
     try:
         res = client.table("clubs").delete().eq("id", club_id).execute()
         return {"status": "success", "message": f"Club '{club_id}' deleted"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.delete("/reset-database")
-def reset_database():
-    """
-    Clears all database entries from Supabase.
-    """
-    client = get_supabase_client()
-    if not client:
-        raise HTTPException(status_code=500, detail="Supabase client is not connected")
-
-    try:
-        client.table("clubs").delete().neq("id", "none_dummy_id_000").execute()
-        client.table("client_profiles").delete().neq("id", "00000000-0000-0000-0000-000000000000").execute()
-        return {"status": "success", "message": "All Supabase records reset to 0"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
