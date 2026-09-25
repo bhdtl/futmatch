@@ -11,35 +11,39 @@ const ARCHETYPE_MAP = {
   MS: "Target Man / Knipser"
 };
 
-export default function ClientForm({ profile, onChange, onSubmit, loading }) {
-  const currentArchetype = ARCHETYPE_MAP[profile.position] || "Universal Player";
+export default function ClientForm({ profile, onChange, onSubmit, onReset, loading }) {
+  const currentArchetype = profile.position ? ARCHETYPE_MAP[profile.position] : "Wählen Sie eine Position aus";
 
   return (
-    <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-600/5 rounded-full blur-3xl pointer-events-none"></div>
-
+    <section class="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-5 md:p-6 shadow-2xl relative overflow-hidden">
       <div class="flex items-center justify-between mb-5">
         <div class="flex items-center gap-2">
-          <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
-          <h2 class="text-base font-semibold text-slate-100">Klienten-Profil Eingabemaske</h2>
+          <span class="text-emerald-400 text-xs font-mono">01/</span>
+          <h3 class="text-xs font-semibold text-zinc-100 uppercase tracking-wider">Klienten-Profil Parameter</h3>
         </div>
-        <span class="text-xs text-slate-400">Such-Kriterien für Algorithmus & Match-Score</span>
+        {onReset && (
+          <button 
+            type="button" 
+            onClick={onReset}
+            class="text-xs text-zinc-400 hover:text-zinc-200 transition"
+          >
+            Formular zurücksetzen
+          </button>
+        )}
       </div>
 
       <form onSubmit={onSubmit} class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
-        {/* Dropdown 1: Position */}
+        {/* Position */}
         <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-300 flex items-center gap-1">
-            <span>Position</span>
-            <span class="text-indigo-400">*</span>
-          </label>
+          <label class="text-xs font-medium text-zinc-300">Position</label>
           <select 
             name="position"
-            value={profile.position} 
+            value={profile.position || ''} 
             onChange={onChange}
-            class="w-full bg-slate-950 border border-slate-700 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            class="w-full bg-zinc-950 border border-zinc-800 text-zinc-100 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
           >
+            <option value="" disabled>— Position wählen —</option>
             <option value="IV">Innenverteidiger (IV)</option>
             <option value="LV">Linksverteidiger (LV)</option>
             <option value="RV">Rechtsverteidiger (RV)</option>
@@ -51,30 +55,30 @@ export default function ClientForm({ profile, onChange, onSubmit, loading }) {
           </select>
         </div>
 
-        {/* Dropdown 2: Alter */}
+        {/* Alter */}
         <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-300">Alter</label>
+          <label class="text-xs font-medium text-zinc-300">Alter</label>
           <select 
             name="age_group"
             value={profile.age_group} 
             onChange={onChange}
-            class="w-full bg-slate-950 border border-slate-700 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            class="w-full bg-zinc-950 border border-zinc-800 text-zinc-100 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
           >
-            <option value="18-21">18 - 21 Jahre (U21 Talent)</option>
-            <option value="22-25">22 - 25 Jahre (Entwicklungsfähig)</option>
-            <option value="26-29">26 - 29 Jahre (Bestes Alter)</option>
-            <option value="30+">30+ Jahre (Erfahrener Profi)</option>
+            <option value="18-21">18 - 21 Jahre (Talent)</option>
+            <option value="22-25">22 - 25 Jahre (Prime Start)</option>
+            <option value="26-29">26 - 29 Jahre (Erfahren)</option>
+            <option value="30+">30+ Jahre (Routinier)</option>
           </select>
         </div>
 
-        {/* Dropdown 3: Starker Fuß */}
+        {/* Starker Fuß */}
         <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-300">Starker Fuß</label>
+          <label class="text-xs font-medium text-zinc-300">Starker Fuß</label>
           <select 
             name="preferred_foot"
             value={profile.preferred_foot} 
             onChange={onChange}
-            class="w-full bg-slate-950 border border-slate-700 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            class="w-full bg-zinc-950 border border-zinc-800 text-zinc-100 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
           >
             <option value="Links">Links (Linksfuß)</option>
             <option value="Rechts">Rechts (Rechtsfuß)</option>
@@ -82,50 +86,42 @@ export default function ClientForm({ profile, onChange, onSubmit, loading }) {
           </select>
         </div>
 
-        {/* Dropdown 4: Vertragssituation */}
+        {/* Vertragssituation */}
         <div class="space-y-1.5">
-          <label class="text-xs font-medium text-slate-300">Vertragssituation</label>
+          <label class="text-xs font-medium text-zinc-300">Vertragssituation</label>
           <select 
             name="contract_status"
             value={profile.contract_status} 
             onChange={onChange}
-            class="w-full bg-slate-950 border border-slate-700 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            class="w-full bg-zinc-950 border border-zinc-800 text-zinc-100 text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
           >
-            <option value="summer2025">Vertrag läuft im Sommer aus (Ablösefrei)</option>
+            <option value="summer2025">Vertrag läuft Sommer 2025 aus (Ablösefrei)</option>
             <option value="free">Sofort Vereinslos (Ablösefrei)</option>
-            <option value="rest1y">Restvertrag 1 Jahr (Günstige Ablöse)</option>
-            <option value="rest2y">Restvertrag 2+ Jahre (Leihe möglich)</option>
+            <option value="rest1y">Restvertrag 1 Jahr</option>
+            <option value="rest2y">Restvertrag 2+ Jahre</option>
           </select>
         </div>
 
-        {/* Info Row */}
-        <div class="lg:col-span-3 flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-2">
-          <div class="flex items-center gap-2">
-            <span class="text-slate-500">Spieler-Archetyp:</span>
-            <span class="px-2.5 py-1 bg-slate-800 text-indigo-300 rounded-lg font-medium border border-slate-700">
-              {currentArchetype}
-            </span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="text-slate-500">Ziel-Märkte:</span>
-            <span class="px-2.5 py-1 bg-slate-800 text-slate-300 rounded-lg border border-slate-700">
-              DACH, Benelux & Ligue 2
-            </span>
-          </div>
+        {/* Info & Action Row */}
+        <div class="lg:col-span-3 flex flex-wrap items-center gap-3 text-xs text-zinc-400 pt-2">
+          <span class="text-zinc-500">Erkannter Archetyp:</span>
+          <span class={`px-2.5 py-1 bg-zinc-950 rounded-lg border border-zinc-800 font-mono text-[11px] ${profile.position ? 'text-emerald-400' : 'text-zinc-500'}`}>
+            {currentArchetype}
+          </span>
         </div>
 
         <div class="lg:col-span-1 pt-2 flex justify-end">
           <button 
             type="submit" 
-            disabled={loading}
-            class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm rounded-xl px-4 py-2.5 transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 disabled:opacity-50"
+            disabled={loading || !profile.position}
+            class="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl px-4 py-2.5 transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {loading ? (
-              <span>Berechne Matches...</span>
+              <span>Analysiere FutMatch Data...</span>
             ) : (
               <>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <span>Club Matches berechnen</span>
+                <span>Match-Analyse starten</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </>
             )}
           </button>

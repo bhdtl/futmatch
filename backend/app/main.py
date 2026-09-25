@@ -3,9 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import router as api_router
 
 app = FastAPI(
-    title="MatchScout B2B — Club Matching Platform",
-    description="Role-Based & Tactical Club-Matching Engine for Player Advisors",
-    version="1.0.0"
+    title="FutMatch Pro — Executive Agency Intelligence API",
+    description="Role-Based & Tactical Club-Matching Engine for Football Advisors & Agencies",
+    version="2.4.0"
 )
 
 app.add_middleware(
@@ -22,9 +22,9 @@ app.include_router(api_router, prefix="/api")
 def root():
     return {
         "status": "online",
-        "service": "MatchScout B2B Advisor Backend",
-        "version": "1.0.0",
-        "documentation": "/docs"
+        "system": "FutMatch Pro Intelligence Engine",
+        "version": "2.4.0",
+        "docs": "/docs"
     }
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 """
-Dossier Generator: Produces executive pitch documents and director outreach templates.
+FutMatch Dossier Generator: Produces executive pitch documents and director outreach templates.
 """
 
 from app.models.schemas import ClientProfileRequest, DossierResponse
@@ -27,14 +27,14 @@ class DossierGenerator:
 
 in Vorbereitung auf die kommenden Transfereffekte für die Saison 2025/26 möchten wir Ihnen unseren Klienten ({pos_display}, Alter: {profile.age}, Starker Fuß: {profile.preferred_foot}) vorlegen.
 
-Basierend auf unserer datengestützten Analyse passt sein Profil hervorragend zu Ihrem bevorzugten Spielsystem ({club['primary_tactics'][0]}) und adressiert Ihre anstehende Vakanz auf der Position {profile.position}.
+Basierend auf unserer FutMatch Kaderanalyse passt sein Profil hervorragend zu Ihrem bevorzugten Spielsystem ({club['primary_tactics'][0]}) und adressiert Ihre anstehende Vakanz auf der Position {profile.position}.
 
 Vertragssituation: {profile.contract_status.capitalize()} (Sehr hohe Transfer-Feasibilitaet).
 
 Gerne senden wir Ihnen ein detailliertes Video-Dossier sowie die WyScout-Metriken zu.
 
 Mit freundlichen Grüßen,
-Ihr Performance Advisor Team"""
+Ihr FutMatch Executive Advisor Team"""
 
         return DossierResponse(
             club_name=club["name"],

@@ -1,69 +1,88 @@
 import React from 'react';
 
-export default function MatchTable({ matches, onSelectDossier }) {
+export default function MatchTable({ matches, isSearching, onSelectDossier }) {
+  if (isSearching) {
+    return (
+      <section class="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-12 text-center space-y-3 shadow-2xl">
+        <div class="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="text-xs text-zinc-400 font-mono">Berechne Taktik-Alignment & Vakanz-Scores...</p>
+      </section>
+    );
+  }
+
   if (!matches || matches.length === 0) {
     return (
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center text-slate-400">
-        Keine passenden Vereine gefunden. Bitte Such-Filter anpassen.
-      </div>
+      <section class="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-12 text-center space-y-3 shadow-2xl">
+        <div class="w-12 h-12 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center mx-auto text-xl text-zinc-500">
+          🔍
+        </div>
+        <div class="max-w-md mx-auto space-y-1">
+          <h4 class="text-sm font-semibold text-zinc-200">Keine aktive Club-Matching Analyse</h4>
+          <p class="text-xs text-zinc-500">Wählen Sie oben die Position und Kriterien Ihres Klienten aus und klicken Sie auf <strong>„Match-Analyse starten“</strong>, um die Ergebnisse zu berechnen.</p>
+        </div>
+      </section>
     );
   }
 
   return (
-    <section class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+    <section class="bg-zinc-900/80 backdrop-blur-md border border-zinc-800/80 rounded-2xl overflow-hidden shadow-2xl">
+      <div class="px-6 py-4 border-b border-zinc-800/80 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-emerald-400 text-xs font-mono">02/</span>
+          <h3 class="text-xs font-semibold text-zinc-100 uppercase tracking-wider">FutMatch Top Club Results</h3>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-zinc-950 text-emerald-400 border border-emerald-500/20 font-mono">
+          {matches.length} Club-Matches gefunden
+        </span>
+      </div>
+
       <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-left border-collapse">
           <thead>
-            <tr class="bg-slate-950/80 text-slate-400 text-xs font-semibold uppercase tracking-wider border-b border-slate-800">
-              <th class="py-4 px-5">Verein</th>
-              <th class="py-4 px-4">Liga</th>
-              <th class="py-4 px-4 text-center">Match-Score</th>
-              <th class="py-4 px-5">Grund für den Fit (Taktik & Vakanz)</th>
-              <th class="py-4 px-5 text-right">Aktion</th>
+            <tr class="bg-zinc-950/90 text-zinc-400 text-[11px] font-semibold uppercase tracking-wider border-b border-zinc-800/80">
+              <th class="py-3.5 px-5">Verein</th>
+              <th class="py-3.5 px-4">Liga</th>
+              <th class="py-3.5 px-4 text-center">Match-Score</th>
+              <th class="py-3.5 px-5">Taktischer Fit & Vakanz-Grund</th>
+              <th class="py-3.5 px-5 text-right">Aktion</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-800/60 text-sm">
+          <tbody class="divide-y divide-zinc-800/60 text-xs">
             {matches.map((club) => {
-              const scoreColor = club.match_score >= 90 
-                ? "text-emerald-400 bg-emerald-500/10 border-emerald-500/30" 
-                : club.match_score >= 83 
-                ? "text-indigo-400 bg-indigo-500/10 border-indigo-500/30" 
-                : "text-amber-400 bg-amber-500/10 border-amber-500/30";
+              const score = club.match_score || club.score;
+              const name = club.club_name || club.name;
+              const logo = club.logo_short || club.logo;
+              const fitReason = club.tactical_fit_reason || club.fit;
 
               return (
-                <tr key={club.club_id} class="hover:bg-slate-800/40 transition-colors group">
-                  <td class="py-4 px-5 font-medium text-slate-100">
+                <tr key={club.club_id || name} class="hover:bg-zinc-800/40 transition-colors group">
+                  <td class="py-3.5 px-5 font-medium text-zinc-100">
                     <div class="flex items-center gap-3">
-                      <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-xs text-indigo-400 group-hover:border-indigo-500/50 transition">
-                        {club.logo_short}
+                      <div class="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-xs text-emerald-400">
+                        {logo}
                       </div>
-                      <div>
-                        <div class="font-semibold text-white text-sm">{club.club_name}</div>
-                        <div class="text-[11px] text-slate-500">ID: {club.club_id}</div>
-                      </div>
+                      <span class="font-semibold text-white">{name}</span>
                     </div>
                   </td>
-                  <td class="py-4 px-4 text-slate-300 text-xs">
-                    <span class="px-2.5 py-1 bg-slate-950 border border-slate-800 rounded-lg text-slate-300 inline-block">
+                  <td class="py-3.5 px-4 text-zinc-300">
+                    <span class="px-2 py-0.5 bg-zinc-950 border border-zinc-800 rounded-md text-[11px]">
                       {club.league}
                     </span>
                   </td>
-                  <td class="py-4 px-4 text-center">
-                    <div class={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${scoreColor}`}>
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                      <span>{club.match_score}%</span>
-                    </div>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                      {score}% Match
+                    </span>
                   </td>
-                  <td class="py-4 px-5 text-slate-300 text-xs leading-relaxed max-w-md">
-                    {club.tactical_fit_reason}
+                  <td class="py-3.5 px-5 text-zinc-300 text-xs leading-relaxed max-w-md">
+                    {fitReason}
                   </td>
-                  <td class="py-4 px-5 text-right">
+                  <td class="py-3.5 px-5 text-right">
                     <button 
                       onClick={() => onSelectDossier(club)} 
-                      class="px-3.5 py-2 bg-indigo-600/10 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 rounded-xl text-xs font-medium transition shadow-sm flex items-center justify-center gap-1.5 ml-auto"
+                      class="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-zinc-950 rounded-lg text-xs font-semibold transition border border-emerald-500/20"
                     >
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1.051 1.051 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                      <span>Dossier erstellen</span>
+                      Dossier erstellen
                     </button>
                   </td>
                 </tr>
