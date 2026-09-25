@@ -7,9 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        slate: {
-          950: '#090d16',
+        zinc: {
+          950: '#09090b',
         }
+      },
+      fontFamily: {
+        sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
       }
     },
   },

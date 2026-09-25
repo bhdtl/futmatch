@@ -111,12 +111,12 @@ export default function App() {
   };
 
   return (
-    <div class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col md:flex-row antialiased">
+    <div className="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col md:flex-row antialiased font-sans">
       {/* Sidebar */}
       <Sidebar activeCount={matches.length} />
 
       {/* Main Workbench */}
-      <main class="flex-1 p-5 md:p-8 space-y-6 overflow-y-auto custom-scrollbar">
+      <main className="flex-1 p-5 md:p-8 space-y-6 overflow-y-auto custom-scrollbar">
         <Header />
 
         <ClientForm 
@@ -133,7 +133,7 @@ export default function App() {
           onSelectDossier={(club) => setSelectedClub(club)} 
         />
 
-        <footer class="flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800/80 pt-4 gap-2 font-mono">
+        <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800/80 pt-4 gap-2 font-mono">
           <p>FutMatch Pro Intelligence OS v2.4 — Desktop Native Edition</p>
           <p>Stand: Saison 2024/2025 • WyScout & Transfermarkt Live Feed API</p>
         </footer>
