@@ -1,7 +1,8 @@
 """
 FutMatch Pro — Real-Time Live Transfermarkt Scraper & Supabase Sync
-Fetches 1:1 active 1st team squads, exact contract expiration dates ("Vertrag bis"), 
-individual player feet, and real market values directly from Transfermarkt live pages.
+Fetches 1:1 active 1st team squads for Season 2026/2027 (saison_id/2026), 
+exact contract expiration dates ("Vertrag bis"), individual player feet, 
+and real market values directly from Transfermarkt live pages.
 """
 
 import sys
@@ -31,9 +32,10 @@ TARGET_CLUBS = [
 def scrape_club_squad(club_info):
     tm_id = club_info["tm_id"]
     slug = club_info["slug"]
-    url = f"https://www.transfermarkt.de/{slug}/kader/verein/{tm_id}/saison_id/2025/plus/1"
+    # Current Season 2026/2027 is saison_id/2026
+    url = f"https://www.transfermarkt.de/{slug}/kader/verein/{tm_id}/saison_id/2026/plus/1"
     
-    print(f"\n[Scraper] Fetching live squad for {club_info['name']} ({url})...")
+    print(f"\n[Scraper 2026/27] Fetching live squad for {club_info['name']} ({url})...")
     resp = requests.get(url, headers=HEADERS, timeout=30)
     if resp.status_code != 200:
         print(f"[ERROR] Failed to fetch {url} (Status: {resp.status_code})")
@@ -98,12 +100,12 @@ def scrape_club_squad(club_info):
             "profile_url": f"https://www.transfermarkt.de{player_link}"
         })
 
-    print(f"[Scraper] Successfully parsed {len(squad_players)} live 1st team players for {club_info['name']}.")
+    print(f"[Scraper 2026/27] Successfully parsed {len(squad_players)} live 1st team players for {club_info['name']}.")
     return squad_players
 
 def run_live_transfermarkt_sync():
     print("============================================================")
-    print("[Pipeline] FutMatch Pro: Live 1:1 Transfermarkt Real-Time Sync")
+    print("[Pipeline] FutMatch Pro: Live 1:1 Transfermarkt Sync (Season 2026/2027)")
     print("============================================================")
 
     client = get_supabase_client()
@@ -150,6 +152,7 @@ def run_live_transfermarkt_sync():
                 "MS": len(attackers)
             },
             "squad_profile": {
+                "season": "2026/2027",
                 "head_coach": club_cfg["head_coach"],
                 "tactical_system": club_cfg["system"],
                 "active_squad_size": len(squad),
@@ -160,17 +163,17 @@ def run_live_transfermarkt_sync():
                     "attackers": len(attackers)
                 },
                 "live_squad_sample": squad[:15], # Exact 1:1 players with positions and feet
-                "data_source": f"Live Real-Time Transfermarkt Scraper (transfermarkt.de/verein/{club_cfg['tm_id']})"
+                "data_source": f"Live Real-Time Transfermarkt Scraper (Season 2026/2027 - transfermarkt.de/verein/{club_cfg['tm_id']})"
             },
             "base_rating": 80
         }
 
         client.table("clubs").upsert(record).execute()
         synced_records.append(record)
-        print(f"[SUCCESS] Upserted {club_cfg['name']} live squad to Supabase!")
+        print(f"[SUCCESS] Upserted {club_cfg['name']} 2026/27 squad to Supabase!")
 
     print(f"\n============================================================")
-    print(f"[COMPLETED] Synced {len(synced_records)} 1:1 Live Transfermarkt Squad Profiles!")
+    print(f"[COMPLETED] Synced {len(synced_records)} 1:1 Live Transfermarkt Squad Profiles for Season 2026/2027!")
     print(f"============================================================")
 
     # Verification query
@@ -179,7 +182,7 @@ def run_live_transfermarkt_sync():
     for row in res.data:
         sp = row.get("squad_profile", {})
         bd = sp.get("squad_breakdown", {})
-        print(f"  -> [{row['id']}] {row['name']} ({row['league']}) | Coach: {sp.get('head_coach')} | System: {sp.get('tactical_system')} | Active Squad: {sp.get('active_squad_size')} players ({bd.get('defenders', 0)} DEF, {bd.get('midfielders', 0)} MID, {bd.get('attackers', 0)} ATT)")
+        print(f"  -> [{row['id']}] {row['name']} ({row['league']}) | Season: {sp.get('season')} | Coach: {sp.get('head_coach')} | Active Squad: {sp.get('active_squad_size')} players ({bd.get('defenders', 0)} DEF, {bd.get('midfielders', 0)} MID, {bd.get('attackers', 0)} ATT)")
 
     return True
 
