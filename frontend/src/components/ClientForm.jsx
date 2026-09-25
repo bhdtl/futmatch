@@ -1,6 +1,7 @@
 import React from 'react';
 
 const ARCHETYPE_MAP = {
+  ALL: "ALLE ROLLEN / KADER-EXPLORER",
   TW: "TORWART / REFLEXE & AUFBAU",
   IV: "BALL-PLAYING DEFENDER / AUFBAUSPIELER",
   LV: "ATTACKING WING-BACK / SCHIENENSPIELER",
@@ -14,7 +15,8 @@ const ARCHETYPE_MAP = {
 };
 
 export default function ClientForm({ profile, onChange, onSubmit, onReset, loading, selectedLeague, onLeagueChange }) {
-  const currentArchetype = profile.position ? ARCHETYPE_MAP[profile.position] : "WÄHLEN SIE EINE POSITION";
+  const currentPos = profile.position || "ALL";
+  const currentArchetype = ARCHETYPE_MAP[currentPos] || "ALLE ROLLEN / KADER-EXPLORER";
 
   return (
     <section className="border border-zinc-800 rounded-lg bg-zinc-900/40 p-5 space-y-4 font-sans shadow-sm">
@@ -38,14 +40,14 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
         
         {/* Position */}
         <div>
-          <label className="block text-zinc-400 mb-1 font-bold">POSITION *</label>
+          <label className="block text-zinc-400 mb-1 font-bold">POSITION</label>
           <select 
             name="position"
-            value={profile.position || ''} 
+            value={profile.position || 'ALL'} 
             onChange={onChange}
             className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer font-sans"
           >
-            <option value="" disabled>— Position wählen —</option>
+            <option value="ALL">Alle Positionen (Beliebig)</option>
             <option value="TW">Torwart (TW)</option>
             <option value="IV">Innenverteidiger (IV)</option>
             <option value="LV">Linksverteidiger (LV)</option>
@@ -67,7 +69,7 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
             onChange={(e) => onLeagueChange(e.target.value)}
             className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer font-sans"
           >
-            <option value="ALL">Alle Ligen</option>
+            <option value="ALL">Alle Ligen (Beliebig)</option>
             <option value="Bundesliga">Bundesliga</option>
             <option value="2. Bundesliga">2. Bundesliga</option>
             <option value="Jupiler Pro League">Jupiler Pro League (Belgien)</option>
@@ -79,10 +81,11 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
           <label className="block text-zinc-400 mb-1 font-bold">ALTERSKLASSE</label>
           <select 
             name="age_group"
-            value={profile.age_group || '22-25'} 
+            value={profile.age_group || 'ALL'} 
             onChange={onChange}
             className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer font-sans"
           >
+            <option value="ALL">Beliebiges Alter (Alle)</option>
             <option value="18-21">18 - 21 Jahre (Talent)</option>
             <option value="22-25">22 - 25 Jahre (Prime Entw.)</option>
             <option value="26-29">26 - 29 Jahre (Etabliert)</option>
@@ -95,10 +98,11 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
           <label className="block text-zinc-400 mb-1 font-bold">STARKER FUSS</label>
           <select 
             name="preferred_foot"
-            value={profile.preferred_foot || 'Rechts'} 
+            value={profile.preferred_foot || 'ALL'} 
             onChange={onChange}
             className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer font-sans"
           >
+            <option value="ALL">Beliebiger Fuß (Alle)</option>
             <option value="Rechts">Rechtsfuß</option>
             <option value="Links">Linksfuß</option>
             <option value="Beidfüßig">Beidfüßig</option>
@@ -110,10 +114,11 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
           <label className="block text-zinc-400 mb-1 font-bold">VERTRAGSSTATUS</label>
           <select 
             name="contract_status"
-            value={profile.contract_status || 'summer2027'} 
+            value={profile.contract_status || 'ALL'} 
             onChange={onChange}
             className="w-full bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-white focus:outline-none focus:border-emerald-600 cursor-pointer font-sans"
           >
+            <option value="ALL">Beliebiger Vertragsstatus</option>
             <option value="summer2027">Vertrag läuft 2027 aus</option>
             <option value="summer2028">Vertrag läuft 2028 aus</option>
             <option value="free">Sofort Vereinslos (Ablösefrei)</option>
@@ -124,7 +129,7 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
         {/* Info & Action Row */}
         <div className="lg:col-span-3 flex flex-wrap items-center gap-3 text-[11px] pt-1">
           <span className="text-zinc-500 font-bold">ARCHETYP:</span>
-          <span className={`px-2.5 py-1 rounded bg-zinc-950 border border-zinc-800 ${profile.position ? 'text-emerald-400 font-bold' : 'text-zinc-500'}`}>
+          <span className="px-2.5 py-1 rounded bg-zinc-950 border border-zinc-800 text-emerald-400 font-bold">
             {currentArchetype}
           </span>
         </div>
@@ -132,8 +137,8 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
         <div className="lg:col-span-2 pt-1 flex justify-end">
           <button 
             type="submit" 
-            disabled={loading || !profile.position}
-            className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded uppercase tracking-wider font-mono text-xs transition disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
+            disabled={loading}
+            className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded uppercase tracking-wider font-mono text-xs transition disabled:opacity-40 shadow-sm"
           >
             {loading ? "BERECHNE VAKANZEN..." : "KADER-MATCHING STARTEN"}
           </button>
