@@ -6,6 +6,7 @@ import ClientForm from '../components/ClientForm';
 import MatchTable from '../components/MatchTable';
 import DossierModal from '../components/DossierModal';
 import AddClubModal from '../components/AddClubModal';
+import { fetchRealSupabaseMatches } from '../services/realMatchingService';
 
 export default function DashboardPage({ onBackToLanding }) {
   const { user, isAdmin, logout } = useAuth();
@@ -66,95 +67,11 @@ export default function DashboardPage({ onBackToLanding }) {
     );
   }
 
-  // Robust Client-Side Fallback Data Generator in case local backend server port 8000 is unavailable
-  const generateFallbackMatches = (currProfile) => {
-    const defaultClubs = [
-      {
-        club_id: "CLB-B04",
-        club_name: "Bayer 04 Leverkusen",
-        logo_short: "B04",
-        league: "Bundesliga",
-        match_score: 95,
-        tactical_fit_reason: "Dringende Vakanz: 2 Vertrag/Verträge laufen 2027/28 aus (Jonas Hofmann (30.06.2027), Robert Andrich (30.06.2028)). System 3-4-2-1 von Kasper Hjulmand / Xabi Alonso sucht Verstärkung.",
-        tactical_alignment: "3-4-2-1 (Kasper Hjulmand / Xabi Alonso)",
-        contract_urgency: "Sehr Hoch",
-        archetype_fit_percentage: 95
-      },
-      {
-        club_id: "CLB-FCB",
-        club_name: "FC Bayern München",
-        logo_short: "FCB",
-        league: "Bundesliga",
-        match_score: 93,
-        tactical_fit_reason: "Dringende Vakanz: 3 Verträge laufen 2027/28 aus (Min-jae Kim (30.06.2028), Hiroki Ito (30.06.2028)). System 4-2-3-1 von Vincent Kompany sucht Verstärkung.",
-        tactical_alignment: "4-2-3-1 (Vincent Kompany)",
-        contract_urgency: "Sehr Hoch",
-        archetype_fit_percentage: 92
-      },
-      {
-        club_id: "CLB-STP",
-        club_name: "FC St. Pauli",
-        logo_short: "STP",
-        league: "Bundesliga",
-        match_score: 93,
-        tactical_fit_reason: "Dringende Vakanz: 2 Verträge laufen 2027/28 aus (Eric Smith (30.06.2027), Adam Dzwigala (30.06.2027)). System 3-5-2 von Alexander Blessin sucht Verstärkung.",
-        tactical_alignment: "3-5-2 (Alexander Blessin)",
-        contract_urgency: "Sehr Hoch",
-        archetype_fit_percentage: 90
-      },
-      {
-        club_id: "CLB-F95",
-        club_name: "Fortuna Düsseldorf",
-        logo_short: "F95",
-        league: "2. Bundesliga",
-        match_score: 92,
-        tactical_fit_reason: "Dringende Vakanz: 7 Verträge in der Abwehr/Mittelfeld laufen 2027/28 aus (Tim Oberdorf, Dominique Heintz). System 4-2-3-1 von Daniel Thioune.",
-        tactical_alignment: "4-2-3-1 (Daniel Thioune)",
-        contract_urgency: "Sehr Hoch",
-        archetype_fit_percentage: 88
-      },
-      {
-        club_id: "CLB-KSV",
-        club_name: "Holstein Kiel",
-        logo_short: "KSV",
-        league: "Bundesliga",
-        match_score: 91,
-        tactical_fit_reason: "Dringende Vakanz: 5 Verträge laufen 2027/28 aus (Sebastian Schonlau, John Tolkin). System 3-5-2 von Marcel Rapp.",
-        tactical_alignment: "3-5-2 (Marcel Rapp)",
-        contract_urgency: "Sehr Hoch",
-        archetype_fit_percentage: 87
-      },
-      {
-        club_id: "CLB-BVB",
-        club_name: "Borussia Dortmund",
-        logo_short: "BVB",
-        league: "Bundesliga",
-        match_score: 90,
-        tactical_fit_reason: "Dringende Vakanz: 5 Abwehr-Verträge laufen 2027/28 aus. System 4-2-3-1 von Nuri Sahin.",
-        tactical_alignment: "4-2-3-1 (Nuri Sahin)",
-        contract_urgency: "Sehr Hoch",
-        archetype_fit_percentage: 86
-      },
-      {
-        club_id: "CLB-SGG",
-        club_name: "Greuther Fürth",
-        logo_short: "SGG",
-        league: "2. Bundesliga",
-        match_score: 89,
-        tactical_fit_reason: "Dringende Vakanz: 7 Verträge laufen 2027/28 aus (Hendry Blank, Krisztián Keresztes). System 3-4-1-2 von Alexander Zorniger.",
-        tactical_alignment: "3-4-1-2 (Alexander Zorniger)",
-        contract_urgency: "Sehr Hoch",
-        archetype_fit_percentage: 85
-      }
-    ];
-
-    return defaultClubs;
-  };
-
   const fetchMatches = async (currentProfile) => {
     setLoading(true);
     setHasSearched(true);
     try {
+      // 1. Try local FastAPI server if available
       const res = await fetch('http://127.0.0.1:8000/api/match-clubs', {
         method: 'POST',
         headers: { 
@@ -167,21 +84,27 @@ export default function DashboardPage({ onBackToLanding }) {
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
           setMatches(data);
+          setLoading(false);
           return;
         }
       }
-      // Fallback if API status is not 200 or empty
-      setMatches(generateFallbackMatches(currentProfile));
     } catch (err) {
-      // Fallback on network error (e.g. backend server offline)
-      console.warn("[FutMatch Pro] Local backend server offline, using real 2026/27 Supabase client fallback dataset.");
-      setMatches(generateFallbackMatches(currentProfile));
+      // Local backend server offline, proceeding to direct Supabase Cloud query
+    }
+
+    // 2. Direct Supabase Cloud DB query (100% real records, ZERO dummy data)
+    try {
+      const realData = await fetchRealSupabaseMatches(currentProfile);
+      setMatches(realData);
+    } catch (err) {
+      console.error("[Matchmaker Error]", err);
+      setMatches([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Trigger initial matching on load so page is NEVER blank
+  // Trigger initial matching on load so page loads real Supabase records immediately
   useEffect(() => {
     fetchMatches(profile);
   }, []);
@@ -260,7 +183,7 @@ export default function DashboardPage({ onBackToLanding }) {
         />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-800 pt-4 gap-2 font-mono">
-          <p>FutMatch Pro Intelligence OS v2.4 — Season 2026/2027 Live Engine</p>
+          <p>FutMatch Pro Intelligence OS v2.4 — Season 2026/2027 Live Supabase Engine</p>
           <p>© 2026 FutMatch Pro Data Engine</p>
         </footer>
       </main>
