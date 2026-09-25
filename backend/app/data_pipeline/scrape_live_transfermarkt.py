@@ -1,8 +1,8 @@
 """
 FutMatch Pro — Real-Time Live Transfermarkt Scraper & Supabase Sync
 Fetches 1:1 active 1st team squads for Season 2026/2027 (saison_id/2026), 
-exact contract expiration dates ("Vertrag bis"), individual player feet, 
-and real market values directly from Transfermarkt live pages.
+extracts EXACT contract expiration dates ("Vertrag bis"), individual player feet, 
+and computes 100% real position-based contract expiring counts (2027/2028).
 """
 
 import sys
@@ -32,7 +32,6 @@ TARGET_CLUBS = [
 def scrape_club_squad(club_info):
     tm_id = club_info["tm_id"]
     slug = club_info["slug"]
-    # Current Season 2026/2027 is saison_id/2026
     url = f"https://www.transfermarkt.de/{slug}/kader/verein/{tm_id}/saison_id/2026/plus/1"
     
     print(f"\n[Scraper 2026/27] Fetching live squad for {club_info['name']} ({url})...")
@@ -62,7 +61,7 @@ def scrape_club_squad(club_info):
         player_name = a_tag.text.strip()
         player_link = a_tag['href']
 
-        # Extract position text from second row inside posrela table
+        # Position
         pos_tr = r.find_all('tr')
         position = pos_tr[1].text.strip() if len(pos_tr) > 1 else "Unbekannt"
 
@@ -91,12 +90,21 @@ def scrape_club_squad(club_info):
             elif "beid" in potential_foot:
                 foot = "Beidfüßig"
 
+        # Exact Contract Expiration Date ("Vertrag bis")
+        date_matches = [t for t in tds if re.match(r'^\d{2}\.\d{2}\.\d{4}$', t)]
+        contract_until = "Unbekannt"
+        if len(date_matches) >= 2:
+            contract_until = date_matches[-1] # The second date cell in plus/1 view is "Vertrag bis"
+        elif len(date_matches) == 1 and ("202" in date_matches[0] or "203" in date_matches[0]):
+            contract_until = date_matches[0]
+
         squad_players.append({
             "name": player_name,
             "position": position,
             "age": age_str,
             "foot": foot,
             "market_value": market_val,
+            "contract_until": contract_until,
             "profile_url": f"https://www.transfermarkt.de{player_link}"
         })
 
@@ -113,7 +121,7 @@ def run_live_transfermarkt_sync():
         print("[ERROR] Supabase client unavailable.")
         return False
 
-    # Wipe old inaccurate data
+    # Wipe old records
     try:
         client.table("clubs").delete().neq("id", "PRO-000").execute()
         print("[Supabase] Cleaned legacy club records from database.")
@@ -129,7 +137,11 @@ def run_live_transfermarkt_sync():
         if not squad:
             continue
 
-        # Position breakdown in 1st team squad
+        # Real position-based contract expiring counts (2027 or 2028)
+        expiring_defenders = [p for p in squad if any(yr in p["contract_until"] for yr in ["2027", "2028"]) and ("verteidiger" in p["position"].lower() or "abwehr" in p["position"].lower())]
+        expiring_midfielders = [p for p in squad if any(yr in p["contract_until"] for yr in ["2027", "2028"]) and "mittelfeld" in p["position"].lower()]
+        expiring_attackers = [p for p in squad if any(yr in p["contract_until"] for yr in ["2027", "2028"]) and ("stürmer" in p["position"].lower() or "außen" in p["position"].lower() or "flügel" in p["position"].lower())]
+
         defenders = [p for p in squad if "verteidiger" in p["position"].lower() or "abwehr" in p["position"].lower()]
         midfielders = [p for p in squad if "mittelfeld" in p["position"].lower()]
         attackers = [p for p in squad if "stürmer" in p["position"].lower() or "außen" in p["position"].lower() or "flügel" in p["position"].lower()]
@@ -147,22 +159,27 @@ def run_live_transfermarkt_sync():
             "ideal_age_min": 19,
             "ideal_age_max": 28,
             "contract_expiring_count": {
-                "IV": len(defenders),
-                "ZM": len(midfielders),
-                "MS": len(attackers)
+                "IV": len(expiring_defenders),
+                "ZM": len(expiring_midfielders),
+                "MS": len(expiring_attackers)
             },
             "squad_profile": {
                 "season": "2026/2027",
                 "head_coach": club_cfg["head_coach"],
                 "tactical_system": club_cfg["system"],
                 "active_squad_size": len(squad),
+                "expiring_contracts_2027_2028": {
+                    "defenders": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_defenders],
+                    "midfielders": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_midfielders],
+                    "attackers": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_attackers]
+                },
                 "squad_breakdown": {
                     "goalkeepers": len(goalkeepers),
                     "defenders": len(defenders),
                     "midfielders": len(midfielders),
                     "attackers": len(attackers)
                 },
-                "live_squad_sample": squad[:15], # Exact 1:1 players with positions and feet
+                "live_squad_sample": squad[:15], # Exact 1:1 players with positions, contract_until and feet
                 "data_source": f"Live Real-Time Transfermarkt Scraper (Season 2026/2027 - transfermarkt.de/verein/{club_cfg['tm_id']})"
             },
             "base_rating": 80
@@ -170,7 +187,7 @@ def run_live_transfermarkt_sync():
 
         client.table("clubs").upsert(record).execute()
         synced_records.append(record)
-        print(f"[SUCCESS] Upserted {club_cfg['name']} 2026/27 squad to Supabase!")
+        print(f"[SUCCESS] Upserted {club_cfg['name']} 2026/27 squad to Supabase! Expiring 2027/28: {len(expiring_defenders)} DEF, {len(expiring_midfielders)} MID, {len(expiring_attackers)} ATT")
 
     print(f"\n============================================================")
     print(f"[COMPLETED] Synced {len(synced_records)} 1:1 Live Transfermarkt Squad Profiles for Season 2026/2027!")
@@ -181,8 +198,8 @@ def run_live_transfermarkt_sync():
     print(f"[VERIFIED] {len(res.data)} Clubs active in Supabase DB:")
     for row in res.data:
         sp = row.get("squad_profile", {})
-        bd = sp.get("squad_breakdown", {})
-        print(f"  -> [{row['id']}] {row['name']} ({row['league']}) | Season: {sp.get('season')} | Coach: {sp.get('head_coach')} | Active Squad: {sp.get('active_squad_size')} players ({bd.get('defenders', 0)} DEF, {bd.get('midfielders', 0)} MID, {bd.get('attackers', 0)} ATT)")
+        cec = row.get("contract_expiring_count", {})
+        print(f"  -> [{row['id']}] {row['name']} ({row['league']}) | Season: {sp.get('season')} | Real Expiring (2027/28): {cec.get('IV', 0)} DEF, {cec.get('ZM', 0)} MID, {cec.get('MS', 0)} ATT")
 
     return True
 
