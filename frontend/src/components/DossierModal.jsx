@@ -14,7 +14,8 @@ export default function DossierModal({ club, profile, onClose }) {
   const squadProfile = club.squad_profile || {};
   const deepTactics = squadProfile.deep_tactics || {};
   const positionalRoles = squadProfile.positional_role_tactics || {};
-  const coverageTier = deepTactics.data_coverage_tier || 'Pure Live Rolling Metric Engine';
+  const wyscoutStarters = squadProfile.wyscout_2027_starters || {};
+  const coverageTier = deepTactics.data_coverage_tier || '100% Empirical WyScout Per-90 & Starter Minutes Index';
 
   const posCode = (profile ? profile.position || 'IV' : 'IV').toUpperCase();
 
@@ -89,6 +90,9 @@ Ihr FutMatch Executive Advisor Team`;
     printWindow.print();
   };
 
+  const currentStarter = wyscoutStarters[activeTab] || {};
+  const metrics = currentStarter.empirical_metrics || {};
+
   const roleTabContent = {
     'IV': { 
       title: positionalRoles.cb_role || 'Innenverteidiger-Profil', 
@@ -127,7 +131,7 @@ Ihr FutMatch Executive Advisor Team`;
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              TEAM TAKTIK & ANFORDERUNGS-ANALYSE
+              TEAM TAKTIK & EMPIRISCHE WYSCOUT ANALYSE
             </span>
             <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 text-xs font-bold font-mono">
               {score ? `${score}% MATCH SCORE` : 'GESAMT-KADER ANALYSIS'}
@@ -200,21 +204,47 @@ Ihr FutMatch Executive Advisor Team`;
             </div>
             
             <div className="bg-zinc-950 p-3.5 rounded border border-zinc-800 font-sans space-y-2">
-              <span className="text-emerald-400 font-mono text-[11px] font-bold block uppercase">
-                📍 {roleTabContent[activeTab].title}
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="text-emerald-400 font-mono text-[11px] font-bold block uppercase">
+                  📍 {roleTabContent[activeTab].title}
+                </span>
+                {currentStarter.player_name && (
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-amber-300 font-mono">
+                    Top 26/27 Spielminuten: <strong>{currentStarter.player_name}</strong> ({currentStarter.minutes_2027} Min)
+                  </span>
+                )}
+              </div>
+              
               <p className="text-zinc-300 text-xs leading-relaxed">
                 {roleTabContent[activeTab].behavior}
               </p>
+
+              {/* WyScout Per-90 Empirical Metrics for the Top Starter */}
+              {Object.keys(metrics).length > 0 && (
+                <div className="pt-2 border-t border-zinc-800/80 space-y-1 font-mono">
+                  <span className="text-[9px] text-zinc-400 font-bold uppercase block">
+                    ⚡ WYSCOUT PER-90 METRIKEN DES AKTUELLEN STARTERS ({currentStarter.player_name}):
+                  </span>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5 pt-0.5">
+                    {Object.entries(metrics).map(([k, v]) => (
+                      <div key={k} className="p-1.5 rounded bg-zinc-900 border border-zinc-800 text-[10px]">
+                        <span className="text-zinc-500 block uppercase text-[8px] font-bold">{k.replace(/_/g, ' ')}</span>
+                        <span className="text-emerald-400 font-bold">{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {roleTabContent[activeTab].extra && (
-                <div className="pt-1.5 border-t border-zinc-800/60 text-[11px] text-amber-400/90 font-mono">
+                <div className="pt-1 text-[10px] text-amber-400/90 font-mono">
                   💡 {roleTabContent[activeTab].extra}
                 </div>
               )}
             </div>
           </div>
 
-          {/* Barcelona-Level Pro Tactical Analyst Breakdown */}
+          {/* FC Barcelona Standard Pro Tactical Analyst Breakdown */}
           <div className="bg-zinc-950 p-3 rounded border border-zinc-800 space-y-2">
             <span className="text-[10px] text-amber-400 font-bold uppercase block tracking-wider">
               📊 PRO TAKTIK-ANALYSE (FC BARCELONA STANDARD METRIKEN)
