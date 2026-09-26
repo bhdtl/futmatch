@@ -115,6 +115,8 @@ export async function fetchRealSupabaseMatches(profile) {
 
     const tacticalMetrics = squadProfile.tactical_metrics || {};
     const deepTactics = squadProfile.deep_tactics || {};
+    const positionalRoles = squadProfile.positional_role_tactics || {};
+
     const tacticalArchetype = deepTactics.tactical_archetype || squadProfile.tactical_dna || 'Variabler Aufbau';
     const ppda = deepTactics.ppda !== undefined ? deepTactics.ppda : 10.5;
     const fieldTilt = deepTactics.field_tilt_pct ? `${deepTactics.field_tilt_pct}%` : '50.0%';
@@ -122,6 +124,29 @@ export async function fetchRealSupabaseMatches(profile) {
     const progressivePasses = deepTactics.progressive_passes_90 || 35.0;
     const deepCompletions = deepTactics.deep_completions_per_match || 5.0;
     const idealTraits = deepTactics.ideal_player_traits || ['Passgenauigkeit unter Druck', 'Positionsdisziplin'];
+
+    // Specific position role insight
+    let positionRoleTitle = "Allgemeines Rollenprofil";
+    let positionRoleBehavior = "Variables Anforderungsprofil an die Position.";
+
+    if (['IV', 'LV', 'RV', 'CB', 'LB', 'RB', 'TW'].includes(posRaw)) {
+      if (['LV', 'RV', 'LB', 'RB'].includes(posRaw)) {
+        positionRoleTitle = positionalRoles.av_role || "Außenverteidiger-Profil";
+        positionRoleBehavior = positionalRoles.av_behavior || "Ausgewogene Flügelabdeckung.";
+      } else {
+        positionRoleTitle = positionalRoles.cb_role || "Innenverteidiger-Profil";
+        positionRoleBehavior = positionalRoles.cb_behavior || "Restverteidigung & Aufbauspiel.";
+      }
+    } else if (['ZM', 'DM', 'OM', 'CM', 'CAM', 'CDM'].includes(posRaw)) {
+      positionRoleTitle = positionalRoles.midfield_role || "Zentrales Mittelfeld-Profil";
+      positionRoleBehavior = positionalRoles.midfield_behavior || "Ballverteilung & Gegenpressing-Schutz.";
+    } else if (['MS', 'ST'].includes(posRaw)) {
+      positionRoleTitle = positionalRoles.striker_role || "Stürmer-Profil";
+      positionRoleBehavior = positionalRoles.striker_behavior || "Tiefe Läufe & Strafraum-Ablagen.";
+    } else if (!isGeneralSearch) {
+      positionRoleTitle = positionalRoles.winger_role || "Flügelstürmer-Profil";
+      positionRoleBehavior = positionalRoles.winger_behavior || "Halbraum-Dribblings & Cutbacks.";
+    }
 
     results.push({
       club_id: club.id,
@@ -140,6 +165,9 @@ export async function fetchRealSupabaseMatches(profile) {
       progressive_passes_90: progressivePasses,
       deep_completions: deepCompletions,
       ideal_player_traits: idealTraits,
+      position_role_title: positionRoleTitle,
+      position_role_behavior: positionRoleBehavior,
+      positional_roles: positionalRoles,
       possession_pct: possessionPct,
       pressing_score: tacticalMetrics.pressing_score || (ppda < 9.5 ? 88 : 72),
       build_up_style: tacticalMetrics.build_up_style || 'Variabel',

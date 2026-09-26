@@ -104,7 +104,19 @@ export default function MatchTable({ matches, isSearching, onSelectDossier }) {
                   </td>
                   <td className="py-4 px-5 text-zinc-300 text-xs leading-relaxed max-w-md">
                     <div>{fitReason}</div>
-                    <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
+                    
+                    {club.position_role_title && (
+                      <div className="mt-2 p-2 rounded bg-zinc-950/90 border border-zinc-800 text-[11px] font-sans">
+                        <span className="text-emerald-400 font-bold font-mono text-[10px] block uppercase">
+                          📍 {club.position_role_title}
+                        </span>
+                        <p className="text-zinc-300 text-[11px] leading-snug mt-0.5">
+                          {club.position_role_behavior}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
                       <span className="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 font-semibold border border-emerald-800/80">
                         {tacticalDna}
                       </span>
