@@ -69,9 +69,14 @@ export default function MatchTable({ matches, isSearching, onSelectDossier }) {
               return (
                 <tr key={club.club_id || name} className="hover:bg-zinc-800/50 transition-colors">
                   <td className="py-4 px-5 font-bold text-white text-sm">
-                    {name}
+                    <button 
+                      onClick={() => onSelectDossier(club)} 
+                      className="text-left font-bold text-white hover:text-emerald-400 transition underline decoration-zinc-700 underline-offset-4"
+                    >
+                      {name}
+                    </button>
                     {possessionPct && (
-                      <div className="text-[10px] font-mono text-zinc-400 font-normal mt-0.5 flex items-center gap-2">
+                      <div className="text-[10px] font-mono text-zinc-400 font-normal mt-1 flex items-center gap-2">
                         <span>Ballbesitz: <strong className="text-emerald-400 font-bold">{possessionPct}</strong></span>
                         {ppda && <span>• PPDA: <strong className="text-amber-400 font-bold">{ppda}</strong></span>}
                       </div>
