@@ -20,11 +20,11 @@ HEADERS = {
 }
 
 TARGET_CLUBS = [
-    {"id": "CLB-B04", "tm_id": 15, "slug": "bayer-04-leverkusen", "name": "Bayer 04 Leverkusen", "league": "Bundesliga", "system": "3-4-2-1"},
-    {"id": "CLB-STP", "tm_id": 35, "slug": "fc-st-pauli", "name": "FC St. Pauli", "league": "Bundesliga", "system": "3-5-2"},
+    {"id": "CLB-B04", "tm_id": 15, "slug": "bayer-04-leverkusen", "name": "Bayer 04 Leverkusen", "league": "Bundesliga", "system": "4-2-3-1"},
+    {"id": "CLB-STP", "tm_id": 35, "slug": "fc-st-pauli", "name": "FC St. Pauli", "league": "Bundesliga", "system": "4-2-3-1"},
     {"id": "CLB-F95", "tm_id": 38, "slug": "fortuna-dusseldorf", "name": "Fortuna Düsseldorf", "league": "2. Bundesliga", "system": "4-2-3-1"},
-    {"id": "CLB-SGG", "tm_id": 65, "slug": "spvgg-greuther-furth", "name": "Greuther Fürth", "league": "2. Bundesliga", "system": "3-4-1-2"},
-    {"id": "CLB-KSV", "tm_id": 269, "slug": "holstein-kiel", "name": "Holstein Kiel", "league": "Bundesliga", "system": "3-5-2"},
+    {"id": "CLB-SGG", "tm_id": 65, "slug": "spvgg-greuther-furth", "name": "Greuther Fürth", "league": "2. Bundesliga", "system": "4-2-3-1"},
+    {"id": "CLB-KSV", "tm_id": 269, "slug": "holstein-kiel", "name": "Holstein Kiel", "league": "Bundesliga", "system": "4-2-3-1"},
     {"id": "CLB-FCB", "tm_id": 27, "slug": "bayern-munchen", "name": "FC Bayern München", "league": "Bundesliga", "system": "4-2-3-1"},
     {"id": "CLB-BVB", "tm_id": 16, "slug": "borussia-dortmund", "name": "Borussia Dortmund", "league": "Bundesliga", "system": "4-2-3-1"},
 ]
