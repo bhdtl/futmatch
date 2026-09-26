@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 export default function DossierModal({ club, profile, onClose }) {
   if (!club) return null;
 
-  const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState('IV');
 
   const name = club.club_name || club.name;
@@ -33,12 +32,6 @@ Gerne senden wir Ihnen ein detailliertes Video-Dossier sowie die WyScout Per-90 
 
 Mit freundlichen Grüßen,
 Ihr FutMatch Executive Advisor Team`;
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(pitchText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const handlePrint = () => {
     const printWindow = window.open('', '_blank');
@@ -70,7 +63,7 @@ Ihr FutMatch Executive Advisor Team`;
             </div>
             <div class="stat-card">
               <div class="label">PRESSING (PPDA)</div>
-              <div class="val">${deepTactics.ppda || 10.5} (${deepTactics.pressing_intensity_label || 'Aktive Pressing'})</div>
+              <div class="val">${deepTactics.ppda || 10.5} (${deepTactics.pressing_intensity_label || 'Aktives Pressing'})</div>
             </div>
             <div class="stat-card">
               <div class="label">BALLBESITZ %</div>
@@ -114,9 +107,9 @@ Ihr FutMatch Executive Advisor Team`;
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              EXECUTIVE DOSSIER & TAKTIK-POPU P
+              TEAM TAKTIK & ANFORDERUNGS-ANALYSE
             </span>
-            <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 text-xs font-bold">
+            <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 text-xs font-bold font-mono">
               {score ? `${score}% MATCH SCORE` : 'GESAMT-KADER ANALYSIS'}
             </span>
           </div>
@@ -129,36 +122,42 @@ Ihr FutMatch Executive Advisor Team`;
           </p>
         </div>
 
-        {/* Scrollable Modal Body */}
+        {/* Scrollable Modal Body: PURE TEAM TACTICAL ANALYTICS */}
         <div className="space-y-4 overflow-y-auto custom-scrollbar pr-1 font-mono text-xs">
           
           {/* Tactical DNA Banner */}
           <div className="bg-zinc-950 p-3.5 rounded border border-zinc-800 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] text-zinc-400 uppercase font-bold">EMPIDISCHE SPIELSTIL-DNA (2026/27)</span>
+              <span className="text-[10px] text-zinc-400 uppercase font-bold">LIVE SPIELSTIL-DNA & TRAINER-PHILOSOPHIE (2026/27)</span>
               <span className="text-[10px] text-zinc-500 font-mono">{coverageTier}</span>
             </div>
             <div className="text-sm font-bold text-emerald-400">{deepTactics.tactical_archetype || 'Dominantes System'}</div>
             
             {/* Tactical Metrics Radar Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 pt-1">
-              <div className="p-2 rounded bg-zinc-900 border border-zinc-800 text-center">
-                <span className="text-[9px] text-zinc-500 block uppercase">Ballbesitz</span>
-                <span className="text-xs font-bold text-zinc-200">{deepTactics.possession_pct || 50.0}%</span>
+              <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
+                <span className="text-[9px] text-zinc-500 block uppercase font-bold">Ballbesitz</span>
+                <span className="text-sm font-bold text-zinc-100">{deepTactics.possession_pct || 50.0}%</span>
               </div>
-              <div className="p-2 rounded bg-zinc-900 border border-zinc-800 text-center">
-                <span className="text-[9px] text-zinc-500 block uppercase">Pressing (PPDA)</span>
-                <span className="text-xs font-bold text-amber-400">{deepTactics.ppda || 10.5}</span>
+              <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
+                <span className="text-[9px] text-zinc-500 block uppercase font-bold">Pressing (PPDA)</span>
+                <span className="text-sm font-bold text-amber-400">{deepTactics.ppda || 10.5}</span>
               </div>
-              <div className="p-2 rounded bg-zinc-900 border border-zinc-800 text-center">
-                <span className="text-[9px] text-zinc-500 block uppercase">Field Tilt %</span>
-                <span className="text-xs font-bold text-blue-400">{deepTactics.field_tilt_pct || 50.0}%</span>
+              <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
+                <span className="text-[9px] text-zinc-500 block uppercase font-bold">Field Tilt %</span>
+                <span className="text-sm font-bold text-blue-400">{deepTactics.field_tilt_pct || 50.0}%</span>
               </div>
-              <div className="p-2 rounded bg-zinc-900 border border-zinc-800 text-center">
-                <span className="text-[9px] text-zinc-500 block uppercase">Deep Entries</span>
-                <span className="text-xs font-bold text-emerald-400">{deepTactics.deep_completions_per_match || 4.5}/Match</span>
+              <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
+                <span className="text-[9px] text-zinc-500 block uppercase font-bold">Deep Entries</span>
+                <span className="text-sm font-bold text-emerald-400">{deepTactics.deep_completions_per_match || 4.5}/Match</span>
               </div>
             </div>
+          </div>
+
+          {/* Vakanz & Taktik Justification */}
+          <div className="bg-zinc-950 p-3 rounded border border-zinc-800 text-[11px] space-y-1">
+            <span className="text-zinc-400 font-bold block text-[10px] uppercase">TAKTIKERKENNUNG & KADER-JUSTIFIZIERUNG:</span>
+            <p className="text-zinc-200 font-sans leading-relaxed">{fitReason}</p>
           </div>
 
           {/* Interactive Positional Role Tabs */}
@@ -180,7 +179,7 @@ Ihr FutMatch Executive Advisor Team`;
               ))}
             </div>
             
-            <div className="bg-zinc-950 p-3 rounded border border-zinc-800 font-sans space-y-1">
+            <div className="bg-zinc-950 p-3.5 rounded border border-zinc-800 font-sans space-y-1">
               <span className="text-emerald-400 font-mono text-[11px] font-bold block uppercase">
                 📍 {roleTabContent[activeTab].title}
               </span>
@@ -188,24 +187,6 @@ Ihr FutMatch Executive Advisor Team`;
                 {roleTabContent[activeTab].behavior}
               </p>
             </div>
-          </div>
-
-          {/* Pitch Letter Section */}
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="text-zinc-400 font-bold text-[10px] uppercase">PITCH-MAIL AN SPORTDIREKTOR / KADERPLANER</label>
-              <button 
-                onClick={handleCopy}
-                className="text-[10px] text-emerald-400 hover:text-emerald-300 font-mono underline"
-              >
-                {copied ? '✓ KOPIERT!' : 'Text kopieren'}
-              </button>
-            </div>
-            <textarea 
-              readOnly 
-              value={pitchText}
-              className="w-full h-28 bg-zinc-950 border border-zinc-800 rounded p-3 text-zinc-300 font-mono text-[11px] leading-relaxed focus:outline-none custom-scrollbar"
-            />
           </div>
 
         </div>
@@ -219,7 +200,7 @@ Ihr FutMatch Executive Advisor Team`;
             onClick={handlePrint} 
             className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded transition shadow-sm"
           >
-            🖨️ PDF / Dossier Drucken
+            🖨️ PDF Dossier Drucken
           </button>
         </div>
       </div>
