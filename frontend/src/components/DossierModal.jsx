@@ -4,6 +4,7 @@ export default function DossierModal({ club, profile, onClose }) {
   if (!club) return null;
 
   const [activeTab, setActiveTab] = useState('IV');
+  const [viewMode, setViewMode] = useState('POSITION_TAB'); // 'POSITION_TAB' or 'FULL_FORMATION_XI'
 
   const name = club.club_name || club.name;
   const score = club.match_score || club.score;
@@ -15,7 +16,9 @@ export default function DossierModal({ club, profile, onClose }) {
   const deepTactics = squadProfile.deep_tactics || {};
   const positionalRoles = squadProfile.positional_role_tactics || {};
   const wyscoutStarters = squadProfile.wyscout_2027_starters || {};
-  const coverageTier = deepTactics.data_coverage_tier || '100% Empirical WyScout Per-90 & Starter Minutes Index';
+  const startingXI = squadProfile.starting_xi_2027 || [];
+  const tacticalFormation = squadProfile.tactical_formation_2027 || tactic;
+  const coverageTier = deepTactics.data_coverage_tier || '100% Empirical Formation Starting XI & WyScout Index';
 
   const posCode = (profile ? profile.position || 'IV' : 'IV').toUpperCase();
 
@@ -131,7 +134,7 @@ Ihr FutMatch Executive Advisor Team`;
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              TEAM TAKTIK & EMPIRISCHE WYSCOUT ANALYSE
+              FORMATION & FORMATIONEN-STAMMSPIELER ANALYSE
             </span>
             <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 text-xs font-bold font-mono">
               {score ? `${score}% MATCH SCORE` : 'GESAMT-KADER ANALYSIS'}
@@ -141,23 +144,44 @@ Ihr FutMatch Executive Advisor Team`;
             {name}
             <span className="text-xs font-normal text-zinc-400 font-mono">({club.league})</span>
           </h3>
-          <p className="text-xs text-zinc-400 font-sans">
-            Cheftrainer: <strong className="text-zinc-200">{headCoach}</strong> • System: <strong className="text-emerald-400">{tactic}</strong>
-          </p>
+          <div className="flex items-center justify-between pt-1">
+            <p className="text-xs text-zinc-400 font-sans">
+              Cheftrainer: <strong className="text-zinc-200">{headCoach}</strong> • System: <strong className="text-emerald-400">{tacticalFormation}</strong>
+            </p>
+            {/* View Mode Toggle Buttons */}
+            <div className="flex gap-1">
+              <button
+                onClick={() => setViewMode('POSITION_TAB')}
+                className={`px-2 py-0.5 text-[10px] font-mono rounded font-bold transition ${
+                  viewMode === 'POSITION_TAB' ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                Positions-Tabs
+              </button>
+              <button
+                onClick={() => setViewMode('FULL_FORMATION_XI')}
+                className={`px-2 py-0.5 text-[10px] font-mono rounded font-bold transition ${
+                  viewMode === 'FULL_FORMATION_XI' ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                📋 Top 11 Startelf (Minuten)
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Scrollable Modal Body: PURE TEAM TACTICAL ANALYTICS */}
+        {/* Scrollable Modal Body */}
         <div className="space-y-4 overflow-y-auto custom-scrollbar pr-1 font-mono text-xs">
           
           {/* Tactical DNA Banner */}
           <div className="bg-zinc-950 p-3.5 rounded border border-zinc-800 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] text-zinc-400 uppercase font-bold">LIVE SPIELSTIL-DNA & TRAINER-PHILOSOPHIE (2026/27)</span>
+              <span className="text-[10px] text-zinc-400 uppercase font-bold">LIVE SPIELSTIL-DNA & TRAINER-PHILOSOPHIE</span>
               <span className="text-[10px] text-zinc-500 font-mono">{coverageTier}</span>
             </div>
             <div className="text-sm font-bold text-emerald-400">{deepTactics.tactical_archetype || 'Dominantes System'}</div>
             
-            {/* Tactical Metrics Radar Grid */}
+            {/* Tactical Metrics Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 pt-1">
               <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
                 <span className="text-[9px] text-zinc-500 block uppercase font-bold">Ballbesitz</span>
@@ -178,71 +202,116 @@ Ihr FutMatch Executive Advisor Team`;
             </div>
           </div>
 
-          {/* Vakanz & Taktik Justification */}
-          <div className="bg-zinc-950 p-3 rounded border border-zinc-800 text-[11px] space-y-1">
-            <span className="text-zinc-400 font-bold block text-[10px] uppercase">TAKTIKERKENNUNG & KADER-JUSTIFIZIERUNG:</span>
-            <p className="text-zinc-200 font-sans leading-relaxed">{fitReason}</p>
-          </div>
-
-          {/* Interactive Positional Role Tabs */}
-          <div className="space-y-2">
-            <label className="text-zinc-400 font-bold text-[10px] uppercase block">POSITIONSSPEZIFISCHE ROLLENANFORDERUNG (SPIELERSCHEMA)</label>
-            <div className="flex gap-1 border-b border-zinc-800 pb-1">
-              {['IV', 'AV', 'ZM', 'FLÜGEL', 'MS'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-3 py-1 text-[11px] font-bold rounded transition ${
-                    activeTab === tab 
-                      ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' 
-                      : 'bg-zinc-950 hover:bg-zinc-800 text-zinc-400'
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-            
-            <div className="bg-zinc-950 p-3.5 rounded border border-zinc-800 font-sans space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-emerald-400 font-mono text-[11px] font-bold block uppercase">
-                  📍 {roleTabContent[activeTab].title}
-                </span>
-                {currentStarter.player_name && (
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-amber-300 font-mono">
-                    Top 26/27 Spielminuten: <strong>{currentStarter.player_name}</strong> ({currentStarter.minutes_2027} Min)
-                  </span>
-                )}
+          {/* MODE 1: POSITION_TAB */}
+          {viewMode === 'POSITION_TAB' && (
+            <>
+              {/* Vakanz & Taktik Justification */}
+              <div className="bg-zinc-950 p-3 rounded border border-zinc-800 text-[11px] space-y-1">
+                <span className="text-zinc-400 font-bold block text-[10px] uppercase">TAKTIKERKENNUNG & KADER-JUSTIFIZIERUNG:</span>
+                <p className="text-zinc-200 font-sans leading-relaxed">{fitReason}</p>
               </div>
-              
-              <p className="text-zinc-300 text-xs leading-relaxed">
-                {roleTabContent[activeTab].behavior}
-              </p>
 
-              {/* WyScout Per-90 Empirical Metrics for the Top Starter */}
-              {Object.keys(metrics).length > 0 && (
-                <div className="pt-2 border-t border-zinc-800/80 space-y-1 font-mono">
-                  <span className="text-[9px] text-zinc-400 font-bold uppercase block">
-                    ⚡ WYSCOUT PER-90 METRIKEN DES AKTUELLEN STARTERS ({currentStarter.player_name}):
-                  </span>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5 pt-0.5">
-                    {Object.entries(metrics).map(([k, v]) => (
-                      <div key={k} className="p-1.5 rounded bg-zinc-900 border border-zinc-800 text-[10px]">
-                        <span className="text-zinc-500 block uppercase text-[8px] font-bold">{k.replace(/_/g, ' ')}</span>
-                        <span className="text-emerald-400 font-bold">{v}</span>
-                      </div>
-                    ))}
+              {/* Interactive Positional Role Tabs */}
+              <div className="space-y-2">
+                <label className="text-zinc-400 font-bold text-[10px] uppercase block">POSITIONSSPEZIFISCHE ROLLENANFORDERUNG (SPIELERSCHEMA)</label>
+                <div className="flex gap-1 border-b border-zinc-800 pb-1">
+                  {['IV', 'AV', 'ZM', 'FLÜGEL', 'MS'].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`px-3 py-1 text-[11px] font-bold rounded transition ${
+                        activeTab === tab 
+                          ? 'bg-emerald-950 border border-emerald-800 text-emerald-400' 
+                          : 'bg-zinc-950 hover:bg-zinc-800 text-zinc-400'
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+                
+                <div className="bg-zinc-950 p-3.5 rounded border border-zinc-800 font-sans space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-emerald-400 font-mono text-[11px] font-bold block uppercase">
+                      📍 {roleTabContent[activeTab].title}
+                    </span>
+                    {currentStarter.player_name && (
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-amber-300 font-mono">
+                        Top Spielminuten: <strong>{currentStarter.player_name}</strong> ({currentStarter.minutes_2027} Min)
+                      </span>
+                    )}
                   </div>
-                </div>
-              )}
+                  
+                  <p className="text-zinc-300 text-xs leading-relaxed">
+                    {roleTabContent[activeTab].behavior}
+                  </p>
 
-              {roleTabContent[activeTab].extra && (
-                <div className="pt-1 text-[10px] text-amber-400/90 font-mono">
-                  💡 {roleTabContent[activeTab].extra}
+                  {/* WyScout Per-90 Empirical Metrics for Top Starter */}
+                  {Object.keys(metrics).length > 0 && (
+                    <div className="pt-2 border-t border-zinc-800/80 space-y-1 font-mono">
+                      <span className="text-[9px] text-zinc-400 font-bold uppercase block">
+                        ⚡ WYSCOUT PER-90 METRIKEN DES STAMMSPIELERS ({currentStarter.player_name}):
+                      </span>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5 pt-0.5">
+                        {Object.entries(metrics).map(([k, v]) => (
+                          <div key={k} className="p-1.5 rounded bg-zinc-900 border border-zinc-800 text-[10px]">
+                            <span className="text-zinc-500 block uppercase text-[8px] font-bold">{k.replace(/_/g, ' ')}</span>
+                            <span className="text-emerald-400 font-bold">{v}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {roleTabContent[activeTab].extra && (
+                    <div className="pt-1 text-[10px] text-amber-400/90 font-mono">
+                      💡 {roleTabContent[activeTab].extra}
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
+            </>
+          )}
+
+          {/* MODE 2: FULL FORMATION XI (DIE TOP 11 STAMMSPIELER DES TEAMS) */}
+          {viewMode === 'FULL_FORMATION_XI' && (
+            <div className="space-y-3 font-mono">
+              <div className="flex items-center justify-between">
+                <span className="text-amber-400 font-bold text-[11px] uppercase tracking-wider block">
+                  📋 DIE 11 STAMMSPIELER DER AKTUELLEN SAISON ({tacticalFormation})
+                </span>
+                <span className="text-[10px] text-zinc-400 font-sans">Sortiert nach Spielminuten</span>
+              </div>
+
+              <div className="space-y-2">
+                {startingXI.map((p, idx) => (
+                  <div key={idx} className="bg-zinc-950 p-3 rounded border border-zinc-800 space-y-1.5 hover:border-zinc-700 transition">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 bg-emerald-950 border border-emerald-800 text-emerald-400 text-[10px] font-bold rounded">
+                          {p.slot}
+                        </span>
+                        <strong className="text-zinc-100 text-xs">{p.name}</strong>
+                        <span className="text-[10px] text-zinc-400 font-sans">({p.age} J. • {p.foot} • Vertrag: {p.contract})</span>
+                      </div>
+                      <span className="text-amber-400 text-xs font-bold font-mono">{p.minutes} Min</span>
+                    </div>
+
+                    {/* Individual Player WyScout Metric Chips */}
+                    {p.metrics && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {Object.entries(p.metrics).map(([mk, mv]) => (
+                          <span key={mk} className="px-2 py-0.5 bg-zinc-900 border border-zinc-800 rounded text-[9px] text-zinc-300">
+                            <strong className="text-zinc-500 uppercase">{mk.replace(/_/g, ' ')}:</strong> <span className="text-emerald-400 font-bold">{mv}</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* FC Barcelona Standard Pro Tactical Analyst Breakdown */}
           <div className="bg-zinc-950 p-3 rounded border border-zinc-800 space-y-2">
