@@ -14,19 +14,19 @@ export default function DossierModal({ club, profile, onClose }) {
   const squadProfile = club.squad_profile || {};
   const deepTactics = squadProfile.deep_tactics || {};
   const positionalRoles = squadProfile.positional_role_tactics || {};
-  const coverageTier = deepTactics.data_coverage_tier || 'Tier 1: Full FBref + Understat Index';
+  const coverageTier = deepTactics.data_coverage_tier || 'Pure Live Rolling Metric Engine';
 
-  const posCode = (profile.position || 'IV').toUpperCase();
+  const posCode = (profile ? profile.position || 'IV' : 'IV').toUpperCase();
 
   const pitchText = `Sehr geehrte Damen und Herren der Kaderplanung von ${name},
 
-in Vorbereitung auf die kommenden Transfereffekte für die Saison 2026/27 möchten wir Ihnen unseren Klienten (Position: ${posCode}, Alter: ${profile.age || 23}, Starker Fuß: ${profile.preferred_foot || 'Rechts'}) vertraulich vorlegen.
+in Vorbereitung auf die kommenden Transfereffekte für die Saison 2026/27 möchten wir Ihnen unseren Klienten (Position: ${posCode}, Alter: ${profile?.age || 23}, Starker Fuß: ${profile?.preferred_foot || 'Rechts'}) vertraulich vorlegen.
 
 Basierend auf unserer FutMatch Pro Kaderanalyse passt sein Profil hervorragend zu Ihrem bevorzugten Spielsystem (${tactic}) unter Cheftrainer ${headCoach} und adressiert Ihre Vakanzen auf der Position ${posCode}.
 
 Taktisches Profil & Trainer-DNA: ${deepTactics.tactical_archetype || 'Dominantes System'} (PPDA: ${deepTactics.ppda || 10.5}, Ballbesitz: ${deepTactics.possession_pct || 50.0}%).
 
-Vertragssituation: ${profile.contract_status ? profile.contract_status.toUpperCase() : 'ABLÖSEFREI'} (Sehr hohe Transfer-Feasibilität).
+Vertragssituation: ${profile?.contract_status ? profile.contract_status.toUpperCase() : 'ABLÖSEFREI'} (Sehr hohe Transfer-Feasibilität).
 
 Gerne senden wir Ihnen ein detailliertes Video-Dossier sowie die WyScout Per-90 Metriken zu.
 
@@ -90,11 +90,31 @@ Ihr FutMatch Executive Advisor Team`;
   };
 
   const roleTabContent = {
-    'IV': { title: positionalRoles.cb_role || 'Innenverteidiger-Profil', behavior: positionalRoles.cb_behavior || 'Aufbauspiel & Absicherung.' },
-    'AV': { title: positionalRoles.av_role || 'Außenverteidiger-Profil', behavior: positionalRoles.av_behavior || 'Schienen- & Overlap-Verhalten.' },
-    'ZM': { title: positionalRoles.midfield_role || 'Mittelfeld-Zentrale (DM/ZM)', behavior: positionalRoles.midfield_behavior || 'Passverteilung & Gegenpressing.' },
-    'FLÜGEL': { title: positionalRoles.winger_role || 'Flügelstürmer-Profil', behavior: positionalRoles.winger_behavior || 'Dribblings & Cutback-Frequenz.' },
-    'MS': { title: positionalRoles.striker_role || 'Stürmer-Profil', behavior: positionalRoles.striker_behavior || 'Strafraum-Zuspiel & Laufwege.' }
+    'IV': { 
+      title: positionalRoles.cb_role || 'Innenverteidiger-Profil', 
+      behavior: positionalRoles.cb_behavior || 'Aufbauspiel & Absicherung.',
+      extra: positionalRoles.iv_buildup_involvement ? `IV-Einbindung im Aufbau: ${positionalRoles.iv_buildup_involvement}` : null
+    },
+    'AV': { 
+      title: positionalRoles.av_role || 'Außenverteidiger-Profil', 
+      behavior: positionalRoles.av_behavior || 'Schienen- & Overlap-Verhalten.',
+      extra: positionalRoles.av_positioning ? `AV-Staffelung: ${positionalRoles.av_positioning}` : null
+    },
+    'ZM': { 
+      title: positionalRoles.midfield_role || 'Mittelfeld-Zentrale (DM/ZM)', 
+      behavior: positionalRoles.midfield_behavior || 'Passverteilung & Gegenpressing.',
+      extra: positionalRoles.six_role_details ? `6er/ZM Steuerung: ${positionalRoles.six_role_details}` : null
+    },
+    'FLÜGEL': { 
+      title: positionalRoles.winger_role || 'Flügelstürmer-Profil', 
+      behavior: positionalRoles.winger_behavior || 'Dribblings & Cutback-Frequenz.',
+      extra: positionalRoles.pressing_lane_closure ? `Pressing-Staffelung: ${positionalRoles.pressing_lane_closure}` : null
+    },
+    'MS': { 
+      title: positionalRoles.striker_role || 'Stürmer-Profil', 
+      behavior: positionalRoles.striker_behavior || 'Strafraum-Zuspiel & Laufwege.',
+      extra: positionalRoles.shot_zones ? `Abschluss-Zonen: ${positionalRoles.shot_zones}` : null
+    }
   };
 
   return (
@@ -179,13 +199,43 @@ Ihr FutMatch Executive Advisor Team`;
               ))}
             </div>
             
-            <div className="bg-zinc-950 p-3.5 rounded border border-zinc-800 font-sans space-y-1">
+            <div className="bg-zinc-950 p-3.5 rounded border border-zinc-800 font-sans space-y-2">
               <span className="text-emerald-400 font-mono text-[11px] font-bold block uppercase">
                 📍 {roleTabContent[activeTab].title}
               </span>
               <p className="text-zinc-300 text-xs leading-relaxed">
                 {roleTabContent[activeTab].behavior}
               </p>
+              {roleTabContent[activeTab].extra && (
+                <div className="pt-1.5 border-t border-zinc-800/60 text-[11px] text-amber-400/90 font-mono">
+                  💡 {roleTabContent[activeTab].extra}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Barcelona-Level Pro Tactical Analyst Breakdown */}
+          <div className="bg-zinc-950 p-3 rounded border border-zinc-800 space-y-2">
+            <span className="text-[10px] text-amber-400 font-bold uppercase block tracking-wider">
+              📊 PRO TAKTIK-ANALYSE (FC BARCELONA STANDARD METRIKEN)
+            </span>
+            <div className="grid grid-cols-2 gap-2 text-[11px]">
+              <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
+                <span className="text-[9px] text-zinc-500 block font-bold uppercase">Shot Zones & Abschlüsse</span>
+                <span className="text-zinc-200 font-sans">{positionalRoles.shot_zones || 'Strafraum & Halbraum-Passagen'}</span>
+              </div>
+              <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
+                <span className="text-[9px] text-zinc-500 block font-bold uppercase">Abwehrketten-Höhe</span>
+                <span className="text-emerald-400 font-bold">{positionalRoles.defensive_line_height_meters || 46.0} m</span>
+              </div>
+              <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
+                <span className="text-[9px] text-zinc-500 block font-bold uppercase">Linienbrechende Pässe</span>
+                <span className="text-zinc-200 font-bold">{positionalRoles.line_breaking_passes_per_90 || 42.0} / 90 Min</span>
+              </div>
+              <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
+                <span className="text-[9px] text-zinc-500 block font-bold uppercase">Schnittstellen-Steckpässe</span>
+                <span className="text-zinc-200 font-bold">{positionalRoles.through_balls_per_90 || 3.5} / 90 Min</span>
+              </div>
             </div>
           </div>
 
