@@ -134,16 +134,17 @@ def run_live_transfermarkt_sync():
         print("[ERROR] Supabase client unavailable.")
         return False
 
-    # Wipe old records
-    try:
-        client.table("clubs").delete().neq("id", "PRO-000").execute()
-        print("[Supabase] Cleaned legacy club records from database.")
-    except Exception as e:
-        print(f"[Supabase] Notice on cleanup: {e}")
-
     synced_records = []
 
     for club_cfg in TARGET_CLUBS:
+        # Fetch existing record if present to preserve deep_tactics & starting_xi
+        existing_res = client.table("clubs").select("*").eq("id", club_cfg["id"]).execute()
+        existing_profile = {}
+        if existing_res.data and len(existing_res.data) > 0:
+            existing_profile = existing_res.data[0].get("squad_profile", {})
+            if not isinstance(existing_profile, dict):
+                existing_profile = {}
+
         # Scrape live head coach directly from Transfermarkt staff page
         head_coach = scrape_live_head_coach(club_cfg["tm_id"], club_cfg["slug"])
         print(f"[Scraper] {club_cfg['name']} Live Coach -> {head_coach}")
@@ -166,6 +167,29 @@ def run_live_transfermarkt_sync():
 
         logo_short = "".join([w[0] for w in club_cfg["name"].split()[:3]]).upper()
 
+        # Merge new Transfermarkt squad data into existing profile
+        merged_squad_profile = dict(existing_profile)
+        merged_squad_profile.update({
+            "season": "2026/2027",
+            "head_coach": head_coach,
+            "tactical_system": club_cfg["system"],
+            "active_squad_size": len(squad),
+            "expiring_contracts_2027_2028": {
+                "defenders": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_defenders],
+                "midfielders": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_midfielders],
+                "attackers": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_attackers]
+            },
+            "squad_breakdown": {
+                "goalkeepers": len(goalkeepers),
+                "defenders": len(defenders),
+                "midfielders": len(midfielders),
+                "attackers": len(attackers)
+            },
+            "full_squad_2027": squad,
+            "live_squad_sample": squad,
+            "data_source": f"Live Real-Time Transfermarkt Scraper (Season 2026/2027 - transfermarkt.de/verein/{club_cfg['tm_id']})"
+        })
+
         record = {
             "id": club_cfg["id"],
             "name": club_cfg["name"],
@@ -180,26 +204,7 @@ def run_live_transfermarkt_sync():
                 "ZM": len(expiring_midfielders),
                 "MS": len(expiring_attackers)
             },
-            "squad_profile": {
-                "season": "2026/2027",
-                "head_coach": head_coach,
-                "tactical_system": club_cfg["system"],
-                "active_squad_size": len(squad),
-                "expiring_contracts_2027_2028": {
-                    "defenders": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_defenders],
-                    "midfielders": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_midfielders],
-                    "attackers": [p["name"] + " (" + p["contract_until"] + ")" for p in expiring_attackers]
-                },
-                "squad_breakdown": {
-                    "goalkeepers": len(goalkeepers),
-                    "defenders": len(defenders),
-                    "midfielders": len(midfielders),
-                    "attackers": len(attackers)
-                },
-                "full_squad_2027": squad,
-                "live_squad_sample": squad,
-                "data_source": f"Live Real-Time Transfermarkt Scraper (Season 2026/2027 - transfermarkt.de/verein/{club_cfg['tm_id']})"
-            },
+            "squad_profile": merged_squad_profile,
             "base_rating": 80
         }
 
