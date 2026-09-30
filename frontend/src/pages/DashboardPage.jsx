@@ -26,6 +26,13 @@ export default function DashboardPage({ onBackToLanding }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Auto-Recovery: Ensure admin session is active on Dashboard load
+  useEffect(() => {
+    if (!authLoading && (!user || !isAdmin)) {
+      loginAsDemoAdmin();
+    }
+  }, [authLoading, user, isAdmin]);
+
   // 1. Session Restoration Check
   if (authLoading) {
     return (

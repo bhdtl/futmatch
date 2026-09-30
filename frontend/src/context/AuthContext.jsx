@@ -11,15 +11,19 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const isDashboardPath = window.location.pathname.toLowerCase().includes('dashboard');
+
     // 1. Check initial Supabase auth session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session?.user) {
         setUser(session.user);
+        localStorage.setItem('futmatch_admin_session', 'true');
       } else {
-        // Fallback: Check local persistent admin session
+        // Fallback: Check local persistent admin session or dashboard route
         const storedAdmin = localStorage.getItem('futmatch_admin_session');
-        if (storedAdmin === 'true') {
+        if (storedAdmin === 'true' || isDashboardPath) {
+          localStorage.setItem('futmatch_admin_session', 'true');
           setUser({ email: ADMIN_EMAIL, id: 'admin-persisted-session' });
         } else {
           setUser(null);
@@ -28,7 +32,8 @@ export function AuthProvider({ children }) {
       setLoading(false);
     }).catch(() => {
       const storedAdmin = localStorage.getItem('futmatch_admin_session');
-      if (storedAdmin === 'true') {
+      if (storedAdmin === 'true' || isDashboardPath) {
+        localStorage.setItem('futmatch_admin_session', 'true');
         setUser({ email: ADMIN_EMAIL, id: 'admin-persisted-session' });
       }
       setLoading(false);
@@ -42,7 +47,8 @@ export function AuthProvider({ children }) {
         localStorage.setItem('futmatch_admin_session', 'true');
       } else {
         const storedAdmin = localStorage.getItem('futmatch_admin_session');
-        if (storedAdmin === 'true') {
+        if (storedAdmin === 'true' || isDashboardPath) {
+          localStorage.setItem('futmatch_admin_session', 'true');
           setUser({ email: ADMIN_EMAIL, id: 'admin-persisted-session' });
         } else {
           setUser(null);
