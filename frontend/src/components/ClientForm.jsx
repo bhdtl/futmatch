@@ -127,11 +127,23 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
         </div>
 
         {/* Info & Action Row */}
-        <div className="lg:col-span-3 flex flex-wrap items-center gap-3 text-[11px] pt-1">
-          <span className="text-zinc-500 font-bold">ARCHETYP:</span>
-          <span className="px-2.5 py-1 rounded bg-zinc-950 border border-zinc-800 text-emerald-400 font-bold">
-            {currentArchetype}
-          </span>
+        <div className="lg:col-span-3 flex flex-wrap items-center gap-3 text-[11px] pt-1 font-mono">
+          <span className="text-zinc-500 font-bold">SCOUT AI ROLLE:</span>
+          <select
+            name="tactical_role"
+            value={profile.tactical_role || 'ATTACKING_WINGBACK'}
+            onChange={onChange}
+            className="bg-zinc-950 border border-zinc-800 rounded px-2.5 py-1 text-emerald-400 font-bold cursor-pointer focus:outline-none focus:border-emerald-600"
+          >
+            <option value="ATTACKING_WINGBACK">⚡ Offensiver Schienenspieler (Complete Wing-Back)</option>
+            <option value="INVERTED_WINGBACK">🧠 Einrückender Aufbauspieler (Inverted Wing-Back)</option>
+            <option value="BALL_PLAYING_DEFENDER">⚽ Spielgestaltender Innenverteidiger (Ball-Playing)</option>
+            <option value="STOPPER_IV">🛡️ Zweikampfstarker Stopper (Physisch)</option>
+            <option value="DEEP_LYING_PLAYMAKER">🎯 Tiefstehender Spielmacher / 6er (Playmaker)</option>
+            <option value="BOX_TO_BOX_ENGINE">🏃 Dynamischer Allrounder / 8er (Box-To-Box)</option>
+            <option value="INSIDE_FORWARD">🔥 Torgefährlicher Flügelstürmer (Inside Forward)</option>
+            <option value="TARGET_FORWARD">🎯 Zielspieler & Strafraum-Knipser (Target Forward)</option>
+          </select>
         </div>
 
         <div className="lg:col-span-2 pt-1 flex justify-end">
@@ -140,7 +152,7 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
             disabled={loading}
             className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded uppercase tracking-wider font-mono text-xs transition disabled:opacity-40 shadow-sm"
           >
-            {loading ? "BERECHNE VAKANZEN..." : "KADER-MATCHING STARTEN"}
+            {loading ? "BERECHNE SCOUT AI VAKANZEN..." : "SCOUT AI MATCHING STARTEN"}
           </button>
         </div>
 

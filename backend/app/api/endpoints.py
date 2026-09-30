@@ -133,3 +133,89 @@ def get_metadata():
             {"code": "rest2y", "label": "Restvertrag 2+ Jahre"}
         ]
     }
+
+# ============================================================
+# SCOUT AI & FOOTBALL MANAGER ROLE PROFILING ENDPOINTS
+# ============================================================
+
+from app.services.scout_ai_engine import ScoutAIEngine, ROLE_DEFINITIONS
+
+class CandidateEvaluationRequest(BaseModel):
+    name: str = "Klient Candidate"
+    position: str = "LV"
+    role_key: str = "ATTACKING_WINGBACK"
+    market_value: str = "10.00 Mio. €"
+    age: int = 24
+    metrics: Optional[Dict[str, float]] = None
+
+class CandidateComparisonRequest(BaseModel):
+    candidate1: CandidateEvaluationRequest
+    candidate2: CandidateEvaluationRequest
+
+@router.get("/scout-ai/roles")
+def get_scout_ai_roles():
+    """
+    Returns available Football Manager / WyScout granular tactical roles and KPI definitions.
+    """
+    return {"roles": ROLE_DEFINITIONS}
+
+@router.post("/scout-ai/evaluate")
+def evaluate_candidate(req: CandidateEvaluationRequest):
+    """
+    Evaluates candidate using ScoutAI Hybrid Formula:
+    Scouting Score = (0.65 * S_ML + 0.35 * S_Fit) * 100
+    """
+    metrics = req.metrics or {
+        "progressive_carries_per_90": 3.4,
+        "progressive_passes_per_90": 4.1,
+        "xa_per_90": 0.22,
+        "xg_per_90": 0.12,
+        "dribble_success_pct": 64.5,
+        "padj_tackles_per_90": 2.8,
+        "tackles_won_pct": 62.0,
+        "interceptions_per_90": 1.9,
+        "aerial_duels_won_pct": 55.0,
+        "crosses_per_90": 2.4,
+        "key_passes_per_90": 1.6,
+        "pass_completion_pct": 84.2,
+        "clearances_per_90": 1.2,
+        "passes_into_penalty_area_per_90": 1.8,
+        "touches_in_box_per_90": 2.1,
+        "shots_per_90": 1.1
+    }
+
+    s_fit = ScoutAIEngine.calculate_statistical_fit(metrics, req.role_key)
+    s_ml = ScoutAIEngine.predict_ml_rating(metrics)
+    scouting_score = ScoutAIEngine.compute_scouting_score(s_ml, s_fit)
+    archetype = ScoutAIEngine.classify_player_archetype(metrics, req.position)
+    formations = ScoutAIEngine.evaluate_formation_suitability(metrics, req.role_key)
+
+    return {
+        "candidate_name": req.name,
+        "position": req.position,
+        "role_key": req.role_key,
+        "scouting_score": scouting_score,
+        "s_ml_predicted_rating": round(s_ml * 100, 1),
+        "s_fit_statistical_suitability": round(s_fit * 100, 1),
+        "archetype": archetype,
+        "formation_suitability": formations,
+        "metrics_evaluated": metrics
+    }
+
+@router.post("/scout-ai/compare")
+def compare_candidates(req: CandidateComparisonRequest):
+    """
+    Side-by-side Candidate Comparison Engine (Model B & KPI Matrix).
+    """
+    eval1 = evaluate_candidate(req.candidate1)
+    eval2 = evaluate_candidate(req.candidate2)
+
+    return {
+        "comparison_matrix": {
+            "candidate_1": eval1,
+            "candidate_2": eval2
+        },
+        "score_delta": round(eval1["scouting_score"] - eval2["scouting_score"], 1),
+        "recommended_candidate": eval1["candidate_name"] if eval1["scouting_score"] >= eval2["scouting_score"] else eval2["candidate_name"]
+    }
+
