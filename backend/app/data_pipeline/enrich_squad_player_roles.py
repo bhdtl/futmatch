@@ -63,7 +63,10 @@ PLAYER_ROLE_OVERRIDES = {
     "ibrahim maza": ("ADVANCED_PLAYMAKER_MEZZALA", "INSIDE_FORWARD_IW", "Kreativer 10er & Dribbler", 86),
     "moussa diaby": ("INSIDE_FORWARD_IW", "CLASSIC_WINGER", "High-Speed Flügelstürmer (Inside Forward)", 88),
     "patrik schick": ("ADVANCED_FORWARD", "TARGET_FORWARD", "Strafraum-Knipser & Stoßstürmer (AF)", 84),
-    "victor boniface": ("TARGET_FORWARD", "ADVANCED_FORWARD", "Physisches Kraftpaket & Zielspieler (TF/AF)", 86)
+    "victor boniface": ("TARGET_FORWARD", "ADVANCED_FORWARD", "Physisches Kraftpaket & Zielspieler (TF/AF)", 86),
+    # Additional Overrides
+    "lennart karl": ("ADVANCED_PLAYMAKER_MEZZALA", "INSIDE_FORWARD_IW", "Kreativer 10er & Spielmacher-Talent (AP/MEZ)", 88),
+    "ismael saibari": ("ADVANCED_PLAYMAKER_MEZZALA", "BOX_TO_BOX_MIDFIELDER", "Dynamischer 10er & Halbraum-Drifter (MEZ)", 87),
 }
 
 def derive_generic_roles(pos_str: str) -> Tuple[str, str, str, int]:
@@ -76,12 +79,14 @@ def derive_generic_roles(pos_str: str) -> Tuple[str, str, str, int]:
         return ("BALL_PLAYING_DEFENDER", "NO_NONSENSE_CB", "Spielgestaltender IV (BPD)", 78)
     elif "linker verteidiger" in pos or "rechter verteidiger" in pos or "linksverteidiger" in pos or "rechtsverteidiger" in pos:
         return ("WING_BACK", "INVERTED_WING_BACK", "Flügelverteidiger / Schienenspieler (WB)", 79)
-    elif "defensives mittelfeld" in pos:
-        return ("ANCHOR_BWM", "DEEP_LYING_PLAYMAKER", "Defensiver Abräumer & Sechser (Anchor)", 77)
-    elif "zentrales mittelfeld" in pos or "mittelfeld" in pos:
-        return ("BOX_TO_BOX_MIDFIELDER", "ADVANCED_PLAYMAKER_MEZZALA", "Dynamischer Allrounder (BBM)", 78)
     elif "offensives mittelfeld" in pos:
-        return ("ADVANCED_PLAYMAKER_MEZZALA", "INSIDE_FORWARD_IW", "Vorgeschobener Spielmacher (AP/MEZ)", 80)
+        return ("ADVANCED_PLAYMAKER_MEZZALA", "INSIDE_FORWARD_IW", "Kreativer 10er & Spielmacher (AP/MEZ)", 85)
+    elif "defensives mittelfeld" in pos:
+        return ("DEEP_LYING_PLAYMAKER", "ANCHOR_BWM", "Taktgeber & Defensiv-Sechser (DLP/BWM)", 82)
+    elif "zentrales mittelfeld" in pos:
+        return ("BOX_TO_BOX_MIDFIELDER", "ADVANCED_PLAYMAKER_MEZZALA", "Dynamischer Allrounder (BBM)", 80)
+    elif "mittelfeld" in pos:
+        return ("BOX_TO_BOX_MIDFIELDER", "DEEP_LYING_PLAYMAKER", "Zentrales Mittelfeld (BBM)", 78)
     elif "linksaußen" in pos or "rechtsaußen" in pos or "flügel" in pos:
         return ("INSIDE_FORWARD_IW", "CLASSIC_WINGER", "Invertierter Flügelstürmer (Inside Forward)", 81)
     elif "mittelstürmer" in pos or "stürmer" in pos or "spitze" in pos:
