@@ -343,8 +343,7 @@ Ihr FutMatch Executive Advisor Team`;
                     <tr>
                       <th className="p-2">Spieler</th>
                       <th className="p-2">Position</th>
-                      <th className="p-2">Taktische FM-Rolle & Archetyp</th>
-                      <th className="p-2">Benchmark Ähnlichkeit</th>
+                      <th className="p-2">FM-Rollen %-Verteilung & Archetyp</th>
                       <th className="p-2">Marktwert</th>
                       <th className="p-2 text-right">Vertrag bis</th>
                     </tr>
@@ -352,7 +351,6 @@ Ihr FutMatch Executive Advisor Team`;
                   <tbody className="divide-y divide-zinc-800/60 bg-zinc-900/50">
                     {fullSquad.map((player, pIdx) => {
                       const isExpiring = player.contract_until && (player.contract_until.includes('2027') || player.contract_until.includes('2028'));
-                      const sim = player.benchmark_similarity;
                       return (
                         <tr key={pIdx} className="hover:bg-zinc-800/50 transition">
                           <td className="p-2 font-bold text-zinc-100">
@@ -366,26 +364,17 @@ Ihr FutMatch Executive Advisor Team`;
                           </td>
                           <td className="p-2 text-zinc-300">{player.position}</td>
                           <td className="p-2">
-                            {player.tactical_role_label ? (
+                            {player.role_distribution_label ? (
                               <div className="space-y-0.5">
-                                <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-amber-300 font-bold text-[9px] block w-fit">
-                                  {player.tactical_role_label.split('(')[0]} ({player.role_fit_pct || 80}%)
+                                <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-amber-300 font-bold text-[9px] block w-fit font-mono">
+                                  {player.role_distribution_label}
                                 </span>
-                                <span className="text-[9px] text-zinc-400 block font-sans">
-                                  {player.archetype || 'Profi-Athlet'}
+                                <span className="text-[9px] text-emerald-400/90 block font-sans font-medium">
+                                  🏷️ {player.archetype || 'Profi-Athlet'}
                                 </span>
                               </div>
                             ) : (
                               <span className="text-zinc-500 text-[10px]">-</span>
-                            )}
-                          </td>
-                          <td className="p-2">
-                            {sim ? (
-                              <span className="px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-[10px] font-mono">
-                                🎯 {sim.similarity_score_pct}% ~ {sim.similar_elite_player}
-                              </span>
-                            ) : (
-                              <span className="text-zinc-500 text-[10px]">Standard</span>
                             )}
                           </td>
                           <td className="p-2 font-bold text-amber-300">{player.market_value || '-'}</td>
