@@ -9,7 +9,7 @@ import AddClubModal from '../components/AddClubModal';
 import { fetchRealSupabaseMatches } from '../services/realMatchingService';
 
 export default function DashboardPage({ onBackToLanding }) {
-  const { user, isAdmin, logout } = useAuth();
+  const { user, isAdmin, loading: authLoading, logout } = useAuth();
 
   const [profile, setProfile] = useState({
     position: 'ALL',
@@ -26,7 +26,19 @@ export default function DashboardPage({ onBackToLanding }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Security Check: If not logged in or not admin, show access denied
+  // 1. Session Restoration Check
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center p-6 font-mono">
+        <div className="flex items-center gap-3 text-emerald-400">
+          <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-xs uppercase font-bold tracking-wider">Authentifiziere Berater-Session...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // 2. Security Check: If not logged in or not admin, show access denied
   if (!user || !isAdmin) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center p-6 antialiased font-sans">
