@@ -72,7 +72,8 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
             <option value="ALL">Alle Ligen (Beliebig)</option>
             <option value="Bundesliga">Bundesliga</option>
             <option value="2. Bundesliga">2. Bundesliga</option>
-            <option value="Jupiler Pro League">Jupiler Pro League (Belgien)</option>
+            <option value="3. Liga">3. Liga</option>
+            <option value="Regionalliga">Regionalliga</option>
           </select>
         </div>
 

@@ -11,6 +11,10 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from app.db.supabase_client import get_supabase_client
@@ -20,13 +24,44 @@ HEADERS = {
 }
 
 TARGET_CLUBS = [
-    {"id": "CLB-B04", "tm_id": 15, "slug": "bayer-04-leverkusen", "name": "Bayer 04 Leverkusen", "league": "Bundesliga", "system": "4-2-3-1"},
-    {"id": "CLB-STP", "tm_id": 35, "slug": "fc-st-pauli", "name": "FC St. Pauli", "league": "Bundesliga", "system": "4-2-3-1"},
-    {"id": "CLB-F95", "tm_id": 38, "slug": "fortuna-dusseldorf", "name": "Fortuna Düsseldorf", "league": "2. Bundesliga", "system": "4-2-3-1"},
-    {"id": "CLB-SGG", "tm_id": 65, "slug": "spvgg-greuther-furth", "name": "Greuther Fürth", "league": "2. Bundesliga", "system": "4-2-3-1"},
-    {"id": "CLB-KSV", "tm_id": 269, "slug": "holstein-kiel", "name": "Holstein Kiel", "league": "Bundesliga", "system": "4-2-3-1"},
+    # Bundesliga
     {"id": "CLB-FCB", "tm_id": 27, "slug": "bayern-munchen", "name": "FC Bayern München", "league": "Bundesliga", "system": "4-2-3-1"},
+    {"id": "CLB-B04", "tm_id": 15, "slug": "bayer-04-leverkusen", "name": "Bayer 04 Leverkusen", "league": "Bundesliga", "system": "3-4-2-1"},
     {"id": "CLB-BVB", "tm_id": 16, "slug": "borussia-dortmund", "name": "Borussia Dortmund", "league": "Bundesliga", "system": "4-2-3-1"},
+    {"id": "CLB-STP", "tm_id": 35, "slug": "fc-st-pauli", "name": "FC St. Pauli", "league": "Bundesliga", "system": "3-4-2-1"},
+    
+    # 2. Bundesliga
+    {"id": "CLB-KSV", "tm_id": 269, "slug": "holstein-kiel", "name": "Holstein Kiel", "league": "2. Bundesliga", "system": "3-5-2"},
+    {"id": "CLB-SGG", "tm_id": 65, "slug": "spvgg-greuther-furth", "name": "Greuther Fürth", "league": "2. Bundesliga", "system": "4-3-3"},
+    
+    # 3. Liga (Expanded)
+    {"id": "CLB-F95", "tm_id": 38, "slug": "fortuna-dusseldorf", "name": "Fortuna Düsseldorf", "league": "3. Liga", "system": "4-3-1-2"},
+    {"id": "CLB-SGD", "tm_id": 129, "slug": "sg-dynamo-dresden", "name": "Dynamo Dresden", "league": "3. Liga", "system": "4-3-3"},
+    {"id": "CLB-FCS", "tm_id": 21, "slug": "1-fc-saarbrucken", "name": "1. FC Saarbrücken", "league": "3. Liga", "system": "3-4-2-1"},
+    {"id": "CLB-RWE", "tm_id": 56, "slug": "rot-weiss-essen", "name": "Rot-Weiss Essen", "league": "3. Liga", "system": "4-2-3-1"},
+    {"id": "CLB-M60", "tm_id": 72, "slug": "tsv-1860-munchen", "name": "TSV 1860 München", "league": "3. Liga", "system": "4-2-3-1"},
+    {"id": "CLB-DSC", "tm_id": 10, "slug": "arminia-bielefeld", "name": "Arminia Bielefeld", "league": "3. Liga", "system": "4-3-3"},
+    {"id": "CLB-SVS", "tm_id": 254, "slug": "sv-sandhausen", "name": "SV Sandhausen", "league": "3. Liga", "system": "4-2-3-1"},
+    {"id": "CLB-VFL", "tm_id": 80, "slug": "vfl-osnabruck", "name": "VfL Osnabrück", "league": "3. Liga", "system": "4-3-3"},
+    {"id": "CLB-FCH", "tm_id": 30, "slug": "fc-hansa-rostock", "name": "Hansa Rostock", "league": "3. Liga", "system": "3-4-1-2"},
+    {"id": "CLB-SVW", "tm_id": 108, "slug": "sv-wehen-wiesbaden", "name": "SV Wehen Wiesbaden", "league": "3. Liga", "system": "3-4-2-1"},
+    {"id": "CLB-AUE", "tm_id": 114, "slug": "fc-erzgebirge-aue", "name": "Erzgebirge Aue", "league": "3. Liga", "system": "4-2-3-1"},
+    {"id": "CLB-VIK", "tm_id": 663, "slug": "fc-viktoria-koln", "name": "FC Viktoria Köln", "league": "3. Liga", "system": "4-2-3-1"},
+    {"id": "CLB-SCV", "tm_id": 152, "slug": "sc-verl", "name": "SC Verl", "league": "3. Liga", "system": "4-3-3"},
+    {"id": "CLB-FCI", "tm_id": 4795, "slug": "fc-ingolstadt-04", "name": "FC Ingolstadt 04", "league": "3. Liga", "system": "4-4-2"},
+    {"id": "CLB-ULM", "tm_id": 211, "slug": "ssv-ulm-1846-fussball", "name": "SSV Ulm 1846", "league": "3. Liga", "system": "3-4-2-1"},
+    {"id": "CLB-REG", "tm_id": 197, "slug": "ssv-jahn-regensburg", "name": "SSV Jahn Regensburg", "league": "3. Liga", "system": "4-2-3-1"},
+
+    # Regionalliga (Expanded)
+    {"id": "CLB-AAC", "tm_id": 164, "slug": "alemannia-aachen", "name": "Alemannia Aachen", "league": "Regionalliga", "system": "3-4-1-2"},
+    {"id": "CLB-MSV", "tm_id": 52, "slug": "msv-duisburg", "name": "MSV Duisburg", "league": "Regionalliga", "system": "4-2-3-1"},
+    {"id": "CLB-OFC", "tm_id": 84, "slug": "kickers-offenbach", "name": "Kickers Offenbach", "league": "Regionalliga", "system": "4-3-3"},
+    {"id": "CLB-RWO", "tm_id": 78, "slug": "rot-weiss-oberhausen", "name": "Rot-Weiß Oberhausen", "league": "Regionalliga", "system": "4-2-3-1"},
+    {"id": "CLB-WSV", "tm_id": 120, "slug": "wuppertaler-sv", "name": "Wuppertaler SV", "league": "Regionalliga", "system": "4-3-3"},
+    {"id": "CLB-CFC", "tm_id": 105, "slug": "chemnitzer-fc", "name": "Chemnitzer FC", "league": "Regionalliga", "system": "4-2-3-1"},
+    {"id": "CLB-JEN", "tm_id": 104, "slug": "fc-carl-zeiss-jena", "name": "FC Carl Zeiss Jena", "league": "Regionalliga", "system": "4-3-3"},
+    {"id": "CLB-SKI", "tm_id": 83, "slug": "stuttgarter-kickers", "name": "Stuttgarter Kickers", "league": "Regionalliga", "system": "4-2-3-1"},
+    {"id": "CLB-COT", "tm_id": 146, "slug": "energie-cottbus", "name": "Energie Cottbus", "league": "Regionalliga", "system": "4-3-3"},
 ]
 
 def scrape_live_head_coach(tm_id, slug):
