@@ -17,6 +17,7 @@ export default function DossierModal({ club, profile, onClose }) {
   const positionalRoles = squadProfile.positional_role_tactics || {};
   const wyscoutStarters = squadProfile.wyscout_2027_starters || {};
   const startingXI = squadProfile.starting_xi_2027 || [];
+  const fullSquad = squadProfile.full_squad_2027 || squadProfile.live_squad_sample || [];
   const tacticalFormation = squadProfile.tactical_formation_2027 || tactic;
   const coverageTier = deepTactics.data_coverage_tier || '100% Empirische 2026/2027 FBref & Transfermarkt Echtdaten';
 
@@ -164,7 +165,15 @@ Ihr FutMatch Executive Advisor Team`;
                   viewMode === 'FULL_FORMATION_XI' ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                📋 Top 11 Startelf (Minuten)
+                📋 Top 11 Startelf
+              </button>
+              <button
+                onClick={() => setViewMode('FULL_SQUAD_LIST')}
+                className={`px-2 py-0.5 text-[10px] font-mono rounded font-bold transition ${
+                  viewMode === 'FULL_SQUAD_LIST' ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                👥 Gesamter Kader ({squadProfile.active_squad_size || fullSquad.length || '2026/27'})
               </button>
             </div>
           </div>
@@ -309,6 +318,62 @@ Ihr FutMatch Executive Advisor Team`;
                     )}
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* MODE 3: FULL SQUAD LIST (GESAMTER KADER 2026/2027) */}
+          {viewMode === 'FULL_SQUAD_LIST' && (
+            <div className="space-y-3 font-mono">
+              <div className="flex items-center justify-between">
+                <span className="text-emerald-400 font-bold text-[11px] uppercase tracking-wider block">
+                  👥 GESAMTER AKTUELLER KADER 2026/2027 ({fullSquad.length} SPIELER)
+                </span>
+                <span className="text-[10px] text-zinc-400 font-sans">Live Transfermarkt Sync</span>
+              </div>
+
+              <div className="border border-zinc-800 rounded overflow-hidden">
+                <table className="w-full text-left text-[11px] font-mono">
+                  <thead className="bg-zinc-950 text-zinc-400 border-b border-zinc-800 text-[10px] uppercase">
+                    <tr>
+                      <th className="p-2">Spieler</th>
+                      <th className="p-2">Position</th>
+                      <th className="p-2">Alter</th>
+                      <th className="p-2">Fuß</th>
+                      <th className="p-2">Marktwert</th>
+                      <th className="p-2 text-right">Vertrag bis</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-800/60 bg-zinc-900/50">
+                    {fullSquad.map((player, pIdx) => {
+                      const isExpiring = player.contract_until && (player.contract_until.includes('2027') || player.contract_until.includes('2028'));
+                      return (
+                        <tr key={pIdx} className="hover:bg-zinc-800/50 transition">
+                          <td className="p-2 font-bold text-zinc-100 flex items-center gap-1.5">
+                            {player.profile_url ? (
+                              <a href={player.profile_url} target="_blank" rel="noreferrer" className="hover:text-emerald-400 underline decoration-zinc-700">
+                                {player.name}
+                              </a>
+                            ) : (
+                              player.name
+                            )}
+                          </td>
+                          <td className="p-2 text-zinc-300">{player.position}</td>
+                          <td className="p-2 text-zinc-400">{player.age || '-'}</td>
+                          <td className="p-2 text-zinc-400">{player.foot || '-'}</td>
+                          <td className="p-2 font-bold text-amber-300">{player.market_value || '-'}</td>
+                          <td className="p-2 text-right">
+                            <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                              isExpiring ? 'bg-amber-950 text-amber-400 border border-amber-800' : 'text-zinc-400'
+                            }`}>
+                              {player.contract_until || 'Unbekannt'}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           )}

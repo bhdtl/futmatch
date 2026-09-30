@@ -196,7 +196,8 @@ def run_live_transfermarkt_sync():
                     "midfielders": len(midfielders),
                     "attackers": len(attackers)
                 },
-                "live_squad_sample": squad[:15],
+                "full_squad_2027": squad,
+                "live_squad_sample": squad,
                 "data_source": f"Live Real-Time Transfermarkt Scraper (Season 2026/2027 - transfermarkt.de/verein/{club_cfg['tm_id']})"
             },
             "base_rating": 80
