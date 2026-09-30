@@ -150,30 +150,22 @@ Ihr FutMatch Executive Advisor Team`;
               Cheftrainer: <strong className="text-zinc-200">{headCoach}</strong> • System: <strong className="text-emerald-400">{tacticalFormation}</strong>
             </p>
             {/* View Mode Toggle Buttons */}
-            <div className="flex gap-1">
+            <div className="flex gap-1.5">
               <button
                 onClick={() => setViewMode('POSITION_TAB')}
-                className={`px-2 py-0.5 text-[10px] font-mono rounded font-bold transition ${
-                  viewMode === 'POSITION_TAB' ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
+                className={`px-3 py-1 text-[11px] font-mono rounded font-bold transition ${
+                  viewMode === 'POSITION_TAB' ? 'bg-emerald-600 text-white shadow-sm' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                Positions-Tabs
-              </button>
-              <button
-                onClick={() => setViewMode('FULL_FORMATION_XI')}
-                className={`px-2 py-0.5 text-[10px] font-mono rounded font-bold transition ${
-                  viewMode === 'FULL_FORMATION_XI' ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
-                }`}
-              >
-                📋 Top 11 Startelf
+                📍 Taktik-DNA & Vakanzen
               </button>
               <button
                 onClick={() => setViewMode('FULL_SQUAD_LIST')}
-                className={`px-2 py-0.5 text-[10px] font-mono rounded font-bold transition ${
-                  viewMode === 'FULL_SQUAD_LIST' ? 'bg-emerald-600 text-white' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
+                className={`px-3 py-1 text-[11px] font-mono rounded font-bold transition ${
+                  viewMode === 'FULL_SQUAD_LIST' ? 'bg-emerald-600 text-white shadow-sm' : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                👥 Gesamter Kader ({squadProfile.active_squad_size || fullSquad.length || '2026/27'})
+                👥 Gesamter Kader & Verträge ({squadProfile.active_squad_size || fullSquad.length || '2026/27'})
               </button>
             </div>
           </div>
