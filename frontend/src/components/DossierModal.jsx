@@ -394,10 +394,10 @@ Ihr FutMatch Executive Advisor Team`;
             </div>
           )}
 
-          {/* FC Barcelona Standard Pro Tactical Analyst Breakdown */}
+          {/* Advanced Pro Scouting Level Tactical Analyst Breakdown */}
           <div className="bg-zinc-950 p-3 rounded border border-zinc-800 space-y-2">
             <span className="text-[10px] text-amber-400 font-bold uppercase block tracking-wider">
-              📊 PRO TAKTIK-ANALYSE (FC BARCELONA STANDARD METRIKEN)
+              📊 ERWEITERTE TAKTIK- & LEISTUNGSMETRIKEN (PRO SCOUTING LEVEL)
             </span>
             <div className="grid grid-cols-2 gap-2 text-[11px]">
               <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
