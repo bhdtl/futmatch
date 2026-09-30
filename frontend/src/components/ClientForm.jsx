@@ -128,21 +128,45 @@ export default function ClientForm({ profile, onChange, onSubmit, onReset, loadi
 
         {/* Info & Action Row */}
         <div className="lg:col-span-3 flex flex-wrap items-center gap-3 text-[11px] pt-1 font-mono">
-          <span className="text-zinc-500 font-bold">SCOUT AI ROLLE:</span>
+          <span className="text-zinc-500 font-bold">SCOUT AI TAKTIK-ROLLE:</span>
           <select
             name="tactical_role"
-            value={profile.tactical_role || 'ATTACKING_WINGBACK'}
+            value={profile.tactical_role || 'WING_BACK'}
             onChange={onChange}
-            className="bg-zinc-950 border border-zinc-800 rounded px-2.5 py-1 text-emerald-400 font-bold cursor-pointer focus:outline-none focus:border-emerald-600"
+            className="bg-zinc-950 border border-zinc-800 rounded px-2.5 py-1 text-emerald-400 font-bold cursor-pointer focus:outline-none focus:border-emerald-600 font-sans"
           >
-            <option value="ATTACKING_WINGBACK">⚡ Offensiver Schienenspieler (Complete Wing-Back)</option>
-            <option value="INVERTED_WINGBACK">🧠 Einrückender Aufbauspieler (Inverted Wing-Back)</option>
-            <option value="BALL_PLAYING_DEFENDER">⚽ Spielgestaltender Innenverteidiger (Ball-Playing)</option>
-            <option value="STOPPER_IV">🛡️ Zweikampfstarker Stopper (Physisch)</option>
-            <option value="DEEP_LYING_PLAYMAKER">🎯 Tiefstehender Spielmacher / 6er (Playmaker)</option>
-            <option value="BOX_TO_BOX_ENGINE">🏃 Dynamischer Allrounder / 8er (Box-To-Box)</option>
-            <option value="INSIDE_FORWARD">🔥 Torgefährlicher Flügelstürmer (Inside Forward)</option>
-            <option value="TARGET_FORWARD">🎯 Zielspieler & Strafraum-Knipser (Target Forward)</option>
+            <optgroup label="1. TORWART (GK)">
+              <option value="SWEEPER_KEEPER">Mitspielender Torwart (Sweeper Keeper / SK)</option>
+              <option value="CLASSIC_GOALKEEPER">Klassischer Torwart (Goalkeeper / G)</option>
+            </optgroup>
+            <optgroup label="2. INNENVERTEIDIGER (CB)">
+              <option value="BALL_PLAYING_DEFENDER">Ballspielender Verteidiger (Ball-Playing Defender / BPD)</option>
+              <option value="NO_NONSENSE_CB">Zentraler / Kompromissloser IV (No-Nonsense CB / NCB)</option>
+              <option value="WIDE_CENTRE_BACK">Breiter Innenverteidiger (Wide Centre-Back / WCB)</option>
+            </optgroup>
+            <optgroup label="3. AUSSENVERTEIDIGER (FB / WB)">
+              <option value="WING_BACK">Flügelverteidiger / Schienenspieler (Wing-Back / WB)</option>
+              <option value="INVERTED_WING_BACK">Invertierter Außenverteidiger (Inverted Full-Back / IWB)</option>
+            </optgroup>
+            <optgroup label="4. DEFENSIVES MITTELFELD (DM)">
+              <option value="ANCHOR_BWM">Tiefer Sechser / Abräumer (Anchor / Ball-Winning Midfielder)</option>
+              <option value="DEEP_LYING_PLAYMAKER">Tiefliegender Spielmacher (Deep Lying Playmaker / DLP)</option>
+              <option value="SEGUNDO_VOLANTE">Halbflügelspieler / Segundo Volante (SV)</option>
+            </optgroup>
+            <optgroup label="5. ZENTRALES MITTELFELD (CM)">
+              <option value="BOX_TO_BOX_MIDFIELDER">Box-to-Box-Mittelfeldspieler (Box-to-Box Midfielder / BBM)</option>
+              <option value="ADVANCED_PLAYMAKER_MEZZALA">Vorgeschobener Spielmacher / Mezzala (AP / MEZ)</option>
+            </optgroup>
+            <optgroup label="6. FLÜGEL / OFFENSIVES MITTELFELD (AM / W / IF)">
+              <option value="INSIDE_FORWARD_IW">Invertierter Flügelstürmer (Inside Forward / IF / IW)</option>
+              <option value="CLASSIC_WINGER">Klassischer Flügelspieler (Winger / W)</option>
+              <option value="SHADOW_STRIKER">Schattenstürmer (Shadow Striker / SS)</option>
+            </optgroup>
+            <optgroup label="7. MITTELSTÜRMER (ST)">
+              <option value="ADVANCED_FORWARD">Kompletter Stürmer / Stoßstürmer (Advanced Forward / AF)</option>
+              <option value="FALSE_NINE_DLF">Falsche Neun / Hängende Spitze (False Nine / F9 / DLF)</option>
+              <option value="TARGET_FORWARD">Zielspieler / Physischer Anker (Target Forward / TF)</option>
+            </optgroup>
           </select>
         </div>
 
