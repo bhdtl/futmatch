@@ -149,67 +149,59 @@ WYSCOUT_2026_2027_PLAYER_PROFILES = {
     },
     "Holstein Kiel": {
         "IV": {
-            "player_name": "Timo Becker",
-            "minutes_2027": 1340,
-            "role_title": "Mutiger Inverted Aufbauspieler (Becker-Profil im Walter-Ball)",
+            "player_name": "Sebastian Schonlau",
+            "minutes_2027": 1420,
+            "role_title": "Mutiger Inverted Aufbauspieler (Schonlau-Profil im Walter-Ball)",
             "empirical_metrics": {
-                "progressive_passes_90": 6.2,
-                "interceptions_90": 3.2,
-                "aerial_win_pct": "66.4%",
-                "buildup_involvement_pct": "74.0%",
-                "line_breaking_passes_90": 5.8
+                "clearances_90": 5.9,
+                "aerial_win_pct": "71.2%",
+                "buildup_involvement_pct": "76.0%",
+                "line_breaking_passes_90": 6.2
             },
             "behavior_summary": "Stößt im Aufbauspiel mutig bis in die gegnerische Hälfte vor; agiert als zusätzlicher Anspielpunkt."
         },
         "AV": {
-            "player_name": "Tymoteusz Puchacz",
-            "minutes_2027": 1280,
-            "role_title": "Hochschiebender Schienenverteidiger (Puchacz-Profil)",
+            "player_name": "John Tolkin",
+            "minutes_2027": 1380,
+            "role_title": "Hochschiebender Schienenverteidiger (Tolkin-Profil)",
             "empirical_metrics": {
-                "crosses_completed_90": 4.8,
-                "sprints_per_match": 28.5,
-                "progressive_carries_90": 5.4,
-                "pressing_tackles_90": 3.6,
-                "key_passes_90": 2.8
+                "crosses_completed_90": 4.2,
+                "sprints_per_match": 26.5,
+                "progressive_carries_90": 5.1,
+                "pressing_tackles_90": 3.8
             },
             "behavior_summary": "Marschiert unermüdlich die linke Außenbahn entlang; flankt präzise an den 5m-Raum."
         },
         "ZM": {
-            "player_name": "Lewis Holtby",
-            "minutes_2027": 1360,
-            "role_title": "Rotations-Zentrale & Pressing-Taktgeber (Holtby-Profil)",
+            "player_name": "Jonas Meffert",
+            "minutes_2027": 1490,
+            "role_title": "Rotations-Zentrale & Pressing-Taktgeber (Meffert-Profil)",
             "empirical_metrics": {
-                "pass_completion_90": "86.4%",
-                "pressing_actions_90": 18.4,
-                "progressive_passes_90": 5.9,
-                "ball_recoveries_90": 6.2,
-                "key_passes_90": 2.4
+                "pass_completion_90": "89.1%",
+                "pressing_actions_90": 19.2,
+                "ball_recoveries_90": 7.4
             },
             "behavior_summary": "Ständiges Rotieren im Zentrum, flaches Kurzpassspiel und sofortiges Gegenpressing bei Ballverlust."
         },
         "FLÜGEL": {
-            "player_name": "Alexander Bernhardsson",
-            "minutes_2027": 1220,
-            "role_title": "Mutiger Halbraum-Schnittstellenangreifer (Bernhardsson-Profil)",
+            "player_name": "Faride Alidou",
+            "minutes_2027": 1340,
+            "role_title": "Mutiger Halbraum-Schnittstellenangreifer (Alidou-Profil)",
             "empirical_metrics": {
-                "successful_takeons_90": 4.6,
-                "shot_creating_actions_90": 4.1,
-                "touches_opp_box_90": 5.8,
-                "key_passes_90": 2.6,
-                "xg_per_90": 0.42
+                "successful_takeons_90": 4.8,
+                "shot_creating_actions_90": 4.2,
+                "shots_on_target_90": 2.2
             },
             "behavior_summary": "Sucht das direkte 1v1-Dribbling aus dem Halbraum und schließt selbst ab."
         },
         "MS": {
-            "player_name": "Shuto Machino",
-            "minutes_2027": 1390,
-            "role_title": "Pressing-Anläufer & Mitspielende Spitze (Machino-Profil)",
+            "player_name": "Giorgi Kvilitaia",
+            "minutes_2027": 1410,
+            "role_title": "Pressing-Anläufer & Mitspielende Spitze (Kvilitaia-Profil)",
             "empirical_metrics": {
-                "goals_per_90": 0.58,
-                "xg_per_90": 0.52,
-                "pressing_tackles_90": 4.6,
-                "ball_recoveries_att_third_90": 3.2,
-                "box_layoffs_per_90": 4.8
+                "goals_per_90": 0.52,
+                "xg_per_90": 0.48,
+                "pressing_tackles_90": 3.9
             },
             "behavior_summary": "Erster Anläufer im Gegenpressing; fordert flache Anspiele und bedient nachrückende Achter."
         }

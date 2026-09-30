@@ -42,19 +42,19 @@ FORMATION_STARTING_XI_PROFILES = {
         ]
     },
     "Holstein Kiel": {
-        "formation": "4-2-3-1 (Tim Walter 4er-Kette)",
+        "formation": "4-2-3-1 (Tim Walter 4er-Kette 2026/27)",
         "starters": [
-            {"slot": "TW", "name": "Timon Weiner", "minutes": 1530, "age": 27, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"short_pass_completion": "91.2%", "sweeper_clearances_90": 3.8, "saves_per_match": 4.2}},
-            {"slot": "LV", "name": "Tymoteusz Puchacz", "minutes": 1280, "age": 27, "foot": "Links", "contract": "30.06.2027", "metrics": {"crosses_completed_90": 4.8, "sprints_per_match": 28.5, "progressive_carries_90": 5.4, "pressing_tackles_90": 3.6}},
-            {"slot": "IV-L", "name": "Patrick Erras", "minutes": 1310, "age": 31, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"clearances_90": 6.8, "aerial_win_pct": "68.4%", "tackles_won_90": 2.9, "long_pass_accuracy": "69.1%"}},
-            {"slot": "IV-R", "name": "Timo Becker", "minutes": 1340, "age": 28, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"progressive_passes_90": 6.2, "interceptions_90": 3.2, "aerial_win_pct": "66.4%", "buildup_involvement_pct": "74.0%"}},
-            {"slot": "RV", "name": "Lasse Rosenboom", "minutes": 1190, "age": 24, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"tackles_won_90": 3.6, "flank_runs_90": 4.2, "ball_recoveries_90": 5.1, "crosses_completed_90": 2.8}},
-            {"slot": "ZM-L", "name": "Lewis Holtby", "minutes": 1360, "age": 35, "foot": "Links", "contract": "30.06.2027", "metrics": {"pass_completion_90": "86.4%", "pressing_actions_90": 18.4, "progressive_passes_90": 5.9, "ball_recoveries_90": 6.2}},
-            {"slot": "ZM-R", "name": "Nicolai Remberg", "minutes": 1290, "age": 25, "foot": "Rechts", "contract": "30.06.2028", "metrics": {"ball_recoveries_90": 7.2, "tackles_won_90": 4.1, "pressing_actions_90": 21.4, "duels_won_pct": "62.8%"}},
-            {"slot": "LF", "name": "Alexander Bernhardsson", "minutes": 1220, "age": 27, "foot": "Links", "contract": "30.06.2027", "metrics": {"successful_takeons_90": 4.6, "shot_creating_actions_90": 4.1, "touches_opp_box_90": 5.8, "key_passes_90": 2.6}},
-            {"slot": "OM", "name": "Armin Gigovic", "minutes": 1240, "age": 23, "foot": "Rechts", "contract": "30.06.2028", "metrics": {"transition_passes_90": 5.4, "interceptions_90": 3.8, "key_passes_90": 2.1, "progressive_carries_90": 4.2}},
-            {"slot": "RF", "name": "Steven Skrzybski", "minutes": 1210, "age": 33, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"goals_per_90": 0.48, "xg_per_90": 0.44, "key_passes_90": 3.4, "shots_on_target_90": 2.1}},
-            {"slot": "MS", "name": "Shuto Machino", "minutes": 1390, "age": 26, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"goals_per_90": 0.58, "xg_per_90": 0.52, "pressing_tackles_90": 4.6, "ball_recoveries_att_third_90": 3.2}}
+            {"slot": "TW", "name": "Timon Weiner", "minutes": 1530, "age": 27, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"pass_completion": "91.2%", "saves_per_match": 4.2}},
+            {"slot": "LV", "name": "John Tolkin", "minutes": 1380, "age": 24, "foot": "Links", "contract": "30.06.2028", "metrics": {"crosses_completed_90": 4.2, "tackles_won_90": 3.8}},
+            {"slot": "IV-L", "name": "Sebastian Schonlau", "minutes": 1420, "age": 32, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"clearances_90": 5.9, "aerial_win_pct": "71.2%"}},
+            {"slot": "IV-R", "name": "David Zec", "minutes": 1390, "age": 26, "foot": "Rechts", "contract": "30.06.2029", "metrics": {"interceptions_90": 3.8, "pass_completion_90": "88.4%"}},
+            {"slot": "RV", "name": "Hiroki Sekine", "minutes": 1310, "age": 24, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"progressive_carries_90": 5.1, "tackles_won_90": 3.4}},
+            {"slot": "ZM-L", "name": "Jonas Meffert", "minutes": 1490, "age": 32, "foot": "Rechts", "contract": "30.06.2028", "metrics": {"pass_completion_90": "89.1%", "ball_recoveries_90": 7.4}},
+            {"slot": "ZM-R", "name": "Kasper Davidsen", "minutes": 1260, "age": 21, "foot": "Rechts", "contract": "30.06.2029", "metrics": {"pressing_actions_90": 19.4, "tackles_won_90": 4.2}},
+            {"slot": "LF", "name": "Faride Alidou", "minutes": 1340, "age": 25, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"successful_takeons_90": 4.8, "shots_on_target_90": 2.2}},
+            {"slot": "OM", "name": "Jonas Therkelsen", "minutes": 1280, "age": 23, "foot": "Rechts", "contract": "30.06.2029", "metrics": {"key_passes_90": 3.1, "shot_creating_actions_90": 4.2}},
+            {"slot": "RF", "name": "Adrián Kaprálik", "minutes": 1320, "age": 24, "foot": "Rechts", "contract": "30.06.2029", "metrics": {"top_speed_kmh": "35.2 km/h", "progressive_carries_90": 6.1}},
+            {"slot": "MS", "name": "Giorgi Kvilitaia", "minutes": 1410, "age": 32, "foot": "Rechts", "contract": "30.06.2027", "metrics": {"goals_per_90": 0.52, "xg_per_90": 0.48}}
         ]
     },
     "FC Bayern München": {
