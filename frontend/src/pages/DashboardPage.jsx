@@ -9,7 +9,7 @@ import AddClubModal from '../components/AddClubModal';
 import { fetchRealSupabaseMatches } from '../services/realMatchingService';
 
 export default function DashboardPage({ onBackToLanding }) {
-  const { user, isAdmin, loading: authLoading, logout } = useAuth();
+  const { user, isAdmin, loading: authLoading, logout, loginAsDemoAdmin } = useAuth();
 
   const [profile, setProfile] = useState({
     position: 'ALL',
@@ -58,21 +58,29 @@ export default function DashboardPage({ onBackToLanding }) {
             <p>Eingeloggt als: <span className="text-white">{user?.email || 'Nicht angemeldet'}</span></p>
           </div>
 
-          <div className="flex gap-2 pt-2">
-            {user && (
+          <div className="space-y-2 pt-2">
+            <button 
+              onClick={loginAsDemoAdmin}
+              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded transition shadow-sm flex items-center justify-center gap-2"
+            >
+              <span>⚡</span> Als Admin / Berater einloggen (Session Aktivieren)
+            </button>
+            <div className="flex gap-2">
+              {user && (
+                <button 
+                  onClick={logout}
+                  className="flex-1 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs rounded transition"
+                >
+                  Abmelden
+                </button>
+              )}
               <button 
-                onClick={logout}
+                onClick={onBackToLanding}
                 className="flex-1 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs rounded transition"
               >
-                Abmelden
+                Zur Landingpage
               </button>
-            )}
-            <button 
-              onClick={onBackToLanding}
-              className="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded transition"
-            >
-              Zur Landingpage
-            </button>
+            </div>
           </div>
         </div>
       </div>

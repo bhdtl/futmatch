@@ -4,11 +4,12 @@ import LandingPage from './pages/LandingPage';
 import DashboardPage from './pages/DashboardPage';
 
 export default function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const getCleanPath = () => window.location.pathname.toLowerCase().trim();
+  const [currentPath, setCurrentPath] = useState(getCleanPath());
 
   useEffect(() => {
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname);
+      setCurrentPath(getCleanPath());
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -16,12 +17,14 @@ export default function App() {
 
   const navigateTo = (path) => {
     window.history.pushState({}, '', path);
-    setCurrentPath(path);
+    setCurrentPath(path.toLowerCase().trim());
   };
+
+  const isDashboardRoute = currentPath.startsWith('/dashboard');
 
   return (
     <AuthProvider>
-      {currentPath === '/dashboard' ? (
+      {isDashboardRoute ? (
         <DashboardPage onBackToLanding={() => navigateTo('/')} />
       ) : (
         <LandingPage onEnterDashboard={() => navigateTo('/dashboard')} />

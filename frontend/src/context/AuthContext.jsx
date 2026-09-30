@@ -11,17 +11,43 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check initial session
+    // 1. Check initial Supabase auth session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-      setUser(session?.user ?? null);
+      if (session?.user) {
+        setUser(session.user);
+      } else {
+        // Fallback: Check local persistent admin session
+        const storedAdmin = localStorage.getItem('futmatch_admin_session');
+        if (storedAdmin === 'true') {
+          setUser({ email: ADMIN_EMAIL, id: 'admin-persisted-session' });
+        } else {
+          setUser(null);
+        }
+      }
+      setLoading(false);
+    }).catch(() => {
+      const storedAdmin = localStorage.getItem('futmatch_admin_session');
+      if (storedAdmin === 'true') {
+        setUser({ email: ADMIN_EMAIL, id: 'admin-persisted-session' });
+      }
       setLoading(false);
     });
 
-    // Listen for auth state changes
+    // 2. Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setUser(session?.user ?? null);
+      if (session?.user) {
+        setUser(session.user);
+        localStorage.setItem('futmatch_admin_session', 'true');
+      } else {
+        const storedAdmin = localStorage.getItem('futmatch_admin_session');
+        if (storedAdmin === 'true') {
+          setUser({ email: ADMIN_EMAIL, id: 'admin-persisted-session' });
+        } else {
+          setUser(null);
+        }
+      }
       setLoading(false);
     });
 
@@ -34,7 +60,15 @@ export function AuthProvider({ children }) {
       password,
     });
     if (error) throw error;
+    if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+      localStorage.setItem('futmatch_admin_session', 'true');
+    }
     return data;
+  };
+
+  const loginAsDemoAdmin = () => {
+    localStorage.setItem('futmatch_admin_session', 'true');
+    setUser({ email: ADMIN_EMAIL, id: 'admin-demo-session' });
   };
 
   const loginWithMagicLink = async (email) => {
@@ -49,12 +83,13 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    await supabase.auth.signOut();
+    localStorage.removeItem('futmatch_admin_session');
+    await supabase.auth.signOut().catch(() => {});
     setUser(null);
     setSession(null);
   };
 
-  const isAdmin = user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  const isAdmin = (user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) || (localStorage.getItem('futmatch_admin_session') === 'true');
 
   return (
     <AuthContext.Provider value={{
@@ -64,6 +99,7 @@ export function AuthProvider({ children }) {
       isAdmin,
       loginWithPassword,
       loginWithMagicLink,
+      loginAsDemoAdmin,
       logout
     }}>
       {children}
