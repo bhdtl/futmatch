@@ -33,6 +33,50 @@ export default function DashboardPage({ onBackToLanding }) {
     }
   }, [authLoading, user, isAdmin]);
 
+  const fetchMatches = async (currentProfile) => {
+    setLoading(true);
+    setHasSearched(true);
+    try {
+      // 1. Try local FastAPI server if available
+      const res = await fetch('http://127.0.0.1:8000/api/match-clubs', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Admin-Email': user?.email || ''
+        },
+        body: JSON.stringify(currentProfile)
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setMatches(data);
+          setLoading(false);
+          return;
+        }
+      }
+    } catch (err) {
+      // Local backend server offline, proceeding to direct Supabase Cloud query
+    }
+
+    // 2. Direct Supabase Cloud DB query (100% real records, ZERO dummy data)
+    try {
+      const realData = await fetchRealSupabaseMatches(currentProfile);
+      setMatches(realData);
+    } catch (err) {
+      console.error("[Matchmaker Error]", err);
+      setMatches([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Trigger initial matching unconditionally at hook initialization
+  useEffect(() => {
+    if (user && isAdmin) {
+      fetchMatches(profile);
+    }
+  }, [user, isAdmin]);
+
   // 1. Session Restoration Check
   if (authLoading) {
     return (
@@ -93,48 +137,6 @@ export default function DashboardPage({ onBackToLanding }) {
       </div>
     );
   }
-
-  const fetchMatches = async (currentProfile) => {
-    setLoading(true);
-    setHasSearched(true);
-    try {
-      // 1. Try local FastAPI server if available
-      const res = await fetch('http://127.0.0.1:8000/api/match-clubs', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'X-Admin-Email': user?.email || ''
-        },
-        body: JSON.stringify(currentProfile)
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setMatches(data);
-          setLoading(false);
-          return;
-        }
-      }
-    } catch (err) {
-      // Local backend server offline, proceeding to direct Supabase Cloud query
-    }
-
-    // 2. Direct Supabase Cloud DB query (100% real records, ZERO dummy data)
-    try {
-      const realData = await fetchRealSupabaseMatches(currentProfile);
-      setMatches(realData);
-    } catch (err) {
-      console.error("[Matchmaker Error]", err);
-      setMatches([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Trigger initial matching on load so page loads real Supabase records immediately
-  useEffect(() => {
-    fetchMatches(profile);
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
