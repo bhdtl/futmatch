@@ -339,7 +339,7 @@ Ihr FutMatch Executive Advisor Team`;
                       <th className="p-2">Spieler</th>
                       <th className="p-2">Position</th>
                       <th className="p-2">Alter</th>
-                      <th className="p-2">Fuß</th>
+                      <th className="p-2">Spieler-Benchmark Ähnlichkeit</th>
                       <th className="p-2">Marktwert</th>
                       <th className="p-2 text-right">Vertrag bis</th>
                     </tr>
@@ -347,9 +347,10 @@ Ihr FutMatch Executive Advisor Team`;
                   <tbody className="divide-y divide-zinc-800/60 bg-zinc-900/50">
                     {fullSquad.map((player, pIdx) => {
                       const isExpiring = player.contract_until && (player.contract_until.includes('2027') || player.contract_until.includes('2028'));
+                      const sim = player.benchmark_similarity;
                       return (
                         <tr key={pIdx} className="hover:bg-zinc-800/50 transition">
-                          <td className="p-2 font-bold text-zinc-100 flex items-center gap-1.5">
+                          <td className="p-2 font-bold text-zinc-100">
                             {player.profile_url ? (
                               <a href={player.profile_url} target="_blank" rel="noreferrer" className="hover:text-emerald-400 underline decoration-zinc-700">
                                 {player.name}
@@ -360,7 +361,15 @@ Ihr FutMatch Executive Advisor Team`;
                           </td>
                           <td className="p-2 text-zinc-300">{player.position}</td>
                           <td className="p-2 text-zinc-400">{player.age || '-'}</td>
-                          <td className="p-2 text-zinc-400">{player.foot || '-'}</td>
+                          <td className="p-2">
+                            {sim ? (
+                              <span className="px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-[10px] font-mono">
+                                🎯 {sim.similarity_score_pct}% ~ {sim.similar_elite_player}
+                              </span>
+                            ) : (
+                              <span className="text-zinc-500 text-[10px]">Standard</span>
+                            )}
+                          </td>
                           <td className="p-2 font-bold text-amber-300">{player.market_value || '-'}</td>
                           <td className="p-2 text-right">
                             <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${

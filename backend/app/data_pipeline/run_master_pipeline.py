@@ -14,29 +14,33 @@ from app.data_pipeline.ingest_formation_starting_11 import run_formation_startin
 from app.data_pipeline.ingest_wyscout_player_roles import run_wyscout_player_roles_ingestion
 from app.data_pipeline.detect_live_formation import run_dynamic_formation_detection
 from app.data_pipeline.resolve_entities_reep import run_reep_entity_resolution_sync
+from app.data_pipeline.compute_player_similarity_benchmarks import run_player_similarity_benchmarking_sync
 
 def execute_master_pipeline():
     print("============================================================")
     print("[Pipeline] FutMatch Pro: MASTER DATA PIPELINE EXECUTION")
     print("============================================================")
     
-    print("\n[Step 1/6] Scraping Live 2026/2027 Transfermarkt Squads & Coaches...")
+    print("\n[Step 1/7] Scraping Live 2026/2027 Transfermarkt Squads & Coaches...")
     run_live_transfermarkt_sync()
 
-    print("\n[Step 2/6] Ingesting Live Rolling Tactical Metrics & Coach PPDA...")
+    print("\n[Step 2/7] Ingesting Live Rolling Tactical Metrics & Coach PPDA...")
     run_pure_live_rolling_ingestion()
 
-    print("\n[Step 3/6] Ingesting 2026/2027 Formation Starting XI Rosters...")
+    print("\n[Step 3/7] Ingesting 2026/2027 Formation Starting XI Rosters...")
     run_formation_starting_xi_ingestion()
 
-    print("\n[Step 4/6] Enriching WyScout Positional Roles & Behaviors...")
+    print("\n[Step 4/7] Enriching WyScout Positional Roles & Behaviors...")
     run_wyscout_player_roles_ingestion()
 
-    print("\n[Step 5/6] Detecting Dynamic Tactical Formations...")
+    print("\n[Step 5/7] Detecting Dynamic Tactical Formations...")
     run_dynamic_formation_detection()
 
-    print("\n[Step 6/6] Executing Reep Entity Resolution & Cross-Provider Sync...")
+    print("\n[Step 6/7] Executing Reep Entity Resolution & Cross-Provider Sync...")
     run_reep_entity_resolution_sync()
+
+    print("\n[Step 7/7] Computing Player Similarity Vectors & Positional Medians...")
+    run_player_similarity_benchmarking_sync()
 
     print("\n============================================================")
     print("[COMPLETED] MASTER DATA PIPELINE FULLY COMPLETED & SYNCED TO SUPABASE!")
