@@ -117,13 +117,14 @@ export async function fetchRealSupabaseMatches(profile) {
     const deepTactics = squadProfile.deep_tactics || {};
     const positionalRoles = squadProfile.positional_role_tactics || {};
 
-    const tacticalArchetype = deepTactics.tactical_archetype || squadProfile.tactical_dna || 'Variabler Aufbau';
-    const ppda = deepTactics.ppda !== undefined ? deepTactics.ppda : 10.5;
-    const fieldTilt = deepTactics.field_tilt_pct ? `${deepTactics.field_tilt_pct}%` : '50.0%';
-    const possessionPct = deepTactics.possession_pct ? `${deepTactics.possession_pct}%` : (tacticalMetrics.possession_pct ? `${tacticalMetrics.possession_pct}%` : '50.0%');
-    const progressivePasses = deepTactics.progressive_passes_90 || 35.0;
-    const deepCompletions = deepTactics.deep_completions_per_match || 5.0;
-    const idealTraits = deepTactics.ideal_player_traits || ['Passgenauigkeit unter Druck', 'Positionsdisziplin'];
+    const hasAdvancedTracking = deepTactics.has_advanced_tracking === true;
+    const tacticalArchetype = deepTactics.tactical_archetype || squadProfile.tactical_dna || 'Regionalliga / Profi-Kader';
+    const ppda = hasAdvancedTracking ? deepTactics.ppda : null;
+    const fieldTilt = hasAdvancedTracking && deepTactics.field_tilt_pct ? `${deepTactics.field_tilt_pct}%` : null;
+    const possessionPct = hasAdvancedTracking && deepTactics.possession_pct ? `${deepTactics.possession_pct}%` : null;
+    const progressivePasses = hasAdvancedTracking ? (deepTactics.progressive_passes_90 || 35.0) : null;
+    const deepCompletions = hasAdvancedTracking ? (deepTactics.deep_completions_per_match || 5.0) : null;
+    const idealTraits = deepTactics.ideal_player_traits || ['Kader-Tiefe', 'Positionsflexibilität'];
 
     // Specific position role insight
     let positionRoleTitle = "Allgemeines Rollenprofil";
@@ -160,6 +161,7 @@ export async function fetchRealSupabaseMatches(profile) {
       tactical_alignment: `${tacticalSystem} (${headCoach})`,
       tactical_dna: tacticalArchetype,
       tactical_archetype: tacticalArchetype,
+      has_advanced_tracking: hasAdvancedTracking,
       ppda: ppda,
       field_tilt: fieldTilt,
       progressive_passes_90: progressivePasses,

@@ -75,10 +75,16 @@ export default function MatchTable({ matches, isSearching, onSelectDossier }) {
                     >
                       {name}
                     </button>
-                    {possessionPct && (
+                    {possessionPct ? (
                       <div className="text-[10px] font-mono text-zinc-400 font-normal mt-1 flex items-center gap-2">
                         <span>Ballbesitz: <strong className="text-emerald-400 font-bold">{possessionPct}</strong></span>
                         {ppda && <span>• PPDA: <strong className="text-amber-400 font-bold">{ppda}</strong></span>}
+                      </div>
+                    ) : (
+                      <div className="mt-1">
+                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-amber-400/90 font-bold tracking-wider inline-block">
+                          TRANSFERMARKT REAL • KEIN OPTA-TRACKING
+                        </span>
                       </div>
                     )}
                   </td>

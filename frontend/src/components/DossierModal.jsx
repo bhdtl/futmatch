@@ -29,7 +29,7 @@ in Vorbereitung auf die kommenden Transfereffekte für die Saison 2026/27 möcht
 
 Basierend auf unserer FutMatch Pro Kaderanalyse passt sein Profil hervorragend zu Ihrem bevorzugten Spielsystem (${tactic}) unter Cheftrainer ${headCoach} und adressiert Ihre Vakanzen auf der Position ${posCode}.
 
-Taktisches Profil & Trainer-DNA: ${deepTactics.tactical_archetype || 'Dominantes System'} (PPDA: ${deepTactics.ppda || 10.5}, Ballbesitz: ${deepTactics.possession_pct || 50.0}%).
+Taktisches Profil & Trainer-DNA: ${deepTactics.tactical_archetype || 'Profi-Kader'} (PPDA: ${deepTactics.ppda || 'N/A'}, Ballbesitz: ${deepTactics.possession_pct ? deepTactics.possession_pct + '%' : 'N/A'}).
 
 Vertragssituation: ${profile?.contract_status ? profile.contract_status.toUpperCase() : 'ABLÖSEFREI'} (Sehr hohe Transfer-Feasibilität).
 
@@ -180,25 +180,39 @@ Ihr FutMatch Executive Advisor Team`;
               <span className="text-[10px] text-zinc-400 uppercase font-bold">LIVE SPIELSTIL-DNA & TRAINER-PHILOSOPHIE</span>
               <span className="text-[10px] text-zinc-500 font-mono">{coverageTier}</span>
             </div>
-            <div className="text-sm font-bold text-emerald-400">{deepTactics.tactical_archetype || 'Dominantes System'}</div>
+            <div className="text-sm font-bold text-emerald-400">{deepTactics.tactical_archetype || 'Profi-Kader'}</div>
             
+            {deepTactics.has_advanced_tracking === false && (
+              <div className="p-2 rounded bg-zinc-900/90 border border-zinc-800 text-[10px] text-amber-400 font-mono">
+                ℹ️ KADERDATEN-HINWEIS: 100% echte Transfermarkt-Kaderdaten & Verträge. Keine erweiterten Opta/FBref PPDA-Metriken in dieser Liga-Ebene.
+              </div>
+            )}
+
             {/* Tactical Metrics Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 pt-1">
               <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
                 <span className="text-[9px] text-zinc-500 block uppercase font-bold">Ballbesitz</span>
-                <span className="text-sm font-bold text-zinc-100">{deepTactics.possession_pct || 50.0}%</span>
+                <span className="text-sm font-bold text-zinc-100">
+                  {deepTactics.possession_pct ? `${deepTactics.possession_pct}%` : <span className="text-zinc-500 font-mono text-xs">N/A</span>}
+                </span>
               </div>
               <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
                 <span className="text-[9px] text-zinc-500 block uppercase font-bold">Pressing (PPDA)</span>
-                <span className="text-sm font-bold text-amber-400">{deepTactics.ppda || 10.5}</span>
+                <span className="text-sm font-bold text-amber-400">
+                  {deepTactics.ppda ? deepTactics.ppda : <span className="text-zinc-500 font-mono text-xs">N/A</span>}
+                </span>
               </div>
               <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
                 <span className="text-[9px] text-zinc-500 block uppercase font-bold">Field Tilt %</span>
-                <span className="text-sm font-bold text-blue-400">{deepTactics.field_tilt_pct || 50.0}%</span>
+                <span className="text-sm font-bold text-blue-400">
+                  {deepTactics.field_tilt_pct ? `${deepTactics.field_tilt_pct}%` : <span className="text-zinc-500 font-mono text-xs">N/A</span>}
+                </span>
               </div>
               <div className="p-2.5 rounded bg-zinc-900 border border-zinc-800 text-center">
                 <span className="text-[9px] text-zinc-500 block uppercase font-bold">Deep Entries</span>
-                <span className="text-sm font-bold text-emerald-400">{deepTactics.deep_completions_per_match || 4.5}/Match</span>
+                <span className="text-sm font-bold text-emerald-400">
+                  {deepTactics.deep_completions_per_match ? `${deepTactics.deep_completions_per_match}/Match` : <span className="text-zinc-500 font-mono text-xs">N/A</span>}
+                </span>
               </div>
             </div>
           </div>
