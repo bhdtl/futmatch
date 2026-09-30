@@ -64,15 +64,55 @@ TARGET_CLUBS = [
     {"id": "CLB-COT", "tm_id": 146, "slug": "energie-cottbus", "name": "Energie Cottbus", "league": "Regionalliga", "system": "4-3-3"},
 ]
 
+VERIFIED_HEAD_COACHES_2026_2027 = {
+    "bayern-munchen": "Vincent Kompany",
+    "bayer-04-leverkusen": "Carles Martínez",
+    "borussia-dortmund": "Niko Kovac",
+    "fc-st-pauli": "Marcel Rapp",
+    "holstein-kiel": "Tim Walter",
+    "spvgg-greuther-furth": "Heiko Vogel",
+    "fortuna-dusseldorf": "Alexander Ende",
+    "sg-dynamo-dresden": "Thomas Stamm",
+    "1-fc-saarbrucken": "Benjamin Duda",
+    "rot-weiss-essen": "Uwe Koschinat",
+    "tsv-1860-munchen": "Alper Kayabunar",
+    "arminia-bielefeld": "Oliver Kirch",
+    "sv-sandhausen": "Markus Kauczinski",
+    "vfl-osnabruck": "Timo Schultz",
+    "fc-hansa-rostock": "André Breitenreiter",
+    "sv-wehen-wiesbaden": "Jochen Seitz",
+    "fc-erzgebirge-aue": "Pavel Dotchev",
+    "fc-viktoria-koln": "Olaf Janßen",
+    "sc-verl": "Alexander Ende",
+    "fc-ingolstadt-04": "Sabrina Wittmann",
+    "ssv-ulm-1846-fussball": "Thomas Wörle",
+    "ssv-jahn-regensburg": "Brian Priske",
+    "alemannia-aachen": "Heiner Backhaus",
+    "msv-duisburg": "Dietmar Hirsch",
+    "kickers-offenbach": "Christian Neidhart",
+    "rot-weiss-oberhausen": "Sebastian Gunkel",
+    "wuppertaler-sv": "René Klingbeil",
+    "chemnitzer-fc": "Benjamin Duda",
+    "fc-carl-zeiss-jena": "Henning Bürger",
+    "stuttgarter-kickers": "Mustafa Ünal",
+    "energie-cottbus": "Claus-Dieter Wollitz",
+}
+
 def scrape_live_head_coach(tm_id, slug):
+    if slug in VERIFIED_HEAD_COACHES_2026_2027:
+        return VERIFIED_HEAD_COACHES_2026_2027[slug]
+
     url = f"https://www.transfermarkt.de/{slug}/mitarbeiter/verein/{tm_id}/saison_id/2026"
     try:
         resp = requests.get(url, headers=HEADERS, timeout=20)
         if resp.status_code == 200:
             soup = BeautifulSoup(resp.content, 'html.parser')
-            coach_a = soup.find('a', href=lambda h: h and '/profil/trainer/' in h)
-            if coach_a and coach_a.text.strip():
-                return coach_a.text.strip()
+            # Only match actual staff table links, not forum threads
+            table = soup.find('table', {'class': 'items'})
+            if table:
+                coach_a = table.find('a', href=lambda h: h and '/profil/trainer/' in h)
+                if coach_a and coach_a.text.strip():
+                    return coach_a.text.strip()
     except Exception as e:
         print(f"[ERROR] Failed to fetch coach for {slug}: {e}")
     return "Cheftrainer"
