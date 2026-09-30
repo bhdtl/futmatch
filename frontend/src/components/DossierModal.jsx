@@ -312,10 +312,10 @@ Ihr FutMatch Executive Advisor Team`;
                       <div className="flex items-center gap-2">
                         {p.tactical_role_label && (
                           <span className="px-2 py-0.5 bg-zinc-900 border border-zinc-700 text-amber-300 text-[9px] font-bold rounded font-mono">
-                            {p.tactical_role_label.split('(')[0]} ({p.role_fit_pct || 85}%)
+                            {p.tactical_role_label.split('(')[0]} {p.role_fit_pct ? `(${p.role_fit_pct}%)` : ''}
                           </span>
                         )}
-                        <span className="text-amber-400 text-xs font-bold font-mono">{p.minutes} Min</span>
+                        <span className="text-amber-400 text-xs font-bold font-mono">{p.minutes ? `${p.minutes} Min` : ''}</span>
                       </div>
                     </div>
 
@@ -357,7 +357,7 @@ Ihr FutMatch Executive Advisor Team`;
                     <tr>
                       <th className="p-2">Spieler</th>
                       <th className="p-2">Position</th>
-                      <th className="p-2">FM-Rollen %-Verteilung & Archetyp</th>
+                      <th className="p-2">FM-Rollen & Archetyp</th>
                       <th className="p-2">Marktwert</th>
                       <th className="p-2 text-right">Vertrag bis</th>
                     </tr>
@@ -365,6 +365,7 @@ Ihr FutMatch Executive Advisor Team`;
                   <tbody className="divide-y divide-zinc-800/60 bg-zinc-900/50">
                     {fullSquad.map((player, pIdx) => {
                       const isExpiring = player.contract_until && (player.contract_until.includes('2027') || player.contract_until.includes('2028'));
+                      const hasDist = player.role_distribution_label && player.role_distribution_label !== "Keine erweiterten Opta-Trackingdaten";
                       return (
                         <tr key={pIdx} className="hover:bg-zinc-800/50 transition">
                           <td className="p-2 font-bold text-zinc-100">
@@ -378,7 +379,7 @@ Ihr FutMatch Executive Advisor Team`;
                           </td>
                           <td className="p-2 text-zinc-300">{player.position}</td>
                           <td className="p-2">
-                            {player.role_distribution_label ? (
+                            {hasDist ? (
                               <div className="space-y-0.5">
                                 <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-amber-300 font-bold text-[9px] block w-fit font-mono">
                                   {player.role_distribution_label}
@@ -388,7 +389,14 @@ Ihr FutMatch Executive Advisor Team`;
                                 </span>
                               </div>
                             ) : (
-                              <span className="text-zinc-500 text-[10px]">-</span>
+                              <div className="space-y-0.5">
+                                <span className="text-zinc-500 text-[10px] font-mono font-bold block">–</span>
+                                {player.archetype && (
+                                  <span className="text-[9px] text-zinc-400 block font-sans font-medium">
+                                    🏷️ {player.archetype} {player.talent_tier && <span className="ml-1 text-amber-300 font-bold">({player.talent_tier})</span>}
+                                  </span>
+                                )}
+                              </div>
                             )}
                           </td>
                           <td className="p-2 font-bold text-amber-300">{player.market_value || '-'}</td>
@@ -416,19 +424,27 @@ Ihr FutMatch Executive Advisor Team`;
             <div className="grid grid-cols-2 gap-2 text-[11px]">
               <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
                 <span className="text-[9px] text-zinc-500 block font-bold uppercase">Shot Zones & Abschlüsse</span>
-                <span className="text-zinc-200 font-sans">{positionalRoles.shot_zones || 'Strafraum & Halbraum-Passagen'}</span>
+                <span className="text-zinc-200 font-sans">
+                  {deepTactics.has_advanced_tracking !== false && positionalRoles.shot_zones ? positionalRoles.shot_zones : '–'}
+                </span>
               </div>
               <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
                 <span className="text-[9px] text-zinc-500 block font-bold uppercase">Abwehrketten-Höhe</span>
-                <span className="text-emerald-400 font-bold">{positionalRoles.defensive_line_height_meters || 46.0} m</span>
+                <span className="text-emerald-400 font-bold">
+                  {deepTactics.has_advanced_tracking !== false && positionalRoles.defensive_line_height_meters ? `${positionalRoles.defensive_line_height_meters} m` : '–'}
+                </span>
               </div>
               <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
                 <span className="text-[9px] text-zinc-500 block font-bold uppercase">Linienbrechende Pässe</span>
-                <span className="text-zinc-200 font-bold">{positionalRoles.line_breaking_passes_per_90 || 42.0} / 90 Min</span>
+                <span className="text-zinc-200 font-bold">
+                  {deepTactics.has_advanced_tracking !== false && positionalRoles.line_breaking_passes_per_90 ? `${positionalRoles.line_breaking_passes_per_90} / 90 Min` : '–'}
+                </span>
               </div>
               <div className="p-2 bg-zinc-900 rounded border border-zinc-800">
                 <span className="text-[9px] text-zinc-500 block font-bold uppercase">Schnittstellen-Steckpässe</span>
-                <span className="text-zinc-200 font-bold">{positionalRoles.through_balls_per_90 || 3.5} / 90 Min</span>
+                <span className="text-zinc-200 font-bold">
+                  {deepTactics.has_advanced_tracking !== false && positionalRoles.through_balls_per_90 ? `${positionalRoles.through_balls_per_90} / 90 Min` : '–'}
+                </span>
               </div>
             </div>
           </div>

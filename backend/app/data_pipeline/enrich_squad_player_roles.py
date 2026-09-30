@@ -165,6 +165,10 @@ def run_perfect_player_role_enrichment():
 
         enriched_full_squad = []
 
+        deep_tactics = squad_profile.get("deep_tactics", {})
+        has_tracking = deep_tactics.get("has_advanced_tracking", True)
+        is_lower = any(l in club.get("league", "").lower() for l in ["regionalliga", "3. liga"])
+
         for player in full_squad:
             p_name = player.get("name", "")
             p_clean = p_name.lower().strip()
@@ -172,17 +176,26 @@ def run_perfect_player_role_enrichment():
 
             if p_clean in PLAYER_ROLE_OVERRIDES:
                 r1_key, r2_key, archetype, r1_pct = PLAYER_ROLE_OVERRIDES[p_clean]
+                r1_def = ROLE_DEFINITIONS.get(r1_key, {})
+                r2_def = ROLE_DEFINITIONS.get(r2_key, {})
+                r1_title = r1_def.get("label", r1_key).split("(")[0].strip()
+                r2_title = r2_def.get("label", r2_key).split("(")[0].strip()
+                r2_pct = 100 - r1_pct
+                role_distribution_label = f"{r1_pct}% {r1_title} • {r2_pct}% {r2_title}"
+            elif is_lower or not has_tracking:
+                r1_key, r2_key, archetype, _ = derive_generic_roles(p_pos)
+                r1_def = ROLE_DEFINITIONS.get(r1_key, {})
+                r2_def = ROLE_DEFINITIONS.get(r2_key, {})
+                r1_pct = None
+                role_distribution_label = "Keine erweiterten Opta-Trackingdaten"
             else:
                 r1_key, r2_key, archetype, r1_pct = derive_generic_roles(p_pos)
-
-            r1_def = ROLE_DEFINITIONS.get(r1_key, {})
-            r2_def = ROLE_DEFINITIONS.get(r2_key, {})
-
-            r1_title = r1_def.get("label", r1_key).split("(")[0].strip()
-            r2_title = r2_def.get("label", r2_key).split("(")[0].strip()
-            r2_pct = 100 - r1_pct
-
-            role_distribution_label = f"{r1_pct}% {r1_title} • {r2_pct}% {r2_title}"
+                r1_def = ROLE_DEFINITIONS.get(r1_key, {})
+                r2_def = ROLE_DEFINITIONS.get(r2_key, {})
+                r1_title = r1_def.get("label", r1_key).split("(")[0].strip()
+                r2_title = r2_def.get("label", r2_key).split("(")[0].strip()
+                r2_pct = 100 - r1_pct
+                role_distribution_label = f"{r1_pct}% {r1_title} • {r2_pct}% {r2_title}"
 
             enriched_p = dict(player)
             enriched_p.pop("benchmark_similarity", None) # Clean up obsolete benchmark field
