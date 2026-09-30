@@ -64,9 +64,9 @@ PLAYER_ROLE_OVERRIDES = {
     "moussa diaby": ("INSIDE_FORWARD_IW", "CLASSIC_WINGER", "High-Speed Flügelstürmer (Inside Forward)", 88),
     "patrik schick": ("ADVANCED_FORWARD", "TARGET_FORWARD", "Strafraum-Knipser & Stoßstürmer (AF)", 84),
     "victor boniface": ("TARGET_FORWARD", "ADVANCED_FORWARD", "Physisches Kraftpaket & Zielspieler (TF/AF)", 86),
-    # Additional Overrides
-    "lennart karl": ("ADVANCED_PLAYMAKER_MEZZALA", "INSIDE_FORWARD_IW", "Kreativer 10er & Spielmacher-Talent (AP/MEZ)", 88),
-    "ismael saibari": ("ADVANCED_PLAYMAKER_MEZZALA", "BOX_TO_BOX_MIDFIELDER", "Dynamischer 10er & Halbraum-Drifter (MEZ)", 87),
+    # Refined Player Overrides
+    "lennart karl": ("INSIDE_FORWARD_IW", "ADVANCED_PLAYMAKER_MEZZALA", "Linksfüßiger Flügel-Drifter & Robben-Typ (Inside Forward / AP)", 72),
+    "ismael saibari": ("SHADOW_STRIKER", "BOX_TO_BOX_MIDFIELDER", "Physisches Offensiv-Kraftpaket & 9er/10er Allrounder (SS/BBM)", 64),
 }
 
 def derive_generic_roles(pos_str: str) -> Tuple[str, str, str, int]:
