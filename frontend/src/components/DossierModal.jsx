@@ -303,8 +303,21 @@ Ihr FutMatch Executive Advisor Team`;
                         <strong className="text-zinc-100 text-xs">{p.name}</strong>
                         <span className="text-[10px] text-zinc-400 font-sans">({p.age} J. • {p.foot} • Vertrag: {p.contract})</span>
                       </div>
-                      <span className="text-amber-400 text-xs font-bold font-mono">{p.minutes} Min</span>
+                      <div className="flex items-center gap-2">
+                        {p.tactical_role_label && (
+                          <span className="px-2 py-0.5 bg-zinc-900 border border-zinc-700 text-amber-300 text-[9px] font-bold rounded font-mono">
+                            {p.tactical_role_label.split('(')[0]} ({p.role_fit_pct || 85}%)
+                          </span>
+                        )}
+                        <span className="text-amber-400 text-xs font-bold font-mono">{p.minutes} Min</span>
+                      </div>
                     </div>
+
+                    {p.archetype && (
+                      <div className="text-[10px] text-emerald-400/90 font-mono flex items-center gap-1">
+                        <span>🏷️ Archetyp:</span> <strong className="text-zinc-200">{p.archetype}</strong>
+                      </div>
+                    )}
 
                     {/* Individual Player WyScout Metric Chips */}
                     {p.metrics && (
@@ -338,8 +351,8 @@ Ihr FutMatch Executive Advisor Team`;
                     <tr>
                       <th className="p-2">Spieler</th>
                       <th className="p-2">Position</th>
-                      <th className="p-2">Alter</th>
-                      <th className="p-2">Spieler-Benchmark Ähnlichkeit</th>
+                      <th className="p-2">Taktische FM-Rolle & Archetyp</th>
+                      <th className="p-2">Benchmark Ähnlichkeit</th>
                       <th className="p-2">Marktwert</th>
                       <th className="p-2 text-right">Vertrag bis</th>
                     </tr>
@@ -360,7 +373,20 @@ Ihr FutMatch Executive Advisor Team`;
                             )}
                           </td>
                           <td className="p-2 text-zinc-300">{player.position}</td>
-                          <td className="p-2 text-zinc-400">{player.age || '-'}</td>
+                          <td className="p-2">
+                            {player.tactical_role_label ? (
+                              <div className="space-y-0.5">
+                                <span className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-amber-300 font-bold text-[9px] block w-fit">
+                                  {player.tactical_role_label.split('(')[0]} ({player.role_fit_pct || 80}%)
+                                </span>
+                                <span className="text-[9px] text-zinc-400 block font-sans">
+                                  {player.archetype || 'Profi-Athlet'}
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="text-zinc-500 text-[10px]">-</span>
+                            )}
+                          </td>
                           <td className="p-2">
                             {sim ? (
                               <span className="px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-[10px] font-mono">
