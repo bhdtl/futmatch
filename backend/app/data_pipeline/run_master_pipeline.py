@@ -10,7 +10,7 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from app.data_pipeline.scrape_live_transfermarkt import run_live_transfermarkt_sync
 from app.data_pipeline.ingest_pure_live_rolling import run_pure_live_rolling_ingestion
-from app.data_pipeline.ingest_formation_starting_11 import run_formation_starting_xi_ingestion
+from app.data_pipeline.ingest_dynamic_minutes_starters import run_dynamic_minutes_starters_ingestion
 from app.data_pipeline.ingest_wyscout_player_roles import run_wyscout_player_roles_ingestion
 from app.data_pipeline.detect_live_formation import run_dynamic_formation_detection
 from app.data_pipeline.resolve_entities_reep import run_reep_entity_resolution_sync
@@ -27,8 +27,8 @@ def execute_master_pipeline():
     print("\n[Step 2/7] Ingesting Live Rolling Tactical Metrics & Coach PPDA...")
     run_pure_live_rolling_ingestion()
 
-    print("\n[Step 3/7] Ingesting 2026/2027 Formation Starting XI Rosters...")
-    run_formation_starting_xi_ingestion()
+    print("\n[Step 3/7] Ingesting 100% Dynamic Player Minutes & Live Starting XI Rosters...")
+    run_dynamic_minutes_starters_ingestion()
 
     print("\n[Step 4/7] Enriching WyScout Positional Roles & Behaviors...")
     run_wyscout_player_roles_ingestion()
