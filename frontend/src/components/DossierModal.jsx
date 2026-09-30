@@ -370,7 +370,7 @@ Ihr FutMatch Executive Advisor Team`;
                                   {player.role_distribution_label}
                                 </span>
                                 <span className="text-[9px] text-emerald-400/90 block font-sans font-medium">
-                                  🏷️ {player.archetype || 'Profi-Athlet'}
+                                  🏷️ {player.archetype || 'Profi-Athlet'} {player.talent_tier && <span className="ml-1 text-amber-300 font-bold">({player.talent_tier})</span>}
                                 </span>
                               </div>
                             ) : (

@@ -70,6 +70,45 @@ PLAYER_ROLE_OVERRIDES = {
     "ismael saibari": ("ADVANCED_PLAYMAKER_MEZZALA", "FALSE_NINE_DLF", "Physisch starker 10er/9er-Hybrid & Ballträger (AP/F9)", 78),
 }
 
+def parse_age_and_market_value(age_str: str, mv_str: str) -> Tuple[int, float]:
+    """Extract numeric age and numeric market value in Euro."""
+    age_val = 25
+    if age_str:
+        m = re.search(r'\((\d+)\)', str(age_str))
+        if m:
+            age_val = int(m.group(1))
+        else:
+            m2 = re.search(r'\b(\d{2})\b', str(age_str))
+            if m2:
+                age_val = int(m2.group(1))
+
+    mv_euros = 0.0
+    if mv_str:
+        clean_mv = str(mv_str).lower().replace(',', '.').strip()
+        if 'mio' in clean_mv:
+            m_val = re.search(r'([\d\.]+)', clean_mv)
+            if m_val:
+                mv_euros = float(m_val.group(1)) * 1_000_000
+        elif 'tsd' in clean_mv:
+            m_val = re.search(r'([\d\.]+)', clean_mv)
+            if m_val:
+                mv_euros = float(m_val.group(1)) * 1_000
+
+    return age_val, mv_euros
+
+def determine_talent_tier(age: int, mv_euros: float, name: str) -> str:
+    """Classifies players dynamically into Top-Talent, Youth Prospect, or Established Pro."""
+    n = name.lower()
+    # High-profile young talents list / threshold
+    if age <= 19:
+        if mv_euros >= 2_000_000 or any(top in n for top in ["karl", "karetsas", "nwaneri", "bellingham", "bischof", "maza"]):
+            return "⭐ Top-Talent & High-Potential"
+        else:
+            return "🌱 Nachwuchs-Talent (Perspektivspieler)"
+    elif age <= 21 and mv_euros >= 10_000_000:
+        return "⭐ U21 Elite-Talent"
+    return ""
+
 def derive_generic_roles(pos_str: str) -> Tuple[str, str, str, int]:
     """Fallback tactical role derive logic for any squad player."""
     pos = str(pos_str).lower()
@@ -148,13 +187,17 @@ def run_perfect_player_role_enrichment():
             enriched_p = dict(player)
             enriched_p.pop("benchmark_similarity", None) # Clean up obsolete benchmark field
 
+            age_int, mv_euros = parse_age_and_market_value(player.get("age", ""), player.get("market_value", ""))
+            talent_tier = determine_talent_tier(age_int, mv_euros, p_name)
+
             enriched_p.update({
                 "tactical_role_key": r1_key,
                 "tactical_role_label": r1_def.get("label", r1_key),
                 "secondary_role_label": r2_def.get("label", r2_key),
                 "role_fit_pct": r1_pct,
                 "role_distribution_label": role_distribution_label,
-                "archetype": archetype
+                "archetype": archetype,
+                "talent_tier": talent_tier
             })
 
             enriched_full_squad.append(enriched_p)
