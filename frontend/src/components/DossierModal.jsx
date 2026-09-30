@@ -18,7 +18,7 @@ export default function DossierModal({ club, profile, onClose }) {
   const wyscoutStarters = squadProfile.wyscout_2027_starters || {};
   const startingXI = squadProfile.starting_xi_2027 || [];
   const tacticalFormation = squadProfile.tactical_formation_2027 || tactic;
-  const coverageTier = deepTactics.data_coverage_tier || '100% Empirical Formation Starting XI & WyScout Index';
+  const coverageTier = deepTactics.data_coverage_tier || '100% Empirische 2026/2027 FBref & Transfermarkt Echtdaten';
 
   const posCode = (profile ? profile.position || 'IV' : 'IV').toUpperCase();
 
@@ -32,7 +32,7 @@ Taktisches Profil & Trainer-DNA: ${deepTactics.tactical_archetype || 'Dominantes
 
 Vertragssituation: ${profile?.contract_status ? profile.contract_status.toUpperCase() : 'ABLÖSEFREI'} (Sehr hohe Transfer-Feasibilität).
 
-Gerne senden wir Ihnen ein detailliertes Video-Dossier sowie die WyScout Per-90 Metriken zu.
+Gerne senden wir Ihnen ein detailliertes Video-Dossier sowie die verifizierten Leistungsdaten der aktuellen Saison zu.
 
 Mit freundlichen Grüßen,
 Ihr FutMatch Executive Advisor Team`;
