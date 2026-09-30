@@ -134,6 +134,64 @@ def derive_generic_roles(pos_str: str) -> Tuple[str, str, str, int]:
     
     return ("BOX_TO_BOX_MIDFIELDER", "BALL_PLAYING_DEFENDER", "Profi-Athlet", 75)
 
+def derive_authentic_starting_xi(full_squad: List[Dict]) -> List[Dict]:
+    """
+    Selects a positionally authentic 11-player lineup (1 TW, 2 IV, 1 LV, 1 RV, 2 ZM/DM, 1 OM, 2 Flügel, 1 MS)
+    from the club's real Transfermarkt squad list.
+    """
+    used_names = set()
+    starting_xi = []
+
+    def find_player(pos_keywords: List[str]):
+        for p in full_squad:
+            p_name = p.get("name")
+            if p_name in used_names:
+                continue
+            p_pos = str(p.get("position", "")).lower()
+            if any(k in p_pos for k in pos_keywords):
+                used_names.add(p_name)
+                return p
+        return None
+
+    slot_targets = [
+        ("TW", ["torwart"]),
+        ("IV-L", ["innenverteidiger", "verteidiger"]),
+        ("IV-R", ["innenverteidiger", "verteidiger"]),
+        ("LV", ["linksverteidiger", "linker verteidiger", "verteidiger"]),
+        ("RV", ["rechtsverteidiger", "rechter verteidiger", "verteidiger"]),
+        ("DM", ["defensives mittelfeld", "mittelfeld"]),
+        ("ZM", ["zentrales mittelfeld", "mittelfeld"]),
+        ("OM", ["offensives mittelfeld", "mittelfeld"]),
+        ("LF", ["linksaußen", "flügel", "stürmer"]),
+        ("RF", ["rechtsaußen", "flügel", "stürmer"]),
+        ("MS", ["mittelstürmer", "stürmer", "spitze"])
+    ]
+
+    for slot, keywords in slot_targets:
+        found = find_player(keywords)
+        if not found:
+            for p in full_squad:
+                if p.get("name") not in used_names:
+                    found = p
+                    used_names.add(p.get("name"))
+                    break
+        if found:
+            starting_xi.append({
+                "slot": slot,
+                "name": found.get("name"),
+                "position": found.get("position", "Unbekannt"),
+                "age": found.get("age", ""),
+                "foot": found.get("foot", "Rechts"),
+                "contract": found.get("contract_until", "2027"),
+                "tactical_role_key": found.get("tactical_role_key"),
+                "tactical_role_label": found.get("tactical_role_label"),
+                "role_fit_pct": found.get("role_fit_pct"),
+                "role_distribution_label": found.get("role_distribution_label"),
+                "archetype": found.get("archetype")
+            })
+
+    return starting_xi
+
 def run_perfect_player_role_enrichment():
     print("============================================================")
     print("[Pipeline] FutMatch Pro: 100% Authentic Tactical Role Assignment Engine")
@@ -158,8 +216,6 @@ def run_perfect_player_role_enrichment():
             squad_profile = {}
 
         full_squad = squad_profile.get("full_squad_2027", [])
-        starting_xi = squad_profile.get("starting_xi_2027", [])
-
         if not full_squad:
             continue
 
@@ -198,7 +254,7 @@ def run_perfect_player_role_enrichment():
                 role_distribution_label = f"{r1_pct}% {r1_title} • {r2_pct}% {r2_title}"
 
             enriched_p = dict(player)
-            enriched_p.pop("benchmark_similarity", None) # Clean up obsolete benchmark field
+            enriched_p.pop("benchmark_similarity", None)
 
             age_int, mv_euros = parse_age_and_market_value(player.get("age", ""), player.get("market_value", ""))
             talent_tier = determine_talent_tier(age_int, mv_euros, p_name)
@@ -216,25 +272,8 @@ def run_perfect_player_role_enrichment():
             enriched_full_squad.append(enriched_p)
             total_players_enriched += 1
 
-        # Enrich starting XI matching names
-        squad_lookup = {p["name"]: p for p in enriched_full_squad}
-        enriched_starting_xi = []
-        for st in starting_xi:
-            st_name = st.get("name")
-            if st_name in squad_lookup:
-                ref_p = squad_lookup[st_name]
-                enriched_st = dict(st)
-                enriched_st.pop("benchmark_similarity", None)
-                enriched_st.update({
-                    "tactical_role_key": ref_p.get("tactical_role_key"),
-                    "tactical_role_label": ref_p.get("tactical_role_label"),
-                    "role_fit_pct": ref_p.get("role_fit_pct"),
-                    "role_distribution_label": ref_p.get("role_distribution_label"),
-                    "archetype": ref_p.get("archetype")
-                })
-                enriched_starting_xi.append(enriched_st)
-            else:
-                enriched_starting_xi.append(st)
+        # Derive positionally authentic starting XI
+        enriched_starting_xi = derive_authentic_starting_xi(enriched_full_squad)
 
         squad_profile["full_squad_2027"] = enriched_full_squad
         squad_profile["starting_xi_2027"] = enriched_starting_xi
@@ -245,7 +284,7 @@ def run_perfect_player_role_enrichment():
 
         updated_clubs += 1
         clean_name = club_name.encode('ascii', 'ignore').decode()
-        print(f"[SUCCESS] {clean_name:25s} | Enriched {len(enriched_full_squad)} players with 100% Authentic FM Tactical Roles & Archetypes!")
+        print(f"[SUCCESS] {clean_name:25s} | Lineup & Roles Enriched for {len(enriched_full_squad)} players!")
 
     print("============================================================")
     print(f"[COMPLETED] Assigned Authentic FM Tactical Roles to {total_players_enriched} players across {updated_clubs} clubs!")
