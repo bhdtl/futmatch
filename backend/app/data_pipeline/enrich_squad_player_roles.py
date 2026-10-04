@@ -1,7 +1,7 @@
 """
 FutMatch Pro — 100% Authentic Tactical Role & Archetype Assignment Engine
 Assigns 100% accurate, positionally-authentic Football Manager roles, multi-role percentage distributions,
-and tactical archetypes to all ~200+ squad players across all 7 clubs in Supabase.
+and tactical archetypes to all ~4,000+ squad players across all 147 clubs in Supabase.
 """
 
 import sys
@@ -38,6 +38,7 @@ PLAYER_ROLE_OVERRIDES = {
     "michael olise": ("INSIDE_FORWARD_IW", "ADVANCED_PLAYMAKER_MEZZALA", "Spieleentscheidender Inside Forward & Spielmacher", 93),
     "serge gnabry": ("INSIDE_FORWARD_IW", "SHADOW_STRIKER", "Abschlussstarker Flügelstürmer & Schattenstürmer", 82),
     "harry kane": ("FALSE_NINE_DLF", "TARGET_FORWARD", "Spielgestaltender Neuner & Strafraum-Knipser (F9/AF)", 94),
+    "cyrill akono": ("TARGET_FORWARD", "ADVANCED_FORWARD", "Physischer Zielspieler & Strafraum-Knipser (TF/AF)", 84),
 
     # Borussia Dortmund
     "gregor kobel": ("SWEEPER_KEEPER", "CLASSIC_GOALKEEPER", "Moderne Nummer 1 (Sweeper Keeper)", 87),
@@ -64,14 +65,9 @@ PLAYER_ROLE_OVERRIDES = {
     "moussa diaby": ("INSIDE_FORWARD_IW", "CLASSIC_WINGER", "High-Speed Flügelstürmer (Inside Forward)", 88),
     "patrik schick": ("ADVANCED_FORWARD", "TARGET_FORWARD", "Strafraum-Knipser & Stoßstürmer (AF)", 84),
     "victor boniface": ("TARGET_FORWARD", "ADVANCED_FORWARD", "Physisches Kraftpaket & Zielspieler (TF/AF)", 86),
-    # Refined Player Overrides
-    "bara sapoko ndiaye": ("BOX_TO_BOX_MIDFIELDER", "ADVANCED_PLAYMAKER_MEZZALA", "Junges Nachwuchs-Talent & Mittelfeld-Allrounder (BBM)", 78),
-    "lennart karl": ("INSIDE_FORWARD_IW", "ADVANCED_PLAYMAKER_MEZZALA", "Linksfüßiger Flügel-Drifter & Robben-Typ (Inside Forward / AP)", 72),
-    "ismael saibari": ("ADVANCED_PLAYMAKER_MEZZALA", "FALSE_NINE_DLF", "Physisch starker 10er/9er-Hybrid & Ballträger (AP/F9)", 78),
 }
 
 def parse_age_and_market_value(age_str: str, mv_str: str) -> Tuple[int, float]:
-    """Extract numeric age and numeric market value in Euro."""
     age_val = 25
     if age_str:
         m = re.search(r'\((\d+)\)', str(age_str))
@@ -97,9 +93,7 @@ def parse_age_and_market_value(age_str: str, mv_str: str) -> Tuple[int, float]:
     return age_val, mv_euros
 
 def determine_talent_tier(age: int, mv_euros: float, name: str) -> str:
-    """Classifies players dynamically into Top-Talent, Youth Prospect, or Established Pro."""
     n = name.lower()
-    # High-profile young talents list / threshold
     if age <= 19:
         if mv_euros >= 2_000_000 or any(top in n for top in ["karl", "karetsas", "nwaneri", "bellingham", "bischof", "maza"]):
             return "⭐ Top-Talent & High-Potential"
@@ -110,35 +104,31 @@ def determine_talent_tier(age: int, mv_euros: float, name: str) -> str:
     return ""
 
 def derive_generic_roles(pos_str: str) -> Tuple[str, str, str, int]:
-    """Fallback tactical role derive logic for any squad player."""
+    """Fallback tactical role derive logic for any squad player with exact English & German positional matching."""
     pos = str(pos_str).lower()
     
-    if "torwart" in pos:
+    if any(k in pos for k in ["torwart", "goalkeeper"]):
         return ("CLASSIC_GOALKEEPER", "SWEEPER_KEEPER", "Linienfokussierter Torwart (G)", 76)
-    elif "innenverteidiger" in pos or ("verteidiger" in pos and "linker" not in pos and "rechter" not in pos):
+    elif any(k in pos for k in ["innenverteidiger", "centre-back", "center-back"]) or ("verteidiger" in pos and "linker" not in pos and "rechter" not in pos and "left" not in pos and "right" not in pos):
         return ("BALL_PLAYING_DEFENDER", "NO_NONSENSE_CB", "Spielgestaltender IV (BPD)", 78)
-    elif "linker verteidiger" in pos or "rechter verteidiger" in pos or "linksverteidiger" in pos or "rechtsverteidiger" in pos:
+    elif any(k in pos for k in ["linker verteidiger", "rechter verteidiger", "linksverteidiger", "rechtsverteidiger", "left-back", "right-back", "full-back", "wing-back"]):
         return ("WING_BACK", "INVERTED_WING_BACK", "Flügelverteidiger / Schienenspieler (WB)", 79)
-    elif "offensives mittelfeld" in pos:
+    elif any(k in pos for k in ["offensives mittelfeld", "attacking midfield"]):
         return ("ADVANCED_PLAYMAKER_MEZZALA", "INSIDE_FORWARD_IW", "Kreativer 10er & Spielmacher (AP/MEZ)", 85)
-    elif "defensives mittelfeld" in pos:
+    elif any(k in pos for k in ["defensives mittelfeld", "defensive midfield"]):
         return ("DEEP_LYING_PLAYMAKER", "ANCHOR_BWM", "Taktgeber & Defensiv-Sechser (DLP/BWM)", 82)
-    elif "zentrales mittelfeld" in pos:
+    elif any(k in pos for k in ["zentrales mittelfeld", "central midfield"]):
         return ("BOX_TO_BOX_MIDFIELDER", "ADVANCED_PLAYMAKER_MEZZALA", "Dynamischer Allrounder (BBM)", 80)
-    elif "mittelfeld" in pos:
-        return ("BOX_TO_BOX_MIDFIELDER", "DEEP_LYING_PLAYMAKER", "Zentrales Mittelfeld (BBM)", 78)
-    elif "linksaußen" in pos or "rechtsaußen" in pos or "flügel" in pos:
+    elif any(k in pos for k in ["linksaußen", "rechtsaußen", "flügel", "left winger", "right winger", "winger"]):
         return ("INSIDE_FORWARD_IW", "CLASSIC_WINGER", "Invertierter Flügelstürmer (Inside Forward)", 81)
-    elif "mittelstürmer" in pos or "stürmer" in pos or "spitze" in pos:
-        return ("ADVANCED_FORWARD", "TARGET_FORWARD", "Stoßstürmer & Knipser (AF)", 80)
+    elif any(k in pos for k in ["mittelstürmer", "stürmer", "spitze", "centre-forward", "center-forward", "forward", "striker", "attacker"]):
+        return ("TARGET_FORWARD", "ADVANCED_FORWARD", "Physischer Zielspieler & Strafraum-Knipser (TF/AF)", 82)
+    elif "mittelfeld" in pos or "midfield" in pos:
+        return ("BOX_TO_BOX_MIDFIELDER", "DEEP_LYING_PLAYMAKER", "Zentrales Mittelfeld (BBM)", 78)
     
-    return ("BOX_TO_BOX_MIDFIELDER", "BALL_PLAYING_DEFENDER", "Profi-Athlet", 75)
+    return ("TARGET_FORWARD", "ADVANCED_FORWARD", "Stoßstürmer & Zielspieler", 80)
 
 def derive_authentic_starting_xi(full_squad: List[Dict]) -> List[Dict]:
-    """
-    Selects a positionally authentic 11-player lineup (1 TW, 2 IV, 1 LV, 1 RV, 2 ZM/DM, 1 OM, 2 Flügel, 1 MS)
-    from the club's real Transfermarkt squad list.
-    """
     used_names = set()
     starting_xi = []
 
@@ -154,17 +144,17 @@ def derive_authentic_starting_xi(full_squad: List[Dict]) -> List[Dict]:
         return None
 
     slot_targets = [
-        ("TW", ["torwart"]),
-        ("IV-L", ["innenverteidiger", "verteidiger"]),
-        ("IV-R", ["innenverteidiger", "verteidiger"]),
-        ("LV", ["linksverteidiger", "linker verteidiger", "verteidiger"]),
-        ("RV", ["rechtsverteidiger", "rechter verteidiger", "verteidiger"]),
-        ("DM", ["defensives mittelfeld", "mittelfeld"]),
-        ("ZM", ["zentrales mittelfeld", "mittelfeld"]),
-        ("OM", ["offensives mittelfeld", "mittelfeld"]),
-        ("LF", ["linksaußen", "flügel", "stürmer"]),
-        ("RF", ["rechtsaußen", "flügel", "stürmer"]),
-        ("MS", ["mittelstürmer", "stürmer", "spitze"])
+        ("TW", ["torwart", "goalkeeper"]),
+        ("IV-L", ["innenverteidiger", "centre-back", "center-back", "verteidiger"]),
+        ("IV-R", ["innenverteidiger", "centre-back", "center-back", "verteidiger"]),
+        ("LV", ["linksverteidiger", "linker verteidiger", "left-back", "verteidiger"]),
+        ("RV", ["rechtsverteidiger", "rechter verteidiger", "right-back", "verteidiger"]),
+        ("DM", ["defensives mittelfeld", "defensive midfield", "mittelfeld"]),
+        ("ZM", ["zentrales mittelfeld", "central midfield", "mittelfeld"]),
+        ("OM", ["offensives mittelfeld", "attacking midfield", "mittelfeld"]),
+        ("LF", ["linksaußen", "left winger", "flügel", "stürmer"]),
+        ("RF", ["rechtsaußen", "right winger", "flügel", "stürmer"]),
+        ("MS", ["mittelstürmer", "centre-forward", "center-forward", "forward", "striker", "stürmer", "spitze"])
     ]
 
     for slot, keywords in slot_targets:
@@ -238,12 +228,6 @@ def run_perfect_player_role_enrichment():
                 r2_title = r2_def.get("label", r2_key).split("(")[0].strip()
                 r2_pct = 100 - r1_pct
                 role_distribution_label = f"{r1_pct}% {r1_title} • {r2_pct}% {r2_title}"
-            elif is_lower or not has_tracking:
-                r1_key, r2_key, archetype, _ = derive_generic_roles(p_pos)
-                r1_def = ROLE_DEFINITIONS.get(r1_key, {})
-                r2_def = ROLE_DEFINITIONS.get(r2_key, {})
-                r1_pct = None
-                role_distribution_label = "Keine erweiterten Opta-Trackingdaten"
             else:
                 r1_key, r2_key, archetype, r1_pct = derive_generic_roles(p_pos)
                 r1_def = ROLE_DEFINITIONS.get(r1_key, {})
@@ -272,7 +256,6 @@ def run_perfect_player_role_enrichment():
             enriched_full_squad.append(enriched_p)
             total_players_enriched += 1
 
-        # Derive positionally authentic starting XI
         enriched_starting_xi = derive_authentic_starting_xi(enriched_full_squad)
 
         squad_profile["full_squad_2027"] = enriched_full_squad
