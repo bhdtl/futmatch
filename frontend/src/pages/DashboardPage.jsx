@@ -6,6 +6,7 @@ import ClientForm from '../components/ClientForm';
 import MatchTable from '../components/MatchTable';
 import DossierModal from '../components/DossierModal';
 import AddClubModal from '../components/AddClubModal';
+import PlayerProfileModal from '../components/PlayerProfileModal';
 import { fetchRealSupabaseMatches } from '../services/realMatchingService';
 
 export default function DashboardPage({ onBackToLanding }) {
@@ -23,6 +24,7 @@ export default function DashboardPage({ onBackToLanding }) {
   const [matches, setMatches] = useState([]);
   const [hasSearched, setHasSearched] = useState(true);
   const [selectedClub, setSelectedClub] = useState(null);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +39,6 @@ export default function DashboardPage({ onBackToLanding }) {
     setLoading(true);
     setHasSearched(true);
     try {
-      // 1. Try local FastAPI server if available
       const res = await fetch('http://127.0.0.1:8000/api/match-clubs', {
         method: 'POST',
         headers: { 
@@ -55,10 +56,9 @@ export default function DashboardPage({ onBackToLanding }) {
         }
       }
     } catch (err) {
-      // Local backend server offline, proceeding to direct Supabase Cloud query
+      // Local server offline, fallback to Supabase Cloud
     }
 
-    // 2. Direct Supabase Cloud DB query (100% real records, ZERO dummy data)
     try {
       const realData = await fetchRealSupabaseMatches(currentProfile);
       setMatches(realData);
@@ -70,14 +70,12 @@ export default function DashboardPage({ onBackToLanding }) {
     }
   };
 
-  // Trigger initial matching unconditionally at hook initialization
   useEffect(() => {
     if (user && isAdmin) {
       fetchMatches(profile);
     }
   }, [user, isAdmin]);
 
-  // 1. Session Restoration Check
   if (authLoading) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center p-6 font-mono">
@@ -89,7 +87,6 @@ export default function DashboardPage({ onBackToLanding }) {
     );
   }
 
-  // 2. Security Check: If not logged in or not admin, show access denied
   if (!user || !isAdmin) {
     return (
       <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center p-6 antialiased font-sans">
@@ -98,41 +95,15 @@ export default function DashboardPage({ onBackToLanding }) {
             !
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] text-red-400 uppercase tracking-wider">CYBER SECURITY ENFORCEMENT</span>
-            <h3 className="text-base font-bold text-white">Zugriff Verweigert</h3>
-            <p className="text-xs text-zinc-400 font-sans leading-relaxed">
-              Der geschützte App-Bereich <code className="bg-zinc-950 px-1 py-0.5 rounded text-emerald-400 font-mono">/dashboard</code> ist exklusiv für den autorisierten Administrator reserviert.
-            </p>
+            <h3 className="text-sm font-bold text-white uppercase">Zugriff Verweigert</h3>
+            <p className="text-xs text-zinc-400">Executive Matchmaking Platform ausschließlich für verifizierte Berater & Analysten.</p>
           </div>
-
-          <div className="p-3 bg-zinc-950 rounded border border-zinc-800 text-left text-xs font-mono space-y-1 text-zinc-400">
-            <p>Eingeloggt als: <span className="text-white">{user?.email || 'Nicht angemeldet'}</span></p>
-          </div>
-
-          <div className="space-y-2 pt-2">
-            <button 
-              onClick={loginAsDemoAdmin}
-              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded transition shadow-sm flex items-center justify-center gap-2"
-            >
-              <span>⚡</span> Als Admin / Berater einloggen (Session Aktivieren)
-            </button>
-            <div className="flex gap-2">
-              {user && (
-                <button 
-                  onClick={logout}
-                  className="flex-1 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs rounded transition"
-                >
-                  Abmelden
-                </button>
-              )}
-              <button 
-                onClick={onBackToLanding}
-                className="flex-1 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs rounded transition"
-              >
-                Zur Landingpage
-              </button>
-            </div>
-          </div>
+          <button 
+            onClick={loginAsDemoAdmin}
+            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded transition shadow-lg shadow-emerald-950"
+          >
+            Als Berater Anmelden
+          </button>
         </div>
       </div>
     );
@@ -140,11 +111,14 @@ export default function DashboardPage({ onBackToLanding }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfile(prev => ({ ...prev, [name]: value }));
+    setProfile((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     fetchMatches(profile);
   };
 
@@ -161,7 +135,6 @@ export default function DashboardPage({ onBackToLanding }) {
     fetchMatches(resetProfile);
   };
 
-  // Filter matches by selected league
   const filteredMatches = matches.filter(club => {
     if (selectedLeague === 'ALL') return true;
     return club.league.toLowerCase().includes(selectedLeague.toLowerCase());
@@ -169,16 +142,12 @@ export default function DashboardPage({ onBackToLanding }) {
 
   return (
     <div className="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col md:flex-row antialiased font-sans">
-      {/* Sidebar */}
       <Sidebar 
         activeCount={filteredMatches.length} 
         onOpenAddModal={() => setIsAddModalOpen(true)}
       />
 
-      {/* Main Workbench */}
       <main className="flex-1 p-5 md:p-8 space-y-6 overflow-y-auto custom-scrollbar">
-        
-        {/* Header with Admin Badge & Landingpage Back Button */}
         <div className="flex items-center justify-between bg-zinc-950 border border-zinc-800 rounded px-4 py-2 text-xs font-mono">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -192,7 +161,10 @@ export default function DashboardPage({ onBackToLanding }) {
           </button>
         </div>
 
-        <Header onOpenAddModal={() => setIsAddModalOpen(true)} />
+        <Header 
+          onOpenAddModal={() => setIsAddModalOpen(true)} 
+          onSelectPlayer={(p) => setSelectedPlayer(p)}
+        />
 
         <ClientForm 
           profile={profile} 
@@ -217,20 +189,25 @@ export default function DashboardPage({ onBackToLanding }) {
         </footer>
       </main>
 
-      {/* Dossier Modal */}
       <DossierModal 
         club={selectedClub} 
         profile={profile} 
         onClose={() => setSelectedClub(null)} 
       />
 
-      {/* Add Club to Supabase Modal */}
       <AddClubModal 
         isOpen={isAddModalOpen} 
         onClose={() => setIsAddModalOpen(false)}
         onClubAdded={() => {
           fetchMatches(profile);
         }}
+      />
+
+      {/* EXECUTIVE PLAYER ANALYTICS MODAL */}
+      <PlayerProfileModal 
+        isOpen={!!selectedPlayer}
+        player={selectedPlayer}
+        onClose={() => setSelectedPlayer(null)}
       />
     </div>
   );
