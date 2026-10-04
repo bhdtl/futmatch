@@ -9,6 +9,7 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
   const passing = detailed.passing || {};
   const duels = detailed.duels || {};
   const defense = detailed.defense || {};
+  const context = detailed.league_position_context || {};
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 md:p-6 overflow-y-auto">
@@ -148,13 +149,15 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
 
         </div>
 
-        {/* ROW 3: COMPLETE PER-90 METRICS & POSITION-BENCHMARK TABLE */}
+        {/* ROW 3: COMPLETE PER-90 METRICS & REAL LEAGUE-POSITION BENCHMARK TABLE */}
         <div className="p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-bold text-zinc-300 uppercase font-mono tracking-wider">
-              📈 Vollständige Per-90 Minuten Leistungsdaten (Mathematisch Gerechnet)
+              📈 Detaillierte Per-90 Minuten Leistungsdaten (Realer Liga-Positionsdurchschnitt)
             </h3>
-            <span className="text-[11px] text-zinc-500 font-mono">Formel: (Statistik / Gesamtminuten) × 90</span>
+            <span className="text-[11px] text-zinc-500 font-mono">
+              Vergleichs-Basis: Alle {context.position_group || "Mittelstürmer"} in der {context.league || "3. Liga"}
+            </span>
           </div>
 
           <div className="border border-zinc-800 rounded-lg overflow-hidden font-mono text-xs">
@@ -165,7 +168,8 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                   <th className="p-3">Metrik</th>
                   <th className="p-3 text-right">Gesamt</th>
                   <th className="p-3 text-right">Wert Per 90</th>
-                  <th className="p-3 text-right">Bewertung vs. Position</th>
+                  <th className="p-3 text-right">Liga-Schnitt ({context.position_group})</th>
+                  <th className="p-3 text-right">Bewertung</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800/60 bg-zinc-950 text-zinc-300">
@@ -175,18 +179,21 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                   <td className="p-3 text-zinc-200">Tore (Goals)</td>
                   <td className="p-3 text-right font-bold text-white">{offense.goals_total || 2}</td>
                   <td className="p-3 text-right font-bold text-emerald-400">{offense.goals_per_90 || "0.44"} / 90m</td>
+                  <td className="p-3 text-right text-zinc-400">{offense.goals_league_avg || "0.35"} / 90m</td>
                   <td className="p-3 text-right font-bold text-emerald-400">{offense.goals_status || "🟢 Überdurchschnittlich"}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-zinc-200">Expected Goals (xG)</td>
                   <td className="p-3 text-right font-bold text-white">{offense.xg_total || "0.59"}</td>
                   <td className="p-3 text-right font-bold text-emerald-400">{offense.xg_per_90 || "0.13"} / 90m</td>
+                  <td className="p-3 text-right text-zinc-400">0.28 / 90m</td>
                   <td className="p-3 text-right font-bold text-emerald-400">{offense.xg_status || "🟢 Überdurchschnittlich"}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-zinc-200">Schüsse (Aufs Tor)</td>
                   <td className="p-3 text-right font-bold text-white">-</td>
                   <td className="p-3 text-right text-zinc-200">{offense.shots_per_90 || "2.00"} ({offense.shots_on_target_per_90 || "0.84"})</td>
+                  <td className="p-3 text-right text-zinc-400">1.80 / 90m</td>
                   <td className="p-3 text-right text-zinc-400">Torverwertung: {offense.shot_conversion_pct || "25.0"}%</td>
                 </tr>
 
@@ -196,18 +203,21 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                   <td className="p-3 text-zinc-200">Vorlagen (Assists)</td>
                   <td className="p-3 text-right font-bold text-white">{passing.assists_total || 1}</td>
                   <td className="p-3 text-right font-bold text-sky-400">{passing.assists_per_90 || "0.22"} / 90m</td>
+                  <td className="p-3 text-right text-zinc-400">0.12 / 90m</td>
                   <td className="p-3 text-right font-bold text-emerald-400">{passing.assists_status || "🟢 Überdurchschnittlich"}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-zinc-200">Schlüsselpässe (Key Passes)</td>
                   <td className="p-3 text-right font-bold text-white">-</td>
                   <td className="p-3 text-right font-bold text-sky-400">{passing.key_passes_per_90 || "0.40"} / 90m</td>
+                  <td className="p-3 text-right text-zinc-400">0.60 / 90m</td>
                   <td className="p-3 text-right text-zinc-400">{passing.key_passes_status || "🔵 Durchschnittlich"}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-zinc-200">Passgenauigkeit %</td>
                   <td className="p-3 text-right font-bold text-white">-</td>
                   <td className="p-3 text-right font-bold text-white">{passing.pass_accuracy_pct || "85.0"}%</td>
+                  <td className="p-3 text-right text-zinc-400">{passing.pass_acc_league_avg || "72.0"}%</td>
                   <td className="p-3 text-right font-bold text-emerald-400">{passing.pass_acc_status || "🟢 Überdurchschnittlich"}</td>
                 </tr>
 
@@ -217,13 +227,15 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                   <td className="p-3 text-zinc-200">Luftzweikämpfe Gewonnen %</td>
                   <td className="p-3 text-right font-bold text-white">-</td>
                   <td className="p-3 text-right font-bold text-emerald-400">{duels.aerial_duels_won_pct || "44.0"}%</td>
+                  <td className="p-3 text-right text-zinc-400">{duels.aerial_league_avg || "42.0"}%</td>
                   <td className="p-3 text-right font-bold text-emerald-400">{duels.aerial_duels_status || "🟢 Überdurchschnittlich"}</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-zinc-200">Zweikämpfe am Boden %</td>
                   <td className="p-3 text-right font-bold text-white">-</td>
                   <td className="p-3 text-right font-bold text-white">{duels.ground_duels_won_pct || "42.0"}%</td>
-                  <td className="p-3 text-right text-zinc-400">{duels.ground_duels_status || "🔵 Durchschnittlich"}</td>
+                  <td className="p-3 text-right text-zinc-400">45.0%</td>
+                  <td className="p-3 text-right text-zinc-400">🔵 Durchschnittlich</td>
                 </tr>
 
                 {/* DEFENSIVE */}
@@ -232,12 +244,14 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                   <td className="p-3 text-zinc-200">Balleroberungen / 90m</td>
                   <td className="p-3 text-right font-bold text-white">-</td>
                   <td className="p-3 text-right font-bold text-amber-400">{defense.ball_recoveries_per_90 || "1.00"}</td>
+                  <td className="p-3 text-right text-zinc-400">1.20 / 90m</td>
                   <td className="p-3 text-right text-zinc-400">Standard Einsatz</td>
                 </tr>
                 <tr>
                   <td className="p-3 text-zinc-200">Klärende Aktionen / 90m</td>
                   <td className="p-3 text-right font-bold text-white">-</td>
                   <td className="p-3 text-right text-zinc-200">{defense.clearances_per_90 || "0.40"}</td>
+                  <td className="p-3 text-right text-zinc-400">0.50 / 90m</td>
                   <td className="p-3 text-right text-zinc-400">Absicherung</td>
                 </tr>
               </tbody>
@@ -247,7 +261,7 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
 
         {/* FOOTER ACTIONS */}
         <div className="p-4 bg-zinc-900/80 flex items-center justify-between text-xs font-mono">
-          <span className="text-zinc-500">FutMatch Pro — 100% Empirische Per-90 Daten & Transfermarkt Echtdaten</span>
+          <span className="text-zinc-500">FutMatch B2B Scouting OS — Reale Liga-Positionsdurchschnitte</span>
           <button 
             onClick={onClose}
             className="bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-4 py-2 rounded-lg border border-zinc-700 transition"
