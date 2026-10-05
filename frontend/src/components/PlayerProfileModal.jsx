@@ -14,6 +14,69 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
   const tracking = detailed.tracking || {};
   const context = detailed.league_position_context || {};
 
+  const minutes = sample.total_minutes || 408;
+  const ninetyUnits = Math.max(0.5, minutes / 90.0);
+
+  // Dynamic Touches & Duels
+  const touchesTotal = duels.touches_total ?? (duels.touches_per_90 ? Math.round(duels.touches_per_90 * ninetyUnits) : 98);
+  const touchesPer90 = duels.touches_per_90 ?? (touchesTotal / ninetyUnits).toFixed(1);
+
+  // Dynamic Offense
+  const goalsTotal = offense.goals_total ?? 2;
+  const goalsPer90 = offense.goals_per_90 ?? (goalsTotal / ninetyUnits).toFixed(2);
+  const xgTotal = offense.xg_total ?? (offense.xg_per_90 ? (offense.xg_per_90 * ninetyUnits).toFixed(2) : "1.69");
+  const xgPer90 = offense.xg_per_90 ?? (xgTotal / ninetyUnits).toFixed(2);
+  const xgotTotal = offense.xgot_total ?? (offense.xgot_per_90 ? (offense.xgot_per_90 * ninetyUnits).toFixed(2) : "1.25");
+  const xgotPer90 = offense.xgot_per_90 ?? (xgotTotal / ninetyUnits).toFixed(2);
+  const shotsTotal = offense.shots_total ?? (offense.shots_per_90 ? Math.round(offense.shots_per_90 * ninetyUnits) : 9);
+  const shotsOnTargetTotal = offense.shots_on_target_total ?? (offense.shots_on_target_per_90 ? Math.round(offense.shots_on_target_per_90 * ninetyUnits) : 3);
+  const shotsPer90 = offense.shots_per_90 ?? (shotsTotal / ninetyUnits).toFixed(2);
+  const shotsOnTargetPer90 = offense.shots_on_target_per_90 ?? (shotsOnTargetTotal / ninetyUnits).toFixed(2);
+  const conversionPct = offense.shot_conversion_pct ?? ((goalsTotal / Math.max(1, shotsTotal)) * 100).toFixed(1);
+
+  // Dynamic Passing
+  const assistsTotal = passing.assists_total ?? 1;
+  const assistsPer90 = passing.assists_per_90 ?? (assistsTotal / ninetyUnits).toFixed(2);
+  const xaTotal = passing.xa_total ?? (passing.xa_per_90 ? (passing.xa_per_90 * ninetyUnits).toFixed(2) : "0.32");
+  const xaPer90 = passing.xa_per_90 ?? (xaTotal / ninetyUnits).toFixed(2);
+  const keyPassesTotal = passing.key_passes_total ?? (passing.key_passes_per_90 ? Math.round(passing.key_passes_per_90 * ninetyUnits) : 3);
+  const keyPassesPer90 = passing.key_passes_per_90 ?? (keyPassesTotal / ninetyUnits).toFixed(2);
+  const passesCompleted = passing.passes_completed ?? 38;
+  const passesAttempted = passing.passes_attempted ?? 44;
+  const passAccPct = passing.pass_accuracy_pct ?? ((passesCompleted / Math.max(1, passesAttempted)) * 100).toFixed(1);
+
+  // Dynamic Duels
+  const aerialWon = duels.aerial_won_total ?? 22;
+  const aerialTotal = duels.aerial_total ?? 50;
+  const aerialPct = duels.aerial_duels_won_pct ?? ((aerialWon / Math.max(1, aerialTotal)) * 100).toFixed(1);
+  const groundWon = duels.ground_won_total ?? 28;
+  const groundTotal = duels.ground_total ?? 67;
+  const groundPct = duels.ground_duels_won_pct ?? ((groundWon / Math.max(1, groundTotal)) * 100).toFixed(1);
+  const dribblesSucc = duels.dribbles_succ_total ?? 1;
+  const dribblesTotal = duels.dribbles_total ?? 2;
+  const dribblePct = duels.dribble_success_pct ?? ((dribblesSucc / Math.max(1, dribblesTotal)) * 100).toFixed(1);
+  const foulsDrawnTotal = duels.fouls_drawn_total ?? 6;
+  const foulsDrawnPer90 = (foulsDrawnTotal / ninetyUnits).toFixed(2);
+  const offsidesTotal = duels.offsides_total ?? 3;
+  const offsidesPer90 = (offsidesTotal / ninetyUnits).toFixed(2);
+
+  // Dynamic Defense
+  const defActionsTotal = defense.defensive_actions_total ?? 11;
+  const defActionsPer90 = (defActionsTotal / ninetyUnits).toFixed(2);
+  const recoveriesTotal = defense.ball_recoveries_total ?? 5;
+  const recoveriesPer90 = defense.ball_recoveries_per_90 ?? (recoveriesTotal / ninetyUnits).toFixed(2);
+  const interceptionsTotal = defense.interceptions_total ?? 2;
+  const interceptionsPer90 = (interceptionsTotal / ninetyUnits).toFixed(2);
+  const clearancesTotal = defense.clearances_total ?? 2;
+  const clearancesPer90 = defense.clearances_per_90 ?? (clearancesTotal / ninetyUnits).toFixed(2);
+
+  // Dynamic Tracking
+  const distKmTotal = tracking.distance_total_km ?? 45.8;
+  const distKmPer90 = tracking.distance_covered_km_per_90 ?? (distKmTotal / ninetyUnits).toFixed(1);
+  const topSpeed = tracking.peak_top_speed_kmh ?? 31.3;
+  const sprintsTotal = tracking.total_sprints ?? 65;
+  const sprintsPer90 = (sprintsTotal / ninetyUnits).toFixed(1);
+
   return (
     <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 md:p-6 overflow-y-auto">
       <div 
@@ -210,35 +273,35 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                 <tbody className="divide-y divide-zinc-800/60 bg-zinc-950 text-zinc-300">
                   <tr>
                     <td className="p-3 font-semibold text-white">Tore (Goals)</td>
-                    <td className="p-3 text-right font-bold text-white">{offense.goals_total || 2} Tore</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{offense.goals_per_90 || "0.44"} / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{goalsTotal} Tore</td>
+                    <td className="p-3 text-right font-bold text-emerald-400">{goalsPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">{offense.goals_league_avg || "0.35"} / 90m</td>
                     <td className="p-3 text-right font-bold text-emerald-400">{offense.goals_status || "🟢 Überdurchschnittlich"}</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-semibold text-white">Expected Goals (xG)</td>
-                    <td className="p-3 text-right font-bold text-white">{offense.xg_total || "0.59"} xG</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{offense.xg_per_90 || "0.13"} / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{xgTotal} xG</td>
+                    <td className="p-3 text-right font-bold text-emerald-400">{xgPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.28 / 90m</td>
                     <td className="p-3 text-right font-bold text-emerald-400">{offense.xg_status || "🟢 Überdurchschnittlich"}</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Expected Goals on Target (xGOT)</td>
-                    <td className="p-3 text-right font-bold text-white">0.42 xGOT</td>
-                    <td className="p-3 text-right text-zinc-200">0.09 / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{xgotTotal} xGOT</td>
+                    <td className="p-3 text-right text-zinc-200">{xgotPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.18 / 90m</td>
                     <td className="p-3 text-right text-zinc-400">Standard xGOT</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Schüsse Gesamt (Aufs Tor)</td>
-                    <td className="p-3 text-right font-bold text-white">9 (3 auf Tor)</td>
-                    <td className="p-3 text-right text-zinc-200">{offense.shots_per_90 || "2.00"} ({offense.shots_on_target_per_90 || "0.84"})</td>
+                    <td className="p-3 text-right font-bold text-white">{shotsTotal} ({shotsOnTargetTotal} auf Tor)</td>
+                    <td className="p-3 text-right text-zinc-200">{shotsPer90} ({shotsOnTargetPer90})</td>
                     <td className="p-3 text-right text-zinc-400">1.80 / 90m</td>
                     <td className="p-3 text-right text-emerald-400 font-bold">Aktiv</td>
                   </tr>
                   <tr>
-                    <td className="p-3 text-zinc-200">Schusstypen (Kopf / Offenes Spiel)</td>
-                    <td className="p-3 text-right font-bold text-white">4 Kopf / 5 Fuß</td>
+                    <td className="p-3 text-zinc-200">Schusstypen (Kopf / Fuß)</td>
+                    <td className="p-3 text-right font-bold text-white">4 Kopf / {Math.max(0, shotsTotal - 4)} Fuß</td>
                     <td className="p-3 text-right text-zinc-200">0.88 Kopf / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.40 Kopf / 90m</td>
                     <td className="p-3 text-right text-emerald-400 font-bold">Kopfball-Gefahr</td>
@@ -246,7 +309,7 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                   <tr>
                     <td className="p-3 text-zinc-200">Torverwertung %</td>
                     <td className="p-3 text-right font-bold text-white">-</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{offense.shot_conversion_pct || "22.2"}%</td>
+                    <td className="p-3 text-right font-bold text-emerald-400">{conversionPct}%</td>
                     <td className="p-3 text-right text-zinc-400">18.0%</td>
                     <td className="p-3 text-right text-emerald-400 font-bold">Effizient</td>
                   </tr>
@@ -271,29 +334,29 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                 <tbody className="divide-y divide-zinc-800/60 bg-zinc-950 text-zinc-300">
                   <tr>
                     <td className="p-3 font-semibold text-white">Vorlagen (Assists)</td>
-                    <td className="p-3 text-right font-bold text-white">{passing.assists_total || 1} Assists</td>
-                    <td className="p-3 text-right font-bold text-sky-400">{passing.assists_per_90 || "0.22"} / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{assistsTotal} Assists</td>
+                    <td className="p-3 text-right font-bold text-sky-400">{assistsPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.12 / 90m</td>
                     <td className="p-3 text-right font-bold text-emerald-400">{passing.assists_status || "🟢 Überdurchschnittlich"}</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-semibold text-white">Expected Assists (xA)</td>
-                    <td className="p-3 text-right font-bold text-white">0.32 xA</td>
-                    <td className="p-3 text-right font-bold text-sky-400">0.07 / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{xaTotal} xA</td>
+                    <td className="p-3 text-right font-bold text-sky-400">{xaPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.08 / 90m</td>
                     <td className="p-3 text-right text-zinc-400">🔵 Durchschnittlich</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Schlüsselpässe (Key Passes)</td>
-                    <td className="p-3 text-right font-bold text-white">3 Schlüsselpässe</td>
-                    <td className="p-3 text-right font-bold text-sky-400">{passing.key_passes_per_90 || "0.40"} / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{keyPassesTotal} Schlüsselpässe</td>
+                    <td className="p-3 text-right font-bold text-sky-400">{keyPassesPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.60 / 90m</td>
                     <td className="p-3 text-right text-zinc-400">{passing.key_passes_status || "🔵 Durchschnittlich"}</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Passgenauigkeit %</td>
-                    <td className="p-3 text-right font-bold text-white">38/44 Pässe</td>
-                    <td className="p-3 text-right font-bold text-white">{passing.pass_accuracy_pct || "85.0"}%</td>
+                    <td className="p-3 text-right font-bold text-white">{passesCompleted}/{passesAttempted} Pässe</td>
+                    <td className="p-3 text-right font-bold text-white">{passAccPct}%</td>
                     <td className="p-3 text-right text-zinc-400">{passing.pass_acc_league_avg || "72.0"}%</td>
                     <td className="p-3 text-right font-bold text-emerald-400">{passing.pass_acc_status || "🟢 Überdurchschnittlich"}</td>
                   </tr>
@@ -325,43 +388,43 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                 <tbody className="divide-y divide-zinc-800/60 bg-zinc-950 text-zinc-300">
                   <tr>
                     <td className="p-3 font-semibold text-white">Berührungen (Touches)</td>
-                    <td className="p-3 text-right font-bold text-white">118 Berührungen</td>
-                    <td className="p-3 text-right font-bold text-purple-400">26.0 / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{touchesTotal} Berührungen</td>
+                    <td className="p-3 text-right font-bold text-purple-400">{touchesPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">28.5 / 90m</td>
                     <td className="p-3 text-right text-zinc-400">🔵 Durchschnittlich</td>
                   </tr>
                   <tr>
                     <td className="p-3 font-semibold text-white">Luftzweikämpfe Gewonnen %</td>
-                    <td className="p-3 text-right font-bold text-white">22/50 gewon.</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{duels.aerial_duels_won_pct || "44.0"}%</td>
+                    <td className="p-3 text-right font-bold text-white">{aerialWon}/{aerialTotal} gewon.</td>
+                    <td className="p-3 text-right font-bold text-emerald-400">{aerialPct}%</td>
                     <td className="p-3 text-right text-zinc-400">{duels.aerial_league_avg || "42.0"}%</td>
                     <td className="p-3 text-right font-bold text-emerald-400">{duels.aerial_duels_status || "🟢 Überdurchschnittlich"}</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Zweikämpfe am Boden %</td>
-                    <td className="p-3 text-right font-bold text-white">28/67 gewon.</td>
-                    <td className="p-3 text-right font-bold text-white">{duels.ground_duels_won_pct || "42.0"}%</td>
+                    <td className="p-3 text-right font-bold text-white">{groundWon}/{groundTotal} gewon.</td>
+                    <td className="p-3 text-right font-bold text-white">{groundPct}%</td>
                     <td className="p-3 text-right text-zinc-400">45.0%</td>
                     <td className="p-3 text-right text-zinc-400">🔵 Durchschnittlich</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Erfolgreiche Dribblings %</td>
-                    <td className="p-3 text-right font-bold text-white">1/2 Dribblings</td>
-                    <td className="p-3 text-right text-purple-400">50.0% Quote</td>
+                    <td className="p-3 text-right font-bold text-white">{dribblesSucc}/{dribblesTotal} Dribblings</td>
+                    <td className="p-3 text-right text-purple-400">{dribblePct}% Quote</td>
                     <td className="p-3 text-right text-zinc-400">48.0%</td>
                     <td className="p-3 text-right text-zinc-400">Solide</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Gefoult worden (Fouls Drawn)</td>
-                    <td className="p-3 text-right font-bold text-white">6x gefoult</td>
-                    <td className="p-3 text-right text-emerald-400">1.32 / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{foulsDrawnTotal}x gefoult</td>
+                    <td className="p-3 text-right text-emerald-400">{foulsDrawnPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.90 / 90m</td>
                     <td className="p-3 text-right font-bold text-emerald-400">Zieht Fouls</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Abseits (Offsides)</td>
-                    <td className="p-3 text-right font-bold text-white">3x Abseits</td>
-                    <td className="p-3 text-right text-zinc-400">0.66 / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{offsidesTotal}x Abseits</td>
+                    <td className="p-3 text-right text-zinc-400">{offsidesPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.50 / 90m</td>
                     <td className="p-3 text-right text-zinc-400">Normal</td>
                   </tr>
@@ -386,29 +449,29 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                 <tbody className="divide-y divide-zinc-800/60 bg-zinc-950 text-zinc-300">
                   <tr>
                     <td className="p-3 font-semibold text-white">Defensive Aktionen Total</td>
-                    <td className="p-3 text-right font-bold text-white">11 Aktionen</td>
-                    <td className="p-3 text-right font-bold text-amber-400">2.42 / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{defActionsTotal} Aktionen</td>
+                    <td className="p-3 text-right font-bold text-amber-400">{defActionsPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">2.10 / 90m</td>
                     <td className="p-3 text-right font-bold text-emerald-400">Aktiv im Anlaufen</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Balleroberungen (Recoveries)</td>
-                    <td className="p-3 text-right font-bold text-white">5 Eroberungen</td>
-                    <td className="p-3 text-right font-bold text-amber-400">{defense.ball_recoveries_per_90 || "1.10"} / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{recoveriesTotal} Eroberungen</td>
+                    <td className="p-3 text-right font-bold text-amber-400">{recoveriesPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">1.20 / 90m</td>
                     <td className="p-3 text-right text-zinc-400">Standard Einsatz</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Abgefangene Bälle (Interceptions)</td>
-                    <td className="p-3 text-right font-bold text-white">2 Abgefangen</td>
-                    <td className="p-3 text-right text-zinc-200">0.44 / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{interceptionsTotal} Abgefangen</td>
+                    <td className="p-3 text-right text-zinc-200">{interceptionsPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.30 / 90m</td>
                     <td className="p-3 text-right text-emerald-400 font-bold">Gutes Antizipieren</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Klärende Aktionen (Clearances)</td>
-                    <td className="p-3 text-right font-bold text-white">2 Geklärt</td>
-                    <td className="p-3 text-right text-zinc-200">{defense.clearances_per_90 || "0.44"} / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{clearancesTotal} Geklärt</td>
+                    <td className="p-3 text-right text-zinc-200">{clearancesPer90} / 90m</td>
                     <td className="p-3 text-right text-zinc-400">0.50 / 90m</td>
                     <td className="p-3 text-right text-zinc-400">Absicherung</td>
                   </tr>
@@ -432,19 +495,19 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                 <tbody className="divide-y divide-zinc-800/60 bg-zinc-950 text-zinc-300">
                   <tr>
                     <td className="p-3 font-semibold text-white">Zurückgelegte Distanz (km)</td>
-                    <td className="p-3 text-right font-bold text-red-400">9.6 km / 90m</td>
+                    <td className="p-3 text-right font-bold text-red-400">{distKmPer90} km / 90m ({distKmTotal} km total)</td>
                     <td className="p-3 text-right text-zinc-400">9.4 km</td>
                     <td className="p-3 text-right font-bold text-emerald-400">Laufstark</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Höchstgeschwindigkeit (Top Speed)</td>
-                    <td className="p-3 text-right font-bold text-white">31.3 km/h</td>
+                    <td className="p-3 text-right font-bold text-white">{topSpeed} km/h</td>
                     <td className="p-3 text-right text-zinc-400">30.8 km/h</td>
                     <td className="p-3 text-right font-bold text-emerald-400">Antrittsstark</td>
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Anzahl der Sprints</td>
-                    <td className="p-3 text-right font-bold text-white">14 Sprints / 90m</td>
+                    <td className="p-3 text-right font-bold text-white">{sprintsPer90} Sprints / 90m ({sprintsTotal} total)</td>
                     <td className="p-3 text-right text-zinc-400">12 Sprints</td>
                     <td className="p-3 text-right font-bold text-emerald-400">High-Intensity Sprints</td>
                   </tr>
@@ -456,7 +519,7 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
                   </tr>
                   <tr>
                     <td className="p-3 text-zinc-200">Begangene Fouls / Gelbe Karten</td>
-                    <td className="p-3 text-right font-bold text-yellow-400">1.1 Fouls / 2x 🟨</td>
+                    <td className="p-3 text-right font-bold text-yellow-400">1.1 Fouls / {sample.yellow_cards || 2}x 🟨</td>
                     <td className="p-3 text-right text-zinc-400">1.2 Fouls</td>
                     <td className="p-3 text-right text-zinc-400">Zweikampfbetont</td>
                   </tr>
