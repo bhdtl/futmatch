@@ -13,6 +13,8 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
   const defense = detailed.defense || {};
   const tracking = detailed.tracking || {};
   const context = detailed.league_position_context || {};
+  const matchAgg = detailed.season_matchday_aggregation || {};
+  const shotmapEvents = matchAgg.shotmap_events || [];
 
   const minutes = sample.total_minutes || 408;
   const ninetyUnits = Math.max(0.5, minutes / 90.0);
@@ -21,17 +23,21 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
   const touchesTotal = duels.touches_total ?? (duels.touches_per_90 ? Math.round(duels.touches_per_90 * ninetyUnits) : 98);
   const touchesPer90 = duels.touches_per_90 ?? (touchesTotal / ninetyUnits).toFixed(1);
 
-  // Dynamic Offense
+  // Dynamic Offense (19 Shots for Akono)
   const goalsTotal = offense.goals_total ?? 2;
   const goalsPer90 = offense.goals_per_90 ?? (goalsTotal / ninetyUnits).toFixed(2);
-  const xgTotal = offense.xg_total ?? (offense.xg_per_90 ? (offense.xg_per_90 * ninetyUnits).toFixed(2) : "1.69");
+  const xgTotal = offense.xg_total ?? (offense.xg_per_90 ? (offense.xg_per_90 * ninetyUnits).toFixed(2) : "2.40");
   const xgPer90 = offense.xg_per_90 ?? (xgTotal / ninetyUnits).toFixed(2);
-  const xgotTotal = offense.xgot_total ?? (offense.xgot_per_90 ? (offense.xgot_per_90 * ninetyUnits).toFixed(2) : "1.25");
+  const xgotTotal = offense.xgot_total ?? (offense.xgot_per_90 ? (offense.xgot_per_90 * ninetyUnits).toFixed(2) : "1.48");
   const xgotPer90 = offense.xgot_per_90 ?? (xgotTotal / ninetyUnits).toFixed(2);
-  const shotsTotal = offense.shots_total ?? (offense.shots_per_90 ? Math.round(offense.shots_per_90 * ninetyUnits) : 9);
-  const shotsOnTargetTotal = offense.shots_on_target_total ?? (offense.shots_on_target_per_90 ? Math.round(offense.shots_on_target_per_90 * ninetyUnits) : 3);
-  const shotsPer90 = offense.shots_per_90 ?? (shotsTotal / ninetyUnits).toFixed(2);
-  const shotsOnTargetPer90 = offense.shots_on_target_per_90 ?? (shotsOnTargetTotal / ninetyUnits).toFixed(2);
+
+  const shotsTotal = offense.shots_total ?? 19;
+  const shotsOnTargetTotal = offense.shots_on_target_total ?? 6;
+  const shotsOffTargetTotal = matchAgg.season_total_shots_off_target ?? 8;
+  const shotsBlockedTotal = matchAgg.season_total_shots_blocked ?? 5;
+
+  const shotsPer90 = (shotsTotal / ninetyUnits).toFixed(2);
+  const shotsOnTargetPer90 = (shotsOnTargetTotal / ninetyUnits).toFixed(2);
   const conversionPct = offense.shot_conversion_pct ?? ((goalsTotal / Math.max(1, shotsTotal)) * 100).toFixed(1);
 
   // Dynamic Passing
@@ -71,10 +77,10 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
   const clearancesPer90 = defense.clearances_per_90 ?? (clearancesTotal / ninetyUnits).toFixed(2);
 
   // Dynamic Tracking
-  const distKmTotal = tracking.distance_total_km ?? 45.8;
+  const distKmTotal = tracking.distance_total_km ?? 46.0;
   const distKmPer90 = tracking.distance_covered_km_per_90 ?? (distKmTotal / ninetyUnits).toFixed(1);
   const topSpeed = tracking.peak_top_speed_kmh ?? 31.3;
-  const sprintsTotal = tracking.total_sprints ?? 65;
+  const sprintsTotal = tracking.total_sprints ?? 67;
   const sprintsPer90 = (sprintsTotal / ninetyUnits).toFixed(1);
 
   return (
@@ -259,62 +265,108 @@ export default function PlayerProfileModal({ isOpen, onClose, player }) {
 
           {/* TAB CONTENT: OFFENSE */}
           {activeTab === 'offense' && (
-            <div className="border border-zinc-800 rounded-lg overflow-hidden font-mono text-xs">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-zinc-900 text-zinc-400 border-b border-zinc-800 text-[11px]">
-                    <th className="p-3">Metrik</th>
-                    <th className="p-3 text-right">Gesamtzahl (Saison)</th>
-                    <th className="p-3 text-right">Wert Per 90 Min.</th>
-                    <th className="p-3 text-right">Liga-Schnitt ({context.position_group || "Mittelstürmer"})</th>
-                    <th className="p-3 text-right">Bewertung</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-800/60 bg-zinc-950 text-zinc-300">
-                  <tr>
-                    <td className="p-3 font-semibold text-white">Tore (Goals)</td>
-                    <td className="p-3 text-right font-bold text-white">{goalsTotal} Tore</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{goalsPer90} / 90m</td>
-                    <td className="p-3 text-right text-zinc-400">{offense.goals_league_avg || "0.35"} / 90m</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{offense.goals_status || "🟢 Überdurchschnittlich"}</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 font-semibold text-white">Expected Goals (xG)</td>
-                    <td className="p-3 text-right font-bold text-white">{xgTotal} xG</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{xgPer90} / 90m</td>
-                    <td className="p-3 text-right text-zinc-400">0.28 / 90m</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{offense.xg_status || "🟢 Überdurchschnittlich"}</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 text-zinc-200">Expected Goals on Target (xGOT)</td>
-                    <td className="p-3 text-right font-bold text-white">{xgotTotal} xGOT</td>
-                    <td className="p-3 text-right text-zinc-200">{xgotPer90} / 90m</td>
-                    <td className="p-3 text-right text-zinc-400">0.18 / 90m</td>
-                    <td className="p-3 text-right text-zinc-400">Standard xGOT</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 text-zinc-200">Schüsse Gesamt (Aufs Tor)</td>
-                    <td className="p-3 text-right font-bold text-white">{shotsTotal} ({shotsOnTargetTotal} auf Tor)</td>
-                    <td className="p-3 text-right text-zinc-200">{shotsPer90} ({shotsOnTargetPer90})</td>
-                    <td className="p-3 text-right text-zinc-400">1.80 / 90m</td>
-                    <td className="p-3 text-right text-emerald-400 font-bold">Aktiv</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 text-zinc-200">Schusstypen (Kopf / Fuß)</td>
-                    <td className="p-3 text-right font-bold text-white">4 Kopf / {Math.max(0, shotsTotal - 4)} Fuß</td>
-                    <td className="p-3 text-right text-zinc-200">0.88 Kopf / 90m</td>
-                    <td className="p-3 text-right text-zinc-400">0.40 Kopf / 90m</td>
-                    <td className="p-3 text-right text-emerald-400 font-bold">Kopfball-Gefahr</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 text-zinc-200">Torverwertung %</td>
-                    <td className="p-3 text-right font-bold text-white">-</td>
-                    <td className="p-3 text-right font-bold text-emerald-400">{conversionPct}%</td>
-                    <td className="p-3 text-right text-zinc-400">18.0%</td>
-                    <td className="p-3 text-right text-emerald-400 font-bold">Effizient</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="space-y-4">
+              <div className="border border-zinc-800 rounded-lg overflow-hidden font-mono text-xs">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-zinc-900 text-zinc-400 border-b border-zinc-800 text-[11px]">
+                      <th className="p-3">Metrik</th>
+                      <th className="p-3 text-right">Gesamtzahl (Saison)</th>
+                      <th className="p-3 text-right">Wert Per 90 Min.</th>
+                      <th className="p-3 text-right">Liga-Schnitt ({context.position_group || "Mittelstürmer"})</th>
+                      <th className="p-3 text-right">Bewertung</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-800/60 bg-zinc-950 text-zinc-300">
+                    <tr>
+                      <td className="p-3 font-semibold text-white">Tore (Goals)</td>
+                      <td className="p-3 text-right font-bold text-white">{goalsTotal} Tore</td>
+                      <td className="p-3 text-right font-bold text-emerald-400">{goalsPer90} / 90m</td>
+                      <td className="p-3 text-right text-zinc-400">{offense.goals_league_avg || "0.35"} / 90m</td>
+                      <td className="p-3 text-right font-bold text-emerald-400">{offense.goals_status || "🟢 Überdurchschnittlich"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-semibold text-white">Expected Goals (xG)</td>
+                      <td className="p-3 text-right font-bold text-white">{xgTotal} xG</td>
+                      <td className="p-3 text-right font-bold text-emerald-400">{xgPer90} / 90m</td>
+                      <td className="p-3 text-right text-zinc-400">0.28 / 90m</td>
+                      <td className="p-3 text-right font-bold text-emerald-400">{offense.xg_status || "🟢 Überdurchschnittlich"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 text-zinc-200">Expected Goals on Target (xGOT)</td>
+                      <td className="p-3 text-right font-bold text-white">{xgotTotal} xGOT</td>
+                      <td className="p-3 text-right text-zinc-200">{xgotPer90} / 90m</td>
+                      <td className="p-3 text-right text-zinc-400">0.18 / 90m</td>
+                      <td className="p-3 text-right text-zinc-400">Standard xGOT</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 text-zinc-200 font-bold text-emerald-400">Schüsse Gesamt (Aufschlüsselung)</td>
+                      <td className="p-3 text-right font-bold text-white">{shotsTotal} Schüsse ({shotsOnTargetTotal} aufs Tor, {shotsOffTargetTotal} verfehlt, {shotsBlockedTotal} geblockt)</td>
+                      <td className="p-3 text-right text-emerald-400 font-bold">{shotsPer90} ({shotsOnTargetPer90} auf Tor / 90m)</td>
+                      <td className="p-3 text-right text-zinc-400">1.80 / 90m</td>
+                      <td className="p-3 text-right text-emerald-400 font-bold">🟢 Sehr Aktiv (19 Schüsse)</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 text-zinc-200">Schusstypen (Kopf / Fuß)</td>
+                      <td className="p-3 text-right font-bold text-white">6 Kopf / 13 Fuß (9 Rechts, 4 Links)</td>
+                      <td className="p-3 text-right text-zinc-200">1.32 Kopf / 90m</td>
+                      <td className="p-3 text-right text-zinc-400">0.40 Kopf / 90m</td>
+                      <td className="p-3 text-right text-emerald-400 font-bold">Kopfball-Gefahr</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 text-zinc-200">Torverwertung %</td>
+                      <td className="p-3 text-right font-bold text-white">-</td>
+                      <td className="p-3 text-right font-bold text-emerald-400">{conversionPct}%</td>
+                      <td className="p-3 text-right text-zinc-400">18.0%</td>
+                      <td className="p-3 text-right text-emerald-400 font-bold">Effizient</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* OPTA & SOFASCORE SHOTMAP LOGS TABLE */}
+              {shotmapEvents.length > 0 && (
+                <div className="bg-zinc-900/60 p-4 rounded-lg border border-zinc-800 space-y-3 font-mono">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-zinc-200">🎯 Sofascore Opta Shotmap Log ({shotmapEvents.length} erfasste Schusspositionen & xG)</span>
+                    <span className="text-zinc-400 text-[11px]">Echte Spieltags-Schusskoordinaten</span>
+                  </div>
+                  
+                  <div className="max-h-56 overflow-y-auto border border-zinc-800 rounded">
+                    <table className="w-full text-left text-[11px]">
+                      <thead className="bg-zinc-900 text-zinc-400 sticky top-0 border-b border-zinc-800">
+                        <tr>
+                          <th className="p-2">Schuss #</th>
+                          <th className="p-2">Spieltag / Gegner</th>
+                          <th className="p-2">Minute</th>
+                          <th className="p-2">Ergebnis</th>
+                          <th className="p-2">xG Wert</th>
+                          <th className="p-2">Schusstyp</th>
+                          <th className="p-2">Situation</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-800/40 bg-zinc-950 text-zinc-300">
+                        {shotmapEvents.map((shot) => (
+                          <tr key={shot.shot_id} className="hover:bg-zinc-900/50">
+                            <td className="p-2 text-zinc-400 font-bold">#{shot.shot_id}</td>
+                            <td className="p-2 text-zinc-200">Spieltag {shot.matchday} vs {shot.opponent}</td>
+                            <td className="p-2 text-zinc-400">{shot.minute}'</td>
+                            <td className="p-2 font-bold">
+                              {shot.outcome === "Tor" && <span className="text-emerald-400 bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800">⚽ Tor</span>}
+                              {shot.outcome === "Aufs Tor" && <span className="text-sky-400">🎯 Aufs Tor</span>}
+                              {shot.outcome === "Verfehlt" && <span className="text-amber-400">🟡 Verfehlt</span>}
+                              {shot.outcome === "Geblockt" && <span className="text-zinc-500">🔴 Geblockt</span>}
+                            </td>
+                            <td className="p-2 text-emerald-400 font-bold">{shot.xg} xG</td>
+                            <td className="p-2 text-zinc-300">{shot.shot_type}</td>
+                            <td className="p-2 text-zinc-400">{shot.situation}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
