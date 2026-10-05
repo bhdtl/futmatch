@@ -1,0 +1,113 @@
+{
+  "player_id": 924069,
+  "overall": {
+    "statistics": {
+      "rating": 6.7857142857143,
+      "totalRating": 47.5,
+      "countRating": 7,
+      "goals": 2,
+      "assists": 1,
+      "goalsAssistsSum": 3,
+      "accuratePasses": 41,
+      "inaccuratePasses": 7,
+      "totalPasses": 48,
+      "accuratePassesPercentage": 85.42,
+      "accurateFinalThirdPasses": 2,
+      "keyPasses": 3,
+      "successfulDribbles": 1,
+      "successfulDribblesPercentage": 50,
+      "yellowCards": 2,
+      "directRedCards": 0,
+      "redCards": 0,
+      "accurateCrosses": 0,
+      "accurateCrossesPercentage": 0,
+      "totalShots": 14,
+      "shotsOnTarget": 4,
+      "aerialDuelsWon": 11,
+      "aerialDuelsWonPercentage": 44,
+      "totalDuelsWon": 28,
+      "totalDuelsWonPercentage": 42.42,
+      "minutesPlayed": 408,
+      "goalConversionPercentage": 14.29,
+      "penaltiesTaken": 0,
+      "penaltyGoals": 0,
+      "shotFromSetPiece": 0,
+      "accurateLongBalls": 2,
+      "accurateLongBallsPercentage": 66.67,
+      "clearances": 3,
+      "errorLeadToShot": 0,
+      "wasFouled": 6,
+      "fouls": 8,
+      "dribbledPast": 0,
+      "offsides": 3,
+      "blockedShots": 4,
+      "passToAssist": 0,
+      "saves": 0,
+      "cleanSheet": 0,
+      "crossesNotClaimed": 0,
+      "matchesStarted": 5,
+      "penaltyConversion": 0,
+      "totalCross": 0,
+      "duelLost": 38,
+      "aerialLost": 14,
+      "totalLongBalls": 3,
+      "goalsConceded": 0,
+      "scoringFrequency": 204,
+      "yellowRedCards": 0,
+      "substitutionsIn": 4,
+      "substitutionsOut": 2,
+      "goalKicks": 0,
+      "ballRecovery": 7,
+      "id": 3240811,
+      "type": "overall",
+      "appearances": 7,
+      "statisticsType": {
+        "sportSlug": "football",
+        "statisticsType": "player"
+      }
+    },
+    "seasonRatingBreakdown": {
+      "shotValue": 0.01,
+      "passValue": -0.07,
+      "dribbleValue": 0.13,
+      "defensiveValue": 0.08
+    },
+    "team": {
+      "name": "SV Meppen",
+      "slug": "sv-meppen",
+      "shortName": "Meppen",
+      "gender": "M",
+      "sport": {
+        "name": "Football",
+        "slug": "football",
+        "id": 1
+      },
+      "userCount": 5903,
+      "nameCode": "MEP",
+      "disabled": false,
+      "national": false,
+      "type": 0,
+      "id": 5804,
+      "teamColors": {
+        "primary": "#0000ff",
+        "secondary": "#ffffff",
+        "text": "#ffffff"
+      },
+      "fieldTranslations": {
+        "nameTranslation": {
+          "ar": "\u0625\u0633 \u0641\u064a \u0645\u064a\u0628\u064a\u0646",
+          "ru": "\u0421\u0412 \u041c\u0435\u043f\u043f\u0435\u043d 1912"
+        },
+        "shortNameTranslation": {
+          "ar": "\u0645\u064a\u0628\u064a\u0646"
+        }
+      }
+    }
+  },
+  "per90": {
+    "error": {
+      "code": 404,
+      "message": "Not Found"
+    }
+  }
+}
