@@ -32,7 +32,7 @@ def aggregate_matchday_history_for_player(player: Dict[str, Any], league: str) -
     if "akono" in p_name.lower():
         match_count = 7
         actual_matchday_logs = [
-            {"matchday": 1, "opponent": "MSV Duisburg", "minutes": 72, "rating": 6.80, "goals": 1, "xg": 0.62, "xgot": 0.60, "shots": 4, "shots_on_target": 2, "shots_off_target": 1, "shots_blocked": 1, "key_passes": 0, "passes_completed": 8, "passes_attempted": 10, "touches": 18, "aerial_won": 3, "aerial_total": 7, "ground_won": 4, "ground_total": 9, "dribbles_succ": 0, "dribbles_att": 0, "fouls_drawn": 1, "offsides": 1, "def_actions": 2, "recoveries": 1, "interceptions": 0, "clearances": 1, "top_speed": 30.8, "distance_km": 8.4, "sprints": 12},
+            {"matchday": 1, "opponent": "MSV Duisburg", "minutes": 72, "rating": 6.80, "goals": 1, "xg": 0.33, "xgot": 0.45, "shots": 1, "shots_on_target": 1, "shots_off_target": 0, "shots_blocked": 0, "key_passes": 0, "passes_completed": 8, "passes_attempted": 10, "touches": 18, "aerial_won": 3, "aerial_total": 7, "ground_won": 4, "ground_total": 9, "dribbles_succ": 0, "dribbles_att": 0, "fouls_drawn": 1, "offsides": 1, "def_actions": 2, "recoveries": 1, "interceptions": 0, "clearances": 1, "top_speed": 30.8, "distance_km": 8.4, "sprints": 12},
             {"matchday": 2, "opponent": "Sonnenhof Großaspach", "minutes": 65, "rating": 6.70, "goals": 0, "xg": 0.12, "xgot": 0.00, "shots": 2, "shots_on_target": 0, "shots_off_target": 1, "shots_blocked": 1, "key_passes": 1, "passes_completed": 6, "passes_attempted": 7, "touches": 14, "aerial_won": 2, "aerial_total": 6, "ground_won": 3, "ground_total": 8, "dribbles_succ": 0, "dribbles_att": 1, "fouls_drawn": 1, "offsides": 0, "def_actions": 1, "recoveries": 1, "interceptions": 0, "clearances": 0, "top_speed": 31.1, "distance_km": 7.2, "sprints": 10},
             {"matchday": 3, "opponent": "Alemannia Aachen", "minutes": 88, "rating": 7.10, "goals": 0, "xg": 0.37, "xgot": 0.22, "shots": 4, "shots_on_target": 1, "shots_off_target": 2, "shots_blocked": 1, "key_passes": 1, "passes_completed": 11, "passes_attempted": 12, "touches": 22, "aerial_won": 4, "aerial_total": 8, "ground_won": 6, "ground_total": 12, "dribbles_succ": 1, "dribbles_att": 1, "fouls_drawn": 2, "offsides": 1, "def_actions": 3, "recoveries": 1, "interceptions": 1, "clearances": 1, "top_speed": 31.3, "distance_km": 9.6, "sprints": 15},
             {"matchday": 4, "opponent": "1. FC Saarbrücken", "minutes": 55, "rating": 6.60, "goals": 0, "xg": 0.19, "xgot": 0.16, "shots": 2, "shots_on_target": 1, "shots_off_target": 1, "shots_blocked": 0, "key_passes": 0, "passes_completed": 4, "passes_attempted": 5, "touches": 12, "aerial_won": 2, "aerial_total": 5, "ground_won": 4, "ground_total": 10, "dribbles_succ": 0, "dribbles_att": 0, "fouls_drawn": 1, "offsides": 0, "def_actions": 1, "recoveries": 0, "interceptions": 0, "clearances": 0, "top_speed": 30.5, "distance_km": 6.1, "sprints": 8},
@@ -42,10 +42,7 @@ def aggregate_matchday_history_for_player(player: Dict[str, Any], league: str) -
         ]
         
         akono_shotmap_events = [
-            {"shot_id": 1, "matchday": 1, "opponent": "MSV Duisburg", "minute": 18, "outcome": "Tor", "xg": 0.38, "xgot": 0.45, "shot_type": "Kopf", "situation": "Offenes Spiel", "body_part": "Header", "pos_x": 91, "pos_y": 48},
-            {"shot_id": 2, "matchday": 1, "opponent": "MSV Duisburg", "minute": 34, "outcome": "Aufs Tor", "xg": 0.12, "xgot": 0.15, "shot_type": "Rechter Fuß", "situation": "Offenes Spiel", "body_part": "Right foot", "pos_x": 84, "pos_y": 55},
-            {"shot_id": 3, "matchday": 1, "opponent": "MSV Duisburg", "minute": 52, "outcome": "Geblockt", "xg": 0.08, "xgot": 0.00, "shot_type": "Rechter Fuß", "situation": "Eckball", "body_part": "Right foot", "pos_x": 88, "pos_y": 42},
-            {"shot_id": 4, "matchday": 1, "opponent": "MSV Duisburg", "minute": 68, "outcome": "Verfehlt", "xg": 0.06, "xgot": 0.00, "shot_type": "Kopf", "situation": "Eckball", "body_part": "Header", "pos_x": 92, "pos_y": 60},
+            {"shot_id": 1, "matchday": 1, "opponent": "MSV Duisburg", "minute": 18, "outcome": "Tor", "xg": 0.33, "xgot": 0.45, "shot_type": "Linker Fuß", "situation": "Eckball", "body_part": "Left foot", "pos_x": 91, "pos_y": 48},
 
             {"shot_id": 5, "matchday": 2, "opponent": "Sonnenhof Großaspach", "minute": 24, "outcome": "Geblockt", "xg": 0.07, "xgot": 0.00, "shot_type": "Rechter Fuß", "situation": "Offenes Spiel", "body_part": "Right foot", "pos_x": 82, "pos_y": 38},
             {"shot_id": 6, "matchday": 2, "opponent": "Sonnenhof Großaspach", "minute": 59, "outcome": "Verfehlt", "xg": 0.05, "xgot": 0.00, "shot_type": "Linker Fuß", "situation": "Freistoß", "body_part": "Left foot", "pos_x": 78, "pos_y": 50},
@@ -69,45 +66,8 @@ def aggregate_matchday_history_for_player(player: Dict[str, Any], league: str) -
             {"shot_id": 19, "matchday": 7, "opponent": "TSG Hoffenheim II", "minute": 41, "outcome": "Verfehlt", "xg": 0.06, "xgot": 0.00, "shot_type": "Rechter Fuß", "situation": "Freistoß", "body_part": "Right foot", "pos_x": 77, "pos_y": 52}
         ]
     else:
-        match_count = max(4, min(28, int(mv_num / 2_500_000) + random.randint(6, 16)))
         actual_matchday_logs = []
         akono_shotmap_events = []
-        base_rating = 6.65 + (mv_num / 25_000_000) * 0.8
-        for m in range(1, match_count + 1):
-            mins = random.choice([90, 88, 76, 68, 45, 30, 22])
-            g = 1 if random.random() > 0.75 else 0
-            shots_n = random.randint(1, 4)
-            shots_ot = min(shots_n, random.randint(0, 2))
-            actual_matchday_logs.append({
-                "matchday": m,
-                "opponent": f"Gegner {m}",
-                "minutes": mins,
-                "rating": round(min(8.8, max(6.0, base_rating + random.uniform(-0.4, 0.4))), 2),
-                "goals": g,
-                "xg": round(g * 0.85 + random.uniform(0.02, 0.2), 2),
-                "xgot": round(g * 0.75 + random.uniform(0.0, 0.15), 2),
-                "shots": shots_n,
-                "shots_on_target": shots_ot,
-                "key_passes": random.randint(0, 2),
-                "passes_completed": random.randint(8, 28),
-                "passes_attempted": random.randint(12, 35),
-                "touches": random.randint(18, 45),
-                "aerial_won": random.randint(1, 5),
-                "aerial_total": random.randint(2, 9),
-                "ground_won": random.randint(2, 7),
-                "ground_total": random.randint(5, 12),
-                "dribbles_succ": random.randint(0, 2),
-                "dribbles_att": random.randint(1, 3),
-                "fouls_drawn": random.randint(0, 2),
-                "offsides": random.randint(0, 1),
-                "def_actions": random.randint(1, 4),
-                "recoveries": random.randint(1, 3),
-                "interceptions": random.randint(0, 2),
-                "clearances": random.randint(0, 2),
-                "top_speed": round(random.uniform(29.5, 34.2), 1),
-                "distance_km": round(mins * 0.11, 1),
-                "sprints": random.randint(4, 18)
-            })
 
     # 2. Mathematical Aggregation Across All Matchdays
     total_season_minutes = sum(m["minutes"] for m in actual_matchday_logs)
@@ -141,7 +101,7 @@ def aggregate_matchday_history_for_player(player: Dict[str, Any], league: str) -
     season_total_sprints = sum(m["sprints"] for m in actual_matchday_logs)
 
     # 3. Peak Values Across Season Matchdays
-    season_peak_top_speed = max(m["top_speed"] for m in actual_matchday_logs)
+    season_peak_top_speed = max([m["top_speed"] for m in actual_matchday_logs], default=0.0)
 
     # 4. Compute True Per-90 Averages from Season Totals
     ninety_units = max(0.5, total_season_minutes / 90.0)
