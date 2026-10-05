@@ -85,20 +85,30 @@ def main():
                 ninety_units = max(0.5, mins / 90.0)
                 
                 goals_sum = sum(m.get("goals", 0) for m in logs)
+                assists_sum = sum(m.get("assists", 0) for m in logs)
                 xg_sum = round(sum(m.get("xg", 0.0) for m in logs), 2)
                 xgot_sum = round(sum(m.get("xgot", 0.0) for m in logs), 2)
                 shots_sum = sum(m.get("shots", 0) for m in logs)
                 shots_ot_sum = sum(m.get("shots_on_target", 0) for m in logs)
                 key_passes_sum = sum(m.get("key_passes", 0) for m in logs)
+                passes_completed_sum = sum(m.get("passes_completed", 0) for m in logs)
+                passes_attempted_sum = sum(m.get("passes_attempted", 0) for m in logs)
                 touches_sum = sum(m.get("touches", 0) for m in logs)
                 aerial_won_sum = sum(m.get("aerial_won", 0) for m in logs)
                 aerial_att_sum = sum(m.get("aerial_total", 0) for m in logs)
                 ground_won_sum = sum(m.get("ground_won", 0) for m in logs)
                 ground_att_sum = sum(m.get("ground_total", 0) for m in logs)
+                dribbles_succ_sum = sum(m.get("dribbles_succ", 0) for m in logs)
+                dribbles_total_sum = sum(m.get("dribbles_total", 0) for m in logs)
+                was_fouled_sum = sum(m.get("was_fouled", 0) for m in logs)
+                fouls_sum = sum(m.get("fouls", 0) for m in logs)
+                offsides_sum = sum(m.get("offsides", 0) for m in logs)
+                clearances_sum = sum(m.get("clearances", 0) for m in logs)
+                interceptions_sum = sum(m.get("interceptions", 0) for m in logs)
                 def_actions_sum = sum(m.get("def_actions", 0) for m in logs)
                 recoveries_sum = sum(m.get("recoveries", 0) for m in logs)
                 top_speed_max = max([m.get("top_speed", 0.0) for m in logs], default=0.0)
-                
+
                 player_metrics = {
                     "player_name": p.get("name"),
                     "club_name": club_name,
@@ -118,9 +128,12 @@ def main():
                     "recoveries_90": round(recoveries_sum / ninety_units, 2),
                     "top_speed": top_speed_max,
                     "raw_sums": {
-                        "goals": goals_sum, "xg": xg_sum, "xgot": xgot_sum, "shots": shots_sum, "shots_ot": shots_ot_sum,
-                        "key_passes": key_passes_sum, "touches": touches_sum, "aerial_won": aerial_won_sum, "aerial_att": aerial_att_sum,
-                        "ground_won": ground_won_sum, "ground_att": ground_att_sum, "def_actions": def_actions_sum, "recoveries": recoveries_sum
+                        "goals": goals_sum, "assists": assists_sum, "xg": xg_sum, "xgot": xgot_sum, "shots": shots_sum, "shots_ot": shots_ot_sum,
+                        "key_passes": key_passes_sum, "passes_completed": passes_completed_sum, "passes_attempted": passes_attempted_sum,
+                        "touches": touches_sum, "aerial_won": aerial_won_sum, "aerial_att": aerial_att_sum,
+                        "ground_won": ground_won_sum, "ground_att": ground_att_sum, "dribbles_succ": dribbles_succ_sum, "dribbles_total": dribbles_total_sum,
+                        "was_fouled": was_fouled_sum, "fouls": fouls_sum, "offsides": offsides_sum,
+                        "clearances": clearances_sum, "interceptions": interceptions_sum, "def_actions": def_actions_sum, "recoveries": recoveries_sum
                     }
                 }
                 

@@ -66,6 +66,20 @@ def main():
                                     
                                     mins = p_stats.get("minutesPlayed", 0)
                                     if mins > 0 and p_id:
+                                        goals = p_stats.get("goals", 0)
+                                        shots_ot = p_stats.get("onTargetScoringAttempt", 0)
+                                        if goals > 0 and shots_ot < goals:
+                                            shots_ot = max(shots_ot, goals)
+
+                                        shots_off = p_stats.get("shotOffTarget", 0)
+                                        shots_blk = p_stats.get("blockedScoringAttempt", 0)
+                                        tot_shots = p_stats.get("totalShots", shots_ot + shots_off + shots_blk)
+
+                                        aerial_w = p_stats.get("aerialWon", 0)
+                                        aerial_l = p_stats.get("aerialLost", 0)
+                                        duel_w = p_stats.get("duelWon", 0)
+                                        duel_l = p_stats.get("duelLost", 0)
+
                                         match_log = {
                                             "matchday": r,
                                             "date": date_str,
@@ -73,20 +87,25 @@ def main():
                                             "match_id": m_id,
                                             "minutes": mins,
                                             "rating": round(p_stats.get("rating", 6.7), 2),
-                                            "goals": p_stats.get("goals", 0),
+                                            "goals": goals,
+                                            "assists": p_stats.get("goalAssist", 0),
                                             "xg": round(p_stats.get("expectedGoals", 0.0), 4),
                                             "xgot": round(p_stats.get("expectedGoalsOnTarget", 0.0), 4),
-                                            "shots": p_stats.get("totalShots", 0),
-                                            "shots_on_target": p_stats.get("shotsOnTarget", 0),
-                                            "key_passes": p_stats.get("keyPasses", 0),
-                                            "passes_completed": p_stats.get("accuratePasses", 0),
-                                            "passes_attempted": p_stats.get("totalPasses", 0),
+                                            "shots": tot_shots,
+                                            "shots_on_target": shots_ot,
+                                            "shots_off_target": shots_off,
+                                            "shots_blocked": shots_blk,
+                                            "key_passes": p_stats.get("keyPass", p_stats.get("keyPasses", 0)),
+                                            "passes_completed": p_stats.get("accuratePass", 0),
+                                            "passes_attempted": p_stats.get("totalPass", 0),
                                             "touches": p_stats.get("touches", 0),
-                                            "aerial_won": p_stats.get("aerialDuelsWon", 0),
-                                            "aerial_total": p_stats.get("aerialDuelsWon", 0) + p_stats.get("aerialDuelsLost", 0),
-                                            "ground_won": p_stats.get("groundDuelsWon", 0),
-                                            "ground_total": p_stats.get("groundDuelsWon", 0) + p_stats.get("groundDuelsLost", 0),
-                                            "def_actions": p_stats.get("totalClearance", 0) + p_stats.get("interceptions", 0),
+                                            "aerial_won": aerial_w,
+                                            "aerial_total": aerial_w + aerial_l,
+                                            "ground_won": max(0, duel_w - aerial_w),
+                                            "ground_total": max(0, (duel_w + duel_l) - (aerial_w + aerial_l)),
+                                            "duel_won": duel_w,
+                                            "duel_total": duel_w + duel_l,
+                                            "def_actions": p_stats.get("totalClearance", 0) + p_stats.get("interceptionWon", 0) + p_stats.get("wonTackle", 0),
                                             "recoveries": p_stats.get("ballRecovery", 0),
                                             "top_speed": round(30.5 + (m_id % 7) * 0.4, 1),
                                             "distance_km": round(mins * 0.11, 1),
