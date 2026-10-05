@@ -1,0 +1,1757 @@
+{
+  "shotmap": [
+    {
+      "player": {
+        "name": "Florian Kr\u00fcger",
+        "slug": "florian-kruger",
+        "shortName": "F. Kr\u00fcger",
+        "position": "M",
+        "jerseyNumber": "26",
+        "userCount": 134,
+        "gender": "M",
+        "sofascoreId": "dqb-3ya",
+        "id": 945878,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0641\u0644\u0648\u0631\u064a\u0627\u0646 \u0643\u0631\u0648\u062c\u0631",
+            "bn": "\u09ab\u09cd\u09b2\u09cb\u09b0\u09bf\u09af\u09bc\u09be\u09a8 \u0995\u09cd\u09b0\u09c1\u0997\u09be\u09b0",
+            "hi": "\u092b\u094d\u0932\u094b\u0930\u093f\u092f\u0928 \u0915\u094d\u0930\u0941\u0917\u0930",
+            "ru": "\u0424\u043b\u043e\u0440\u0438\u0430\u043d \u041a\u0440\u044e\u0433\u0435\u0440"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0641. \u0643\u0631\u0648\u062c\u0631",
+            "bn": "\u098f\u09ab. \u0995\u09cd\u09b0\u09c1\u0997\u09be\u09b0",
+            "hi": "\u090f\u092b. \u0915\u094d\u0930\u0941\u0917\u0930",
+            "ru": "\u0424. \u041a\u0440\u044e\u0433\u0435\u0440"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "miss",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 15,
+        "y": 36,
+        "z": 0
+      },
+      "bodyPart": "right-foot",
+      "goalMouthLocation": "close-high-right",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 42.1,
+        "z": 56.1
+      },
+      "xg": 0.03735,
+      "id": 7997228,
+      "time": 90,
+      "addedTime": 3,
+      "timeSeconds": 5558,
+      "draw": {
+        "start": {
+          "x": 36,
+          "y": 15
+        },
+        "end": {
+          "x": 57.9,
+          "y": 0
+        },
+        "goal": {
+          "x": 57.9,
+          "y": 43.9
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 1,
+      "reversedPeriodTimeSeconds": 742,
+      "periodTimeSeconds": 158
+    },
+    {
+      "player": {
+        "name": "Simon Engelmann",
+        "slug": "simon-engelmann",
+        "shortName": "S. Engelmann",
+        "position": "F",
+        "jerseyNumber": "11",
+        "userCount": 24,
+        "gender": "M",
+        "sofascoreId": "vt5-7is",
+        "id": 124363,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0633\u0627\u064a\u0645\u0648\u0646 \u0625\u0646\u062c\u0644\u0645\u0627\u0646",
+            "ru": "\u0421\u0430\u0439\u043c\u043e\u043d \u042d\u043d\u0433\u0435\u043b\u044c\u043c\u0430\u043d\u043d"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0633. \u0625\u0646\u062c\u0644\u0645\u0627\u0646",
+            "ru": "\u0421. \u042d\u043d\u0433\u0435\u043b\u044c\u043c\u0430\u043d\u043d"
+          }
+        }
+      },
+      "isHome": false,
+      "shotType": "post",
+      "situation": "throw-in-set-piece",
+      "playerCoordinates": {
+        "x": 9,
+        "y": 53,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "high",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 55.7,
+        "z": 40
+      },
+      "xg": 0.3292,
+      "id": 7997227,
+      "time": 90,
+      "addedTime": 2,
+      "timeSeconds": 5464,
+      "draw": {
+        "start": {
+          "x": 53,
+          "y": 9
+        },
+        "end": {
+          "x": 44.3,
+          "y": 0
+        },
+        "goal": {
+          "x": 44.3,
+          "y": 60
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 1,
+      "reversedPeriodTimeSeconds": 836,
+      "periodTimeSeconds": 64
+    },
+    {
+      "player": {
+        "name": "Richard Meier",
+        "firstName": "",
+        "lastName": "",
+        "slug": "richard-meier",
+        "shortName": "R. Meier",
+        "position": "F",
+        "jerseyNumber": "9",
+        "userCount": 80,
+        "gender": "M",
+        "sofascoreId": "6g5-253",
+        "id": 1457415,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0631\u064a\u062a\u0634\u0627\u0631\u062f \u0645\u0627\u064a\u0631",
+            "ru": "\u0420\u0438\u0447\u0430\u0440\u0434 \u041c\u0435\u0439\u0435\u0440"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0631. \u0645\u0627\u064a\u0631",
+            "ru": "\u0420. \u041c\u0435\u0439\u0435\u0440"
+          }
+        }
+      },
+      "isHome": false,
+      "shotType": "save",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 9,
+        "y": 47,
+        "z": 0
+      },
+      "bodyPart": "head",
+      "goalMouthLocation": "high-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50.5,
+        "z": 33.3
+      },
+      "xg": 0.09453,
+      "xgot": 0.1538,
+      "id": 7997226,
+      "time": 90,
+      "addedTime": 1,
+      "timeSeconds": 5408,
+      "draw": {
+        "start": {
+          "x": 47,
+          "y": 9
+        },
+        "end": {
+          "x": 49.5,
+          "y": 0
+        },
+        "goal": {
+          "x": 49.5,
+          "y": 66.7
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 1,
+      "reversedPeriodTimeSeconds": 892,
+      "periodTimeSeconds": 8
+    },
+    {
+      "player": {
+        "name": "Conor No\u00df",
+        "firstName": "",
+        "lastName": "",
+        "slug": "conor-noss",
+        "shortName": "C. No\u00df",
+        "position": "M",
+        "jerseyNumber": "14",
+        "userCount": 149,
+        "gender": "M",
+        "sofascoreId": "8jr-udq",
+        "id": 990249,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0643\u0648\u0646\u0648\u0631 \u0646\u0648\u0633",
+            "bn": "\u0995\u09a8\u09b0 \u09a8\u09cb\u09b8",
+            "hi": "\u0915\u094b\u0928\u094b\u0930 \u0928\u094b\u0938",
+            "ru": "\u041a\u043e\u043d\u043e\u0440 \u041d\u043e\u0441"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0643. \u0646\u0648\u0633",
+            "bn": "\u09b8\u09bf. \u09a8\u09cb\u09b8",
+            "hi": "\u0938\u0940. \u0928\u094b\u0938",
+            "ru": "\u041a. \u041d\u043e\u0441"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "goal",
+      "goalType": "regular",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 7,
+        "y": 71,
+        "z": 0
+      },
+      "bodyPart": "right-foot",
+      "goalMouthLocation": "low-left",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 53.5,
+        "z": 11.9
+      },
+      "xg": 0.09657,
+      "xgot": 0.4004,
+      "id": 7997225,
+      "time": 84,
+      "timeSeconds": 4997,
+      "draw": {
+        "start": {
+          "x": 71,
+          "y": 7
+        },
+        "end": {
+          "x": 46.5,
+          "y": 0
+        },
+        "goal": {
+          "x": 46.5,
+          "y": 88.1
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 7,
+      "reversedPeriodTimeSeconds": 403,
+      "periodTimeSeconds": 2297
+    },
+    {
+      "player": {
+        "name": "Simon Engelmann",
+        "slug": "simon-engelmann",
+        "shortName": "S. Engelmann",
+        "position": "F",
+        "jerseyNumber": "11",
+        "userCount": 24,
+        "gender": "M",
+        "sofascoreId": "vt5-7is",
+        "id": 124363,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0633\u0627\u064a\u0645\u0648\u0646 \u0625\u0646\u062c\u0644\u0645\u0627\u0646",
+            "ru": "\u0421\u0430\u0439\u043c\u043e\u043d \u042d\u043d\u0433\u0435\u043b\u044c\u043c\u0430\u043d\u043d"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0633. \u0625\u0646\u062c\u0644\u0645\u0627\u0646",
+            "ru": "\u0421. \u042d\u043d\u0433\u0435\u043b\u044c\u043c\u0430\u043d\u043d"
+          }
+        }
+      },
+      "isHome": false,
+      "shotType": "miss",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 16,
+        "y": 54,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "close-high-left",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 57.7,
+        "z": 41
+      },
+      "xg": 0.07033,
+      "id": 7997224,
+      "time": 82,
+      "timeSeconds": 4903,
+      "draw": {
+        "start": {
+          "x": 54,
+          "y": 16
+        },
+        "end": {
+          "x": 42.3,
+          "y": 0
+        },
+        "goal": {
+          "x": 42.3,
+          "y": 59
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 9,
+      "reversedPeriodTimeSeconds": 497,
+      "periodTimeSeconds": 2203
+    },
+    {
+      "player": {
+        "name": "Patrick Sussek",
+        "slug": "patrick-sussek",
+        "shortName": "P. Sussek",
+        "position": "M",
+        "jerseyNumber": "37",
+        "userCount": 56,
+        "gender": "M",
+        "sofascoreId": "rj4-5gm",
+        "id": 878594,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0628\u0627\u062a\u0631\u064a\u0643 \u0633\u0648\u0633\u064a\u0643",
+            "ru": "\u041f\u0430\u0442\u0440\u0438\u043a \u0421\u0443\u0441\u0441\u0435\u043a"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0628. \u0633\u0648\u0633\u064a\u0643",
+            "ru": "\u041f. \u0421\u0443\u0441\u0441\u0435\u043a"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "miss",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 9,
+        "y": 48,
+        "z": 0
+      },
+      "bodyPart": "head",
+      "goalMouthLocation": "close-left",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 57.8,
+        "z": 17.2
+      },
+      "xg": 0.08425,
+      "id": 7997223,
+      "time": 80,
+      "timeSeconds": 4775,
+      "draw": {
+        "start": {
+          "x": 48,
+          "y": 9
+        },
+        "end": {
+          "x": 42.2,
+          "y": 0
+        },
+        "goal": {
+          "x": 42.2,
+          "y": 82.8
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 11,
+      "reversedPeriodTimeSeconds": 625,
+      "periodTimeSeconds": 2075
+    },
+    {
+      "player": {
+        "name": "Luca Prasse",
+        "firstName": "",
+        "lastName": "",
+        "slug": "prasse-luca",
+        "shortName": "L. Prasse",
+        "position": "F",
+        "jerseyNumber": "44",
+        "userCount": 29,
+        "gender": "M",
+        "sofascoreId": "wr7-ps4",
+        "id": 1445486,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0628\u0631\u0627\u0633\u060c \u0644\u0648\u0643\u0627",
+            "ru": "\u041f\u0440\u0430\u0441\u0441\u0435 \u041b\u0443\u043a\u0430"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0644. \u0628\u0631\u0627\u0633",
+            "ru": "\u041f. \u041b\u0443\u043a\u0430"
+          }
+        }
+      },
+      "isHome": false,
+      "shotType": "miss",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 23,
+        "y": 53,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "close-right",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 43.9,
+        "z": 6.7
+      },
+      "xg": 0.05777,
+      "id": 7997222,
+      "time": 77,
+      "timeSeconds": 4612,
+      "draw": {
+        "start": {
+          "x": 53,
+          "y": 23
+        },
+        "end": {
+          "x": 56.1,
+          "y": 0
+        },
+        "goal": {
+          "x": 56.1,
+          "y": 93.3
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 14,
+      "reversedPeriodTimeSeconds": 788,
+      "periodTimeSeconds": 1912
+    },
+    {
+      "player": {
+        "name": "Lex-Tyger Lobinger",
+        "firstName": "Lex-Tyger",
+        "lastName": "Lobinger",
+        "slug": "lex-tyger-lobinger",
+        "shortName": "L. Lobinger",
+        "position": "F",
+        "jerseyNumber": "9",
+        "userCount": 91,
+        "gender": "M",
+        "sofascoreId": "snu-g4f",
+        "id": 943120,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0644\u064a\u0643\u0633-\u062a\u0627\u064a\u062c\u0631 \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b\u0435\u043a\u0441-\u0422\u0430\u0439\u0433\u0435\u0440 \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0644. \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b. \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "block",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 6,
+        "y": 58,
+        "z": 0
+      },
+      "bodyPart": "right-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 6,
+        "y": 58,
+        "z": 0
+      },
+      "xg": 0.1559,
+      "id": 7997221,
+      "time": 76,
+      "timeSeconds": 4523,
+      "draw": {
+        "start": {
+          "x": 58,
+          "y": 6
+        },
+        "block": {
+          "x": 58,
+          "y": 6
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 15,
+      "reversedPeriodTimeSeconds": 877,
+      "periodTimeSeconds": 1823
+    },
+    {
+      "player": {
+        "name": "Can Coskun",
+        "firstName": "Can",
+        "lastName": "Coskun",
+        "slug": "can-coskun",
+        "shortName": "C. Coskun",
+        "position": "D",
+        "jerseyNumber": "27",
+        "userCount": 38,
+        "gender": "M",
+        "sofascoreId": "jkw-ygr",
+        "id": 891491,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u062c\u0627\u0646 \u0643\u0648\u0634\u0643\u0648\u0646",
+            "ru": "\u0414\u0436\u0430\u043d \u041a\u043e\u0448\u043a\u0443\u043d"
+          },
+          "shortNameTranslation": {
+            "ar": "\u062c. \u0643\u0648\u0634\u0643\u0648\u0646",
+            "ru": "\u0414. \u041a\u043e\u0448\u043a\u0443\u043d"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "block",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 10,
+        "y": 76,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 10,
+        "y": 76,
+        "z": 0
+      },
+      "xg": 0.002371,
+      "id": 7997220,
+      "time": 75,
+      "timeSeconds": 4488,
+      "draw": {
+        "start": {
+          "x": 76,
+          "y": 10
+        },
+        "block": {
+          "x": 76,
+          "y": 10
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 16,
+      "reversedPeriodTimeSeconds": 912,
+      "periodTimeSeconds": 1788
+    },
+    {
+      "player": {
+        "name": "Patrick Sussek",
+        "slug": "patrick-sussek",
+        "shortName": "P. Sussek",
+        "position": "M",
+        "jerseyNumber": "37",
+        "userCount": 56,
+        "gender": "M",
+        "sofascoreId": "rj4-5gm",
+        "id": 878594,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0628\u0627\u062a\u0631\u064a\u0643 \u0633\u0648\u0633\u064a\u0643",
+            "ru": "\u041f\u0430\u0442\u0440\u0438\u043a \u0421\u0443\u0441\u0441\u0435\u043a"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0628. \u0633\u0648\u0633\u064a\u0643",
+            "ru": "\u041f. \u0421\u0443\u0441\u0441\u0435\u043a"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "miss",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 11,
+        "y": 52,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "close-right",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 44,
+        "z": 6.4
+      },
+      "xg": 0.1489,
+      "id": 7997219,
+      "time": 68,
+      "timeSeconds": 4064,
+      "draw": {
+        "start": {
+          "x": 52,
+          "y": 11
+        },
+        "end": {
+          "x": 56,
+          "y": 0
+        },
+        "goal": {
+          "x": 56,
+          "y": 93.6
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 23,
+      "reversedPeriodTimeSeconds": 1336,
+      "periodTimeSeconds": 1364
+    },
+    {
+      "player": {
+        "name": "Ben Schlicke",
+        "firstName": "Ben",
+        "lastName": "Schlicke",
+        "slug": "ben-schlicke",
+        "shortName": "B. Schlicke",
+        "position": "D",
+        "jerseyNumber": "40",
+        "userCount": 20,
+        "gender": "M",
+        "sofascoreId": "5fi-uaj",
+        "id": 1395640,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0634\u0644\u064a\u0643\u0647\u060c \u0628\u0646",
+            "ru": "\u0411\u0435\u043d \u0428\u043b\u0438\u043a\u0435"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0628. \u0634\u0644\u064a\u0643\u0647",
+            "ru": "\u0411. \u0428\u043b\u0438\u043a\u0435"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "goal",
+      "goalType": "regular",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 9,
+        "y": 46,
+        "z": 0
+      },
+      "bodyPart": "head",
+      "goalMouthLocation": "low-left",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 51.9,
+        "z": 14.5
+      },
+      "xg": 0.09371,
+      "xgot": 0.377,
+      "id": 7997218,
+      "time": 64,
+      "timeSeconds": 3836,
+      "draw": {
+        "start": {
+          "x": 46,
+          "y": 9
+        },
+        "end": {
+          "x": 48.1,
+          "y": 0
+        },
+        "goal": {
+          "x": 48.1,
+          "y": 85.5
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 27,
+      "reversedPeriodTimeSeconds": 1564,
+      "periodTimeSeconds": 1136
+    },
+    {
+      "player": {
+        "name": "Ben Schlicke",
+        "firstName": "Ben",
+        "lastName": "Schlicke",
+        "slug": "ben-schlicke",
+        "shortName": "B. Schlicke",
+        "position": "D",
+        "jerseyNumber": "40",
+        "userCount": 20,
+        "gender": "M",
+        "sofascoreId": "5fi-uaj",
+        "id": 1395640,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0634\u0644\u064a\u0643\u0647\u060c \u0628\u0646",
+            "ru": "\u0411\u0435\u043d \u0428\u043b\u0438\u043a\u0435"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0628. \u0634\u0644\u064a\u0643\u0647",
+            "ru": "\u0411. \u0428\u043b\u0438\u043a\u0435"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "block",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 7,
+        "y": 45,
+        "z": 0
+      },
+      "bodyPart": "head",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 7,
+        "y": 45,
+        "z": 0
+      },
+      "xg": 0.1099,
+      "id": 7997217,
+      "time": 64,
+      "timeSeconds": 3811,
+      "draw": {
+        "start": {
+          "x": 45,
+          "y": 7
+        },
+        "block": {
+          "x": 45,
+          "y": 7
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 27,
+      "reversedPeriodTimeSeconds": 1589,
+      "periodTimeSeconds": 1111
+    },
+    {
+      "player": {
+        "name": "Thorben Deters",
+        "slug": "thorben-deters",
+        "shortName": "T. Deters",
+        "position": "M",
+        "jerseyNumber": "11",
+        "userCount": 14,
+        "gender": "M",
+        "sofascoreId": "epp-rf8",
+        "id": 553644,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u062b\u0648\u0631\u0628\u0646 \u062f\u064a\u062a\u064a\u0631\u0633",
+            "ru": "\u0422\u043e\u0440\u0431\u0435\u043d \u0414\u0435\u0442\u0435\u0440\u0448"
+          },
+          "shortNameTranslation": {
+            "ar": "\u062b. \u062f\u064a\u062a\u064a\u0631\u0633",
+            "ru": "\u0422. \u0414\u0435\u0442\u0435\u0440\u0448"
+          }
+        }
+      },
+      "isHome": false,
+      "shotType": "save",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 25,
+        "y": 28,
+        "z": 0
+      },
+      "bodyPart": "right-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 49.5,
+        "z": 19
+      },
+      "xg": 0.01756,
+      "xgot": 0.01197,
+      "id": 7997216,
+      "time": 55,
+      "timeSeconds": 3263,
+      "draw": {
+        "start": {
+          "x": 28,
+          "y": 25
+        },
+        "end": {
+          "x": 50.5,
+          "y": 0
+        },
+        "goal": {
+          "x": 50.5,
+          "y": 81
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 36,
+      "reversedPeriodTimeSeconds": 2137,
+      "periodTimeSeconds": 563
+    },
+    {
+      "player": {
+        "name": "Cyrill Akono",
+        "slug": "akono-cyrill",
+        "shortName": "C. Akono",
+        "position": "F",
+        "jerseyNumber": "14",
+        "userCount": 29,
+        "gender": "M",
+        "sofascoreId": "zbf-fwm",
+        "id": 924069,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0623\u0643\u0648\u0646\u0648\u060c \u0633\u064a\u0631\u064a\u0644",
+            "ru": "\u0410\u043a\u043e\u043d\u043e, \u0421\u0438\u0440\u0438\u043b\u043b"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0633. \u0623\u0643\u0648\u0646\u0648",
+            "ru": "\u0421. \u0410\u043a\u043e\u043d\u043e"
+          }
+        }
+      },
+      "isHome": false,
+      "shotType": "block",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 8,
+        "y": 43,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 8,
+        "y": 43,
+        "z": 0
+      },
+      "xg": 0.3288,
+      "id": 7997215,
+      "time": 54,
+      "timeSeconds": 3210,
+      "draw": {
+        "start": {
+          "x": 43,
+          "y": 8
+        },
+        "block": {
+          "x": 43,
+          "y": 8
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 37,
+      "reversedPeriodTimeSeconds": 2190,
+      "periodTimeSeconds": 510
+    },
+    {
+      "player": {
+        "name": "Joshua Bitter",
+        "slug": "joshua-bitter",
+        "shortName": "J. Bitter",
+        "position": "D",
+        "jerseyNumber": "29",
+        "userCount": 23,
+        "gender": "M",
+        "sofascoreId": "hym-pvc",
+        "id": 842527,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u064a\u0648\u0634\u0648\u0627 \u0628\u064a\u062a\u0631",
+            "ru": "\u0414\u0436\u043e\u0448\u0443\u0430 \u0411\u0438\u0442\u0442\u0435\u0440"
+          },
+          "shortNameTranslation": {
+            "ar": "\u064a. \u0628\u064a\u062a\u0631",
+            "ru": "\u0414. \u0411\u0438\u0442\u0442\u0435\u0440"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "block",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 12,
+        "y": 72,
+        "z": 0
+      },
+      "bodyPart": "right-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 12,
+        "y": 72,
+        "z": 0
+      },
+      "xg": 0.01066,
+      "id": 7997214,
+      "time": 49,
+      "timeSeconds": 2915,
+      "draw": {
+        "start": {
+          "x": 72,
+          "y": 12
+        },
+        "block": {
+          "x": 72,
+          "y": 12
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 42,
+      "reversedPeriodTimeSeconds": 2485,
+      "periodTimeSeconds": 215
+    },
+    {
+      "player": {
+        "name": "Jan-Simon Symalla",
+        "slug": "symalla-jan-simon",
+        "shortName": "J. Symalla",
+        "position": "M",
+        "jerseyNumber": "23",
+        "userCount": 58,
+        "gender": "M",
+        "sofascoreId": "5f5-7xh",
+        "id": 1822936,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0633\u064a\u0645\u0627\u0644\u0627\u060c \u064a\u0627\u0646-\u0633\u064a\u0645\u0648\u0646",
+            "ru": "\u0421\u0438\u043c\u0430\u043b\u043b\u0430 \u042f\u043d-\u0421\u0438\u043c\u043e\u043d"
+          },
+          "shortNameTranslation": {
+            "ar": "\u064a. \u0633\u064a\u0645\u0627\u0644\u0627",
+            "ru": "\u0421. \u042f\u043d-\u0421\u0438\u043c\u043e\u043d"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "miss",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 10,
+        "y": 64,
+        "z": 0
+      },
+      "bodyPart": "right-foot",
+      "goalMouthLocation": "close-high-right",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 43.1,
+        "z": 59.9
+      },
+      "xg": 0.1013,
+      "id": 7997213,
+      "time": 31,
+      "timeSeconds": 1819,
+      "draw": {
+        "start": {
+          "x": 64,
+          "y": 10
+        },
+        "end": {
+          "x": 56.9,
+          "y": 0
+        },
+        "goal": {
+          "x": 56.9,
+          "y": 40.1
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 15,
+      "reversedPeriodTimeSeconds": 881,
+      "periodTimeSeconds": 1819
+    },
+    {
+      "player": {
+        "name": "Jakob Bookjans",
+        "firstName": "Jakob",
+        "lastName": "Bookjans",
+        "slug": "jakob-bookjans",
+        "shortName": "J. Bookjans",
+        "position": "M",
+        "jerseyNumber": "7",
+        "userCount": 22,
+        "gender": "M",
+        "sofascoreId": "zbb-528",
+        "id": 981445,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u064a\u0627\u0643\u0648\u0628 \u0628\u0648\u0643\u062c\u0627\u0646\u0632",
+            "ru": "\u042f\u043a\u043e\u0431 \u0411\u0443\u043a\u044c\u044f\u043d\u0441"
+          },
+          "shortNameTranslation": {
+            "ar": "\u064a. \u0628\u0648\u0643\u062c\u0627\u0646\u0632",
+            "ru": "\u042f. \u0411\u0443\u043a\u044c\u044f\u043d\u0441"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "save",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 23,
+        "y": 55,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "high-left",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 54.3,
+        "z": 37.5
+      },
+      "xg": 0.02563,
+      "xgot": 0.6375,
+      "id": 7997212,
+      "time": 28,
+      "timeSeconds": 1644,
+      "draw": {
+        "start": {
+          "x": 55,
+          "y": 23
+        },
+        "end": {
+          "x": 45.7,
+          "y": 0
+        },
+        "goal": {
+          "x": 45.7,
+          "y": 62.5
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 18,
+      "reversedPeriodTimeSeconds": 1056,
+      "periodTimeSeconds": 1644
+    },
+    {
+      "player": {
+        "name": "Jakob Bookjans",
+        "firstName": "Jakob",
+        "lastName": "Bookjans",
+        "slug": "jakob-bookjans",
+        "shortName": "J. Bookjans",
+        "position": "M",
+        "jerseyNumber": "7",
+        "userCount": 22,
+        "gender": "M",
+        "sofascoreId": "zbb-528",
+        "id": 981445,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u064a\u0627\u0643\u0648\u0628 \u0628\u0648\u0643\u062c\u0627\u0646\u0632",
+            "ru": "\u042f\u043a\u043e\u0431 \u0411\u0443\u043a\u044c\u044f\u043d\u0441"
+          },
+          "shortNameTranslation": {
+            "ar": "\u064a. \u0628\u0648\u0643\u062c\u0627\u0646\u0632",
+            "ru": "\u042f. \u0411\u0443\u043a\u044c\u044f\u043d\u0441"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "block",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 11,
+        "y": 28,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 11,
+        "y": 28,
+        "z": 0
+      },
+      "xg": 0.05349,
+      "id": 7997211,
+      "time": 27,
+      "timeSeconds": 1601,
+      "draw": {
+        "start": {
+          "x": 28,
+          "y": 11
+        },
+        "block": {
+          "x": 28,
+          "y": 11
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 19,
+      "reversedPeriodTimeSeconds": 1099,
+      "periodTimeSeconds": 1601
+    },
+    {
+      "player": {
+        "name": "Christian Viet",
+        "slug": "christian-viet",
+        "shortName": "C. Viet",
+        "position": "M",
+        "jerseyNumber": "10",
+        "userCount": 3101,
+        "gender": "M",
+        "sofascoreId": "chf-99g",
+        "id": 882005,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0643\u0631\u064a\u0633\u062a\u064a\u0627\u0646 \u0641\u064a\u062a",
+            "ru": "\u041a\u0440\u0438\u0441\u0442\u0438\u0430\u043d \u0412\u044c\u0435\u0442"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0643. \u0641\u064a\u062a",
+            "ru": "\u041a. \u0412\u044c\u0435\u0442"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "block",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 4,
+        "y": 36,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 4,
+        "y": 36,
+        "z": 0
+      },
+      "xg": 0.05807,
+      "id": 7997210,
+      "time": 27,
+      "timeSeconds": 1599,
+      "draw": {
+        "start": {
+          "x": 36,
+          "y": 4
+        },
+        "block": {
+          "x": 36,
+          "y": 4
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 19,
+      "reversedPeriodTimeSeconds": 1101,
+      "periodTimeSeconds": 1599
+    },
+    {
+      "player": {
+        "name": "Jakob Bookjans",
+        "firstName": "Jakob",
+        "lastName": "Bookjans",
+        "slug": "jakob-bookjans",
+        "shortName": "J. Bookjans",
+        "position": "M",
+        "jerseyNumber": "7",
+        "userCount": 22,
+        "gender": "M",
+        "sofascoreId": "zbb-528",
+        "id": 981445,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u064a\u0627\u0643\u0648\u0628 \u0628\u0648\u0643\u062c\u0627\u0646\u0632",
+            "ru": "\u042f\u043a\u043e\u0431 \u0411\u0443\u043a\u044c\u044f\u043d\u0441"
+          },
+          "shortNameTranslation": {
+            "ar": "\u064a. \u0628\u0648\u0643\u062c\u0627\u0646\u0632",
+            "ru": "\u042f. \u0411\u0443\u043a\u044c\u044f\u043d\u0441"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "save",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 16,
+        "y": 51,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "high-left",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 54.6,
+        "z": 20.6
+      },
+      "xg": 0.137,
+      "xgot": 0.3902,
+      "id": 7997209,
+      "time": 26,
+      "timeSeconds": 1554,
+      "draw": {
+        "start": {
+          "x": 51,
+          "y": 16
+        },
+        "end": {
+          "x": 45.4,
+          "y": 0
+        },
+        "goal": {
+          "x": 45.4,
+          "y": 79.4
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 20,
+      "reversedPeriodTimeSeconds": 1146,
+      "periodTimeSeconds": 1554
+    },
+    {
+      "player": {
+        "name": "Lex-Tyger Lobinger",
+        "firstName": "Lex-Tyger",
+        "lastName": "Lobinger",
+        "slug": "lex-tyger-lobinger",
+        "shortName": "L. Lobinger",
+        "position": "F",
+        "jerseyNumber": "9",
+        "userCount": 91,
+        "gender": "M",
+        "sofascoreId": "snu-g4f",
+        "id": 943120,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0644\u064a\u0643\u0633-\u062a\u0627\u064a\u062c\u0631 \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b\u0435\u043a\u0441-\u0422\u0430\u0439\u0433\u0435\u0440 \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0644. \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b. \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "miss",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 6,
+        "y": 44,
+        "z": 0
+      },
+      "bodyPart": "head",
+      "goalMouthLocation": "close-right",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 41.9,
+        "z": 5.4
+      },
+      "xg": 0.2022,
+      "id": 7997208,
+      "time": 25,
+      "timeSeconds": 1493,
+      "draw": {
+        "start": {
+          "x": 44,
+          "y": 6
+        },
+        "end": {
+          "x": 58.1,
+          "y": 0
+        },
+        "goal": {
+          "x": 58.1,
+          "y": 94.6
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 21,
+      "reversedPeriodTimeSeconds": 1207,
+      "periodTimeSeconds": 1493
+    },
+    {
+      "player": {
+        "name": "Lex-Tyger Lobinger",
+        "firstName": "Lex-Tyger",
+        "lastName": "Lobinger",
+        "slug": "lex-tyger-lobinger",
+        "shortName": "L. Lobinger",
+        "position": "F",
+        "jerseyNumber": "9",
+        "userCount": 91,
+        "gender": "M",
+        "sofascoreId": "snu-g4f",
+        "id": 943120,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0644\u064a\u0643\u0633-\u062a\u0627\u064a\u062c\u0631 \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b\u0435\u043a\u0441-\u0422\u0430\u0439\u0433\u0435\u0440 \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0644. \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b. \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "miss",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 11,
+        "y": 40,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "close-right",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 41.8,
+        "z": 15.6
+      },
+      "xg": 0.1949,
+      "id": 7997207,
+      "time": 23,
+      "timeSeconds": 1347,
+      "draw": {
+        "start": {
+          "x": 40,
+          "y": 11
+        },
+        "end": {
+          "x": 58.2,
+          "y": 0
+        },
+        "goal": {
+          "x": 58.2,
+          "y": 84.4
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 23,
+      "reversedPeriodTimeSeconds": 1353,
+      "periodTimeSeconds": 1347
+    },
+    {
+      "player": {
+        "name": "Stefan Ranki\u0107",
+        "slug": "stefan-rankic",
+        "shortName": "S. Ranki\u0107",
+        "position": "D",
+        "jerseyNumber": "33",
+        "userCount": 6,
+        "gender": "M",
+        "sofascoreId": "vu3-py2",
+        "id": 934635,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0633\u062a\u064a\u0641\u0627\u0646 \u0631\u0627\u0646\u0643\u064a\u062a\u0634",
+            "ru": "\u0421\u0442\u0435\u0444\u0430\u043d \u0420\u0430\u043d\u043a\u0438\u0107"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0633. \u0631\u0627\u0646\u0643\u064a\u062a\u0634",
+            "ru": "\u0421. \u0420\u0430\u043d\u043a\u0438\u0107"
+          }
+        }
+      },
+      "isHome": false,
+      "shotType": "miss",
+      "situation": "corner",
+      "playerCoordinates": {
+        "x": 8,
+        "y": 47,
+        "z": 0
+      },
+      "bodyPart": "head",
+      "goalMouthLocation": "close-right",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 43.9,
+        "z": 3.7
+      },
+      "xg": 0.1056,
+      "id": 7997206,
+      "time": 20,
+      "timeSeconds": 1189,
+      "draw": {
+        "start": {
+          "x": 47,
+          "y": 8
+        },
+        "end": {
+          "x": 56.1,
+          "y": 0
+        },
+        "goal": {
+          "x": 56.1,
+          "y": 96.3
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 26,
+      "reversedPeriodTimeSeconds": 1511,
+      "periodTimeSeconds": 1189
+    },
+    {
+      "player": {
+        "name": "Lex-Tyger Lobinger",
+        "firstName": "Lex-Tyger",
+        "lastName": "Lobinger",
+        "slug": "lex-tyger-lobinger",
+        "shortName": "L. Lobinger",
+        "position": "F",
+        "jerseyNumber": "9",
+        "userCount": 91,
+        "gender": "M",
+        "sofascoreId": "snu-g4f",
+        "id": 943120,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0644\u064a\u0643\u0633-\u062a\u0627\u064a\u062c\u0631 \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b\u0435\u043a\u0441-\u0422\u0430\u0439\u0433\u0435\u0440 \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0644. \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b. \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "block",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 15,
+        "y": 32,
+        "z": 0
+      },
+      "bodyPart": "right-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 15,
+        "y": 32,
+        "z": 0
+      },
+      "xg": 0.08027,
+      "id": 7997205,
+      "time": 13,
+      "timeSeconds": 736,
+      "draw": {
+        "start": {
+          "x": 32,
+          "y": 15
+        },
+        "block": {
+          "x": 32,
+          "y": 15
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 33,
+      "reversedPeriodTimeSeconds": 1964,
+      "periodTimeSeconds": 736
+    },
+    {
+      "player": {
+        "name": "Jakob Bookjans",
+        "firstName": "Jakob",
+        "lastName": "Bookjans",
+        "slug": "jakob-bookjans",
+        "shortName": "J. Bookjans",
+        "position": "M",
+        "jerseyNumber": "7",
+        "userCount": 22,
+        "gender": "M",
+        "sofascoreId": "zbb-528",
+        "id": 981445,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u064a\u0627\u0643\u0648\u0628 \u0628\u0648\u0643\u062c\u0627\u0646\u0632",
+            "ru": "\u042f\u043a\u043e\u0431 \u0411\u0443\u043a\u044c\u044f\u043d\u0441"
+          },
+          "shortNameTranslation": {
+            "ar": "\u064a. \u0628\u0648\u0643\u062c\u0627\u0646\u0632",
+            "ru": "\u042f. \u0411\u0443\u043a\u044c\u044f\u043d\u0441"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "block",
+      "situation": "throw-in-set-piece",
+      "playerCoordinates": {
+        "x": 17,
+        "y": 61,
+        "z": 0
+      },
+      "bodyPart": "left-foot",
+      "goalMouthLocation": "low-centre",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 50,
+        "z": 20
+      },
+      "blockCoordinates": {
+        "x": 17,
+        "y": 61,
+        "z": 0
+      },
+      "xg": 0.006442,
+      "id": 7997204,
+      "time": 12,
+      "timeSeconds": 694,
+      "draw": {
+        "start": {
+          "x": 61,
+          "y": 17
+        },
+        "block": {
+          "x": 61,
+          "y": 17
+        },
+        "end": {
+          "x": 50,
+          "y": 0
+        },
+        "goal": {
+          "x": 50,
+          "y": 80
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 34,
+      "reversedPeriodTimeSeconds": 2006,
+      "periodTimeSeconds": 694
+    },
+    {
+      "player": {
+        "name": "Lex-Tyger Lobinger",
+        "firstName": "Lex-Tyger",
+        "lastName": "Lobinger",
+        "slug": "lex-tyger-lobinger",
+        "shortName": "L. Lobinger",
+        "position": "F",
+        "jerseyNumber": "9",
+        "userCount": 91,
+        "gender": "M",
+        "sofascoreId": "snu-g4f",
+        "id": 943120,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0644\u064a\u0643\u0633-\u062a\u0627\u064a\u062c\u0631 \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b\u0435\u043a\u0441-\u0422\u0430\u0439\u0433\u0435\u0440 \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0644. \u0644\u0648\u0628\u064a\u062c\u0631",
+            "ru": "\u041b. \u041b\u043e\u0431\u0438\u043d\u0433\u0435\u0440"
+          }
+        }
+      },
+      "isHome": true,
+      "shotType": "goal",
+      "goalType": "regular",
+      "situation": "regular",
+      "playerCoordinates": {
+        "x": 8,
+        "y": 44,
+        "z": 0
+      },
+      "bodyPart": "head",
+      "goalMouthLocation": "high-left",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 52.4,
+        "z": 23.6
+      },
+      "xg": 0.05609,
+      "xgot": 0.3786,
+      "id": 7997203,
+      "time": 8,
+      "timeSeconds": 433,
+      "draw": {
+        "start": {
+          "x": 44,
+          "y": 8
+        },
+        "end": {
+          "x": 47.6,
+          "y": 0
+        },
+        "goal": {
+          "x": 47.6,
+          "y": 76.4
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 38,
+      "reversedPeriodTimeSeconds": 2267,
+      "periodTimeSeconds": 433
+    },
+    {
+      "player": {
+        "name": "Oliver Issa Schmitt",
+        "firstName": "",
+        "lastName": "",
+        "slug": "oliver-issa-schmitt",
+        "shortName": "O. I. Schmitt",
+        "position": "F",
+        "userCount": 18,
+        "gender": "M",
+        "sofascoreId": "xzd-44m",
+        "id": 991063,
+        "fieldTranslations": {
+          "nameTranslation": {
+            "ar": "\u0623\u0648\u0644\u064a\u0641\u0631 \u0639\u064a\u0633\u0649 \u0634\u0645\u064a\u062a",
+            "ru": "\u041e\u043b\u0438\u0432\u0435\u0440 \u0418\u0441\u0441\u0430 \u0428\u043c\u0438\u0442\u0442"
+          },
+          "shortNameTranslation": {
+            "ar": "\u0623. \u0634\u0645\u064a\u062a",
+            "ru": "\u041e. \u0428\u043c\u0438\u0442\u0442"
+          }
+        }
+      },
+      "isHome": false,
+      "shotType": "miss",
+      "situation": "throw-in-set-piece",
+      "playerCoordinates": {
+        "x": 2,
+        "y": 38,
+        "z": 0
+      },
+      "bodyPart": "right-foot",
+      "goalMouthLocation": "close-left",
+      "goalMouthCoordinates": {
+        "x": 0,
+        "y": 58.6,
+        "z": 20.8
+      },
+      "xg": 0.0178,
+      "id": 7997202,
+      "time": 1,
+      "timeSeconds": 28,
+      "draw": {
+        "start": {
+          "x": 38,
+          "y": 2
+        },
+        "end": {
+          "x": 41.4,
+          "y": 0
+        },
+        "goal": {
+          "x": 41.4,
+          "y": 79.2
+        }
+      },
+      "incidentType": "shot",
+      "reversedPeriodTime": 45,
+      "reversedPeriodTimeSeconds": 2672,
+      "periodTimeSeconds": 28
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+[
+  {
+    "player": {
+      "name": "Cyrill Akono",
+      "slug": "akono-cyrill",
+      "shortName": "C. Akono",
+      "position": "F",
+      "jerseyNumber": "14",
+      "userCount": 29,
+      "gender": "M",
+      "sofascoreId": "zbf-fwm",
+      "id": 924069,
+      "fieldTranslations": {
+        "nameTranslation": {
+          "ar": "\u0623\u0643\u0648\u0646\u0648\u060c \u0633\u064a\u0631\u064a\u0644",
+          "ru": "\u0410\u043a\u043e\u043d\u043e, \u0421\u0438\u0440\u0438\u043b\u043b"
+        },
+        "shortNameTranslation": {
+          "ar": "\u0633. \u0623\u0643\u0648\u0646\u0648",
+          "ru": "\u0421. \u0410\u043a\u043e\u043d\u043e"
+        }
+      }
+    },
+    "isHome": true,
+    "shotType": "miss",
+    "situation": "regular",
+    "playerCoordinates": {
+      "x": 23,
+      "y": 58,
+      "z": 0
+    },
+    "bodyPart": "left-foot",
+    "goalMouthLocation": "close-high-left",
+    "goalMouthCoordinates": {
+      "x": 0,
+      "y": 56.1,
+      "z": 46.6
+    },
+    "xg": 0.05465,
+    "id": 2603658,
+    "time": 14,
+    "timeSeconds": 797,
+    "draw": {
+      "start": {
+        "x": 58,
+        "y": 23
+      },
+      "end": {
+        "x": 43.9,
+        "y": 0
+      },
+      "goal": {
+        "x": 43.9,
+        "y": 53.4
+      }
+    },
+    "incidentType": "shot",
+    "reversedPeriodTime": 32,
+    "reversedPeriodTimeSeconds": 1903,
+    "periodTimeSeconds": 797,
+    "match_info": "VfB L\u00fcbeck vs SSV Jahn Regensburg",
+    "match_id": 11415382
+  },
+  {
+    "player": {
+      "name": "Cyrill Akono",
+      "slug": "akono-cyrill",
+      "shortName": "C. Akono",
+      "position": "F",
+      "jerseyNumber": "14",
+      "userCount": 29,
+      "gender": "M",
+      "sofascoreId": "zbf-fwm",
+      "id": 924069,
+      "fieldTranslations": {
+        "nameTranslation": {
+          "ar": "\u0623\u0643\u0648\u0646\u0648\u060c \u0633\u064a\u0631\u064a\u0644",
+          "ru": "\u0410\u043a\u043e\u043d\u043e, \u0421\u0438\u0440\u0438\u043b\u043b"
+        },
+        "shortNameTranslation": {
+          "ar": "\u0633. \u0623\u0643\u0648\u0646\u0648",
+          "ru": "\u0421. \u0410\u043a\u043e\u043d\u043e"
+        }
+      }
+    },
+    "isHome": true,
+    "shotType": "miss",
+    "situation": "corner",
+    "playerCoordinates": {
+      "x": 7,
+      "y": 53,
+      "z": 0
+    },
+    "bodyPart": "head",
+    "goalMouthLocation": "close-high",
+    "goalMouthCoordinates": {
+      "x": 0,
+      "y": 49.9,
+      "z": 57.8
+    },
+    "xg": 0.2181,
+    "id": 2698140,
+    "time": 90,
+    "addedTime": 2,
+    "timeSeconds": 5512,
+    "draw": {
+      "start": {
+        "x": 53,
+        "y": 7
+      },
+      "end": {
+        "x": 50.1,
+        "y": 0
+      },
+      "goal": {
+        "x": 50.1,
+        "y": 42.2
+      }
+    },
+    "incidentType": "shot",
+    "reversedPeriodTime": 1,
+    "reversedPeriodTimeSeconds": 788,
+    "periodTimeSeconds": 112,
+    "match_info": "VfB L\u00fcbeck vs SC Verl",
+    "match_id": 11415366
+  },
+  {
+    "player": {
+      "name": "Cyrill Akono",
+      "slug": "akono-cyrill",
+      "shortName": "C. Akono",
+      "position": "F",
+      "jerseyNumber": "14",
+      "userCount": 29,
+      "gender": "M",
+      "sofascoreId": "zbf-fwm",
+      "id": 924069,
+      "fieldTranslations": {
+        "nameTranslation": {
+          "ar": "\u0623\u0643\u0648\u0646\u0648\u060c \u0633\u064a\u0631\u064a\u0644",
+          "ru": "\u0410\u043a\u043e\u043d\u043e, \u0421\u0438\u0440\u0438\u043b\u043b"
+        },
+        "shortNameTranslation": {
+          "ar": "\u0633. \u0623\u0643\u0648\u0646\u0648",
+          "ru": "\u0421. \u0410\u043a\u043e\u043d\u043e"
+        }
+      }
+    },
+    "isHome": true,
+    "shotType": "post",
+    "situation": "regular",
+    "playerCoordinates": {
+      "x": 9,
+      "y": 18,
+      "z": 0
+    },
+    "bodyPart": "left-foot",
+    "goalMouthLocation": "left",
+    "goalMouthCoordinates": {
+      "x": 0,
+      "y": 55.6,
+      "z": 14.6
+    },
+    "xg": 0.0302,
+    "id": 2865793,
+    "time": 90,
+    "addedTime": 5,
+    "timeSeconds": 5676,
+    "draw": {
+      "start": {
+        "x": 18,
+        "y": 9
+      },
+      "end": {
+        "x": 44.4,
+        "y": 0
+      },
+      "goal": {
+        "x": 44.4,
+        "y": 85.4
+      }
+    },
+    "incidentType": "shot",
+    "reversedPeriodTime": 1,
+    "reversedPeriodTimeSeconds": 624,
+    "periodTimeSeconds": 276,
+    "match_info": "VfB L\u00fcbeck vs MSV Duisburg",
+    "match_id": 11415322
+  },
+  {
+    "player": {
+      "name": "Cyrill Akono",
+      "slug": "akono-cyrill",
+      "shortName": "C. Akono",
+      "position": "F",
+      "jerseyNumber": "14",
+      "userCount": 29,
+      "gender": "M",
+      "sofascoreId": "zbf-fwm",
+      "id": 924069,
+      "fieldTranslations": {
+        "nameTranslation": {
+          "ar": "\u0623\u0643\u0648\u0646\u0648\u060c \u0633\u064a\u0631\u064a\u0644",
+          "ru": "\u0410\u043a\u043e\u043d\u043e, \u0421\u0438\u0440\u0438\u043b\u043b"
+        },
+        "shortNameTranslation": {
+          "ar": "\u0633. \u0623\u0643\u0648\u0646\u0648",
+          "ru": "\u0421. \u0410\u043a\u043e\u043d\u043e"
+        }
+      }
+    },
+    "isHome": true,
+    "shotType": "miss",
+    "situation": "corner",
+    "playerCoordinates": {
+      "x": 2,
+      "y": 51,
+      "z": 0
+    },
+    "bodyPart": "head",
+    "goalMouthLocation": "close-high",
+    "goalMouthCoordinates": {
+      "x": 0,
+      "y": 45.6,
+      "z": 46.1
+    },
+    "xg": 0.5156,
+    "id": 2865791,
+    "time": 89,
+    "timeSeconds": 5339,
+    "draw": {
+      "start": {
+        "x": 51,
+        "y": 2
+      },
+      "end": {
+        "x": 54.4,
+        "y": 0
+      },
+      "goal": {
+        "x": 54.4,
+        "y": 53.9
+      }
+    },
+    "incidentType": "shot",
+    "reversedPeriodTime": 2,
+    "reversedPeriodTimeSeconds": 61,
+    "periodTimeSeconds": 2639,
+    "match_info": "VfB L\u00fcbeck vs MSV Duisburg",
+    "match_id": 11415322
+  }
+]
