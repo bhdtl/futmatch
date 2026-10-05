@@ -3,6 +3,10 @@ import sys
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
+from pathlib import Path
+
+env_path = Path(__file__).parent.parent.parent / ".env"
+load_dotenv(dotenv_path=env_path)
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://xrytnuhucuqmyoytdtch.supabase.co")
