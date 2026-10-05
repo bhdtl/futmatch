@@ -64,8 +64,15 @@ def main():
 
         full_squad = squad_profile.get("full_squad_2027", [])
         for p in full_squad:
-            pos = p.get("position", "F")
-            if pos not in ["F", "M", "D", "GK"]:
+            raw_pos = p.get("position", "")
+            pos = "F"
+            if "Back" in raw_pos or "Defender" in raw_pos:
+                pos = "D"
+            elif "Midfield" in raw_pos:
+                pos = "M"
+            elif "Goalkeeper" in raw_pos:
+                pos = "GK"
+            elif "Forward" in raw_pos or "Winger" in raw_pos or "Striker" in raw_pos:
                 pos = "F"
 
             stats = p.get("detailed_stats", {})
@@ -191,10 +198,20 @@ def main():
             if pos not in ["F", "M", "D", "GK"]: pos = "F"
 
             # Fetch real calculated benchmark for this player's league & position
-            bench = real_league_position_averages[league].get(pos, {
-                "goals": 0.30, "xg": 0.30, "xgot": 0.20, "shots": 2.00, "key_passes": 0.60,
-                "touches": 26.0, "aerial_pct": 40.0, "ground_pct": 45.0, "def_actions": 2.0, "recoveries": 1.2, "top_speed": 31.0
-            })
+            calc_bench = real_league_position_averages[league].get(pos, {})
+            bench = {
+                "goals": calc_bench.get("goals") or 0.35,
+                "xg": calc_bench.get("xg") or 0.32,
+                "xgot": calc_bench.get("xgot") or 0.20,
+                "shots": calc_bench.get("shots") or 1.80,
+                "key_passes": calc_bench.get("key_passes") or 0.60,
+                "touches": calc_bench.get("touches") or 28.5,
+                "aerial_pct": calc_bench.get("aerial_pct") or 42.0,
+                "ground_pct": calc_bench.get("ground_pct") or 45.0,
+                "def_actions": calc_bench.get("def_actions") or 2.10,
+                "recoveries": calc_bench.get("recoveries") or 1.20,
+                "top_speed": calc_bench.get("top_speed") or 31.0
+            }
 
             stats = p.get("detailed_stats", {})
             mins = m.get("mins", 0)
